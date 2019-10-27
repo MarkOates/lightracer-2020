@@ -54,7 +54,7 @@ public:
 	void (*joy_down_func)();
 	void (*joy_axis_func)();
 
-	Framework();
+	Framework(int screen_width=800, int screen_height=600);
 	~Framework();
 	int run_loop();
 };

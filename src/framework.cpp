@@ -10,7 +10,7 @@ ALLEGRO_EVENT *current_event = NULL;
 void error(const char *e) { }
 
 
-Framework::Framework() :
+Framework::Framework(int screen_width, int screen_height) :
 	timer_func(NULL),
 	key_up_func(NULL),
 	key_down_func(NULL),
@@ -24,7 +24,7 @@ Framework::Framework() :
 	display_close_func(NULL),
 	abort_program(false)
 {
-	int w=800,h=600;
+	int w=screen_width,h=screen_height;
 	// init //
 
 	if (!al_init()) error("Could not init allegro");
