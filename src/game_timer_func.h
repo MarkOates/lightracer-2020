@@ -72,17 +72,13 @@ void game_timer_func()
 	{
 		al_draw_text(get_font("lacuna.ttf", -50), al_color_name("red"), 400, 200, ALLEGRO_ALIGN_CENTRE, "GAME OVER");
 		al_draw_text(get_font("lacuna.ttf", -20), al_color_name("red"), 400, 250, ALLEGRO_ALIGN_CENTRE, "Get more contributers.");
-			
-			al_draw_text(get_font("lacuna.ttf", -30), al_color_name("red"),
-				400, 350, ALLEGRO_ALIGN_CENTRE, "press ENTER to START A NEW GAME");
+      al_draw_text(get_font("lacuna.ttf", -30), al_color_name("red"), 400, 350, ALLEGRO_ALIGN_CENTRE, "press ENTER to START A NEW GAME");
 	}
 	else if (racer->dead)
 	{
 		al_draw_text(get_font("lacuna.ttf", -50), al_color_name("orange"), 400, 200, ALLEGRO_ALIGN_CENTRE, "YOU FAILED");
 		al_draw_text(get_font("lacuna.ttf", -20), al_color_name("orange"), 400, 250, ALLEGRO_ALIGN_CENTRE, "Don't close your source code.");
-
-			al_draw_text(get_font("lacuna.ttf", -20), al_color_name("orange"),
-				400, 350, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
+      al_draw_text(get_font("lacuna.ttf", -20), al_color_name("orange"), 400, 350, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
 	}
 	else
 	{
