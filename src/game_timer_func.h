@@ -3,6 +3,8 @@ void game_timer_func()
    float screen_center_x = SCREEN_HW;
    float screen_center_y = SCREEN_HH;
 
+   static ALLEGRO_FONT *font_regular = get_font("venus_rising_rg.ttf", -28);
+
    if (logo_showing)
    {
       al_clear_to_color(color_hex("000000"));
@@ -10,12 +12,12 @@ void game_timer_func()
       al_draw_scaled_rotated_bitmap(logo_img, al_get_bitmap_width(logo_img)/2, al_get_bitmap_height(logo_img)/2,
          screen_center_x, (250 - 300) + screen_center_y, logo_scale, logo_scale, 0, 0);
 
-         al_draw_text(get_font("lacuna.ttf", -20), al_color_name("white"),
+         al_draw_text(font_regular, al_color_name("white"),
             screen_center_x, (325 - 300) + screen_center_y, ALLEGRO_ALIGN_CENTRE, "Use only the ARROW KEYS to play");
          al_draw_text(get_font("lacuna.ttf", -25), al_color_name("dodgerblue"),
             screen_center_x, (375 - 300) + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to BEGIN");
 
-         al_draw_text(get_font("lacuna.ttf", -20), al_color_name("white"),
+         al_draw_text(font_regular, al_color_name("white"),
             screen_center_x, (500 - 300) + screen_center_y, ALLEGRO_ALIGN_CENTRE, "SpeedHack 2011 Entry by Mark Oates");
 
 
