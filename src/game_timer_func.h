@@ -26,9 +26,6 @@ void game_timer_func()
 
 	start_profile_timer("WHOLE UPDATE");
 	al_clear_to_color(color_hex("303030"));
-	//al_clear_to_color();
-	
-	//al_set_sample_instance_speed(engine_sample_instance, 2.0);
 
 	start_profile_timer("racer/track");
 	update_racer_and_track(racer, track); // < as I understand, *everything* that OMG_DeltaTime affects is in here
@@ -40,17 +37,12 @@ void game_timer_func()
 	camera->transform_on();
 
 
-	//good_camera->x racer->position.x;
 	good_camera->x = racer->position.x;
 	good_camera->z = racer->position.y;
 
 	al_set_sample_instance_speed(engine_sample_instance, 0.8+(racer->velocity_magnitude*racer->velocity_magnitude)/7);
 	al_set_sample_instance_gain(engine_sample_instance, 0.6);
-	//al_draw_circle(0, 0, 20, al_color_name("orange"), 5.0);
 
-	//track->draw();
-
-	//racer->draw();
 	start_profile_timer("particle update");
 	particle_effect::update_all();
 	stop_profile_timer("particle update");
@@ -59,7 +51,6 @@ void game_timer_func()
 	track->draw_projected(camera, racer->direction_angle, racer->position.x, racer->position.y, racer->velocity_magnitude);
 	stop_profile_timer("draw projected");
 
-	//al_draw_text(get_font("lacuna.ttf", -19), al_color_name("white"), 20, 100, NULL, tostring(OMG_DeltaTime).c_str());
 	draw_hud();
 
 
@@ -92,9 +83,6 @@ void game_timer_func()
 
 			al_draw_text(get_font("lacuna.ttf", -20), al_color_name("orange"),
 				400, 350, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
-		
-		//racer->velocity_magnitude *= 0.98;
-		//racer->throttle_on = false;
 	}
 	else
 	{
