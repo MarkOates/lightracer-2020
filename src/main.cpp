@@ -8,6 +8,18 @@
 #include "profiling_timer.h"
 
 
+#include <vector>
+
+
+using std::vector;
+
+
+
+#include <AllegroFlare/BitmapBin.hpp>
+using AllegroFlare::BitmapBin;
+BitmapBin bitmaps;
+
+
 
 bool logo_showing = true;
 float logo_scale = 0.0;
@@ -312,7 +324,7 @@ void create_particle_spread(float x, float y)
 		particle->in_use = true;
 	// potential crash right here
 		//if () particle->position
-		particle->image = get_image("yellow_ball.png");
+		particle->image = bitmaps.auto_get("yellow_ball.png");
 
 		float rotation = FULL_ROTATION/num_balls_in_spread * i;
 
@@ -1170,6 +1182,9 @@ bool create_random_track(Track *t, int num_segments)
 
 void init_game()
 {
+   std::cout << "start of bitmap bin path setting" << std::endl;
+   bitmaps.set_path("data/images");
+   std::cout << "end of bitmap bin path setting" << std::endl;
 	animate(logo_scale, 0.7, 0.9, 7.0, interpolator::trippleFastIn);
 
 	OMG_DeltaTime = 0.6;
@@ -1435,7 +1450,9 @@ int main(int argc, char **argv)
 	Framework f(SCREEN_W, SCREEN_H);
 	init_profiling();
 	init_game();
-	//f.timer_func = game_timer_func;
+	f.timer_func = game_timer_func;
 	f.key_down_func = key_down_func;
 	return f.run_loop();
+
+   bitmaps.clear();
 }

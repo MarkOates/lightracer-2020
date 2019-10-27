@@ -16,7 +16,6 @@
 #include <allegro5/allegro_native_dialog.h>
 
 #include "font_bin.h"
-#include "image_bin.h"
 #include "sample_bin.h"
 #include "useful.h"
 #include "vec2d.h"

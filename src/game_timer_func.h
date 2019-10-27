@@ -3,7 +3,7 @@ void game_timer_func()
 	if (logo_showing)
 	{
 		al_clear_to_color(color_hex("000000"));
-		ALLEGRO_BITMAP *logo_img = get_image("lightracer_logo.png");
+		ALLEGRO_BITMAP *logo_img = bitmaps.auto_get("lightracer_logo.png");
 		al_draw_scaled_rotated_bitmap(logo_img, al_get_bitmap_width(logo_img)/2, al_get_bitmap_height(logo_img)/2,
 			400, 250, logo_scale, logo_scale, 0, 0);
 

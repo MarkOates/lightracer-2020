@@ -2,7 +2,7 @@
 
 
 
-#include "image_bin.h"
+//#include "image_bin.h"
 
 float get_zoom_scale(float const &world_z, CheapCamera *cam)
 {
@@ -316,7 +316,7 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
 		//al_draw_prim(right_point, NULL, NULL, 0, right_index_ct, ALLEGRO_PRIM_LINE_STRIP);
 
 	start_profile_timer("DP 2");
-	ALLEGRO_BITMAP *yellow_ball = get_image("yellow_ball.png");;
+	ALLEGRO_BITMAP *yellow_ball = bitmaps.auto_get("yellow_ball.png");;
 
 
 	float _align_x = 0.5;
@@ -353,9 +353,9 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
 
 
 		float racer_depth_scale = good_camera->get_scale(racer_to_draw_z);
-		al_draw_scaled_rotated_bitmap(get_image("racer3.png"),
-										al_get_bitmap_width(get_image("racer3.png"))*_align_x,
-										al_get_bitmap_height(get_image("racer3.png"))*_align_y,
+		al_draw_scaled_rotated_bitmap(bitmaps.auto_get("racer3.png"),
+										al_get_bitmap_width(bitmaps.auto_get("racer3.png"))*_align_x,
+										al_get_bitmap_height(bitmaps.auto_get("racer3.png"))*_align_y,
 										(racer_to_draw_x - good_camera->x)*racer_depth_scale + good_camera->center_point.x,
 										(racer_to_draw_y - good_camera->y)*racer_depth_scale + good_camera->center_point.y,
 										_scale_x*racer_depth_scale*0.8,
@@ -365,10 +365,10 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
 
 		float engine_alpha = racer->velocity_magnitude;
 
-		al_draw_tinted_scaled_rotated_bitmap(get_image("there_are_3_lights.png"),
+		al_draw_tinted_scaled_rotated_bitmap(bitmaps.auto_get("there_are_3_lights.png"),
 			al_map_rgba_f(engine_alpha, engine_alpha, engine_alpha, engine_alpha),
-										al_get_bitmap_width(get_image("there_are_3_lights.png"))*_align_x,
-										al_get_bitmap_height(get_image("there_are_3_lights.png"))*_align_y,
+										al_get_bitmap_width(bitmaps.auto_get("there_are_3_lights.png"))*_align_x,
+										al_get_bitmap_height(bitmaps.auto_get("there_are_3_lights.png"))*_align_y,
 										(racer_to_draw_x - good_camera->x)*racer_depth_scale + good_camera->center_point.x,
 										(racer_to_draw_y - good_camera->y)*racer_depth_scale + good_camera->center_point.y,
 										_scale_x*racer_depth_scale*0.8,
@@ -379,10 +379,10 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
 		if ((fmod(engine_alpha, 1.0f) < 0.2) && (racer->velocity_magnitude > 3))
 		{
 
-		al_draw_tinted_scaled_rotated_bitmap(get_image("3_light_glow.png"),
+		al_draw_tinted_scaled_rotated_bitmap(bitmaps.auto_get("3_light_glow.png"),
 			al_map_rgba_f(1.0, 1.0, 1.0, 1.0),
-										al_get_bitmap_width(get_image("3_light_glow.png"))*_align_x,
-										al_get_bitmap_height(get_image("3_light_glow.png"))*_align_y,
+										al_get_bitmap_width(bitmaps.auto_get("3_light_glow.png"))*_align_x,
+										al_get_bitmap_height(bitmaps.auto_get("3_light_glow.png"))*_align_y,
 										(racer_to_draw_x - good_camera->x)*racer_depth_scale + good_camera->center_point.x,
 										(racer_to_draw_y - good_camera->y)*racer_depth_scale + good_camera->center_point.y,
 										_scale_x*racer_depth_scale*0.8,
@@ -441,7 +441,7 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
 
 
 
-	yellow_ball = get_image("upbeam_light.png");
+	yellow_ball = bitmaps.auto_get("upbeam_light.png");
 
 
 	//// DRAW PARTICLES
@@ -499,8 +499,8 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
 
 	start_profile_timer("DP rail lights");
 
-	yellow_ball = get_image("upbeam_light.png");
-	ALLEGRO_BITMAP *rail_light_off = get_image("light_off.png");
+	yellow_ball = bitmaps.auto_get("upbeam_light.png");
+	ALLEGRO_BITMAP *rail_light_off = bitmaps.auto_get("light_off.png");
 
 	//fill_track_rail_points();
 
@@ -601,7 +601,7 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
 
 	////// DRAW THE POLE LIGHTS
 
-	yellow_ball = get_image("pole.png");
+	yellow_ball = bitmaps.auto_get("pole.png");
 	static int strobe = 0;
 	strobe++;
 	if (strobe > 6) { strobe = 0;}
@@ -630,41 +630,41 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
 		{
 		case COLOR_TYPE_WHITE:
 			//return;
-			if (strobe == 1) yellow_ball = get_image("white_light.png");
-			if (strobe == 2) yellow_ball = get_image("pole_red.png");
-			if (strobe == 3) yellow_ball = get_image("white_light.png");
-			if (strobe == 4) yellow_ball = get_image("pole_blue.png");
-			if (strobe == 5) yellow_ball = get_image("white_light.png");
-			if (strobe == 6) yellow_ball = get_image("pole_green.png");
+			if (strobe == 1) yellow_ball = bitmaps.auto_get("white_light.png");
+			if (strobe == 2) yellow_ball = bitmaps.auto_get("pole_red.png");
+			if (strobe == 3) yellow_ball = bitmaps.auto_get("white_light.png");
+			if (strobe == 4) yellow_ball = bitmaps.auto_get("pole_blue.png");
+			if (strobe == 5) yellow_ball = bitmaps.auto_get("white_light.png");
+			if (strobe == 6) yellow_ball = bitmaps.auto_get("pole_green.png");
 			break;
 		case COLOR_TYPE_RED_DEATH:
 			strobes = true;
-			yellow_ball = get_image("pole_red.png");
+			yellow_ball = bitmaps.auto_get("pole_red.png");
 			break;
 		case COLOR_TYPE_YELLOW:
-			yellow_ball = get_image("pole.png");
+			yellow_ball = bitmaps.auto_get("pole.png");
 			break;
 		case COLOR_TYPE_GREEN:
-			yellow_ball = get_image("pole_green.png");
+			yellow_ball = bitmaps.auto_get("pole_green.png");
 			break;
 		case COLOR_TYPE_BLUE:
-			yellow_ball = get_image("pole_blue.png");
+			yellow_ball = bitmaps.auto_get("pole_blue.png");
 			break;
 		case COLOR_TYPE_OFF:
-			yellow_ball = get_image("light_off2.png");
+			yellow_ball = bitmaps.auto_get("light_off2.png");
 			break;
 		case COLOR_TYPE_RED:
-			yellow_ball = get_image("pole_red.png");
+			yellow_ball = bitmaps.auto_get("pole_red.png");
 			break;
 		}
 
-		if (strobes && (strobe > 3)) yellow_ball = get_image("pole_black.png");
+		if (strobes && (strobe > 3)) yellow_ball = bitmaps.auto_get("pole_black.png");
 
 
 		if (!(Track::__left_color_light_belongs_to[i].second == (index_of_last_track_segment_that_collides-1)
 			|| Track::__left_color_light_belongs_to[i].second == (index_of_last_track_segment_that_collides)
 			|| Track::__left_color_light_belongs_to[i].second == (index_of_last_track_segment_that_collides+1)
-			)) yellow_ball = get_image("light_off2.png");
+			)) yellow_ball = bitmaps.auto_get("light_off2.png");
 
 
 		float depth_scale = good_camera->get_scale(left_point[i].z);
@@ -695,42 +695,42 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
 		{
 		case COLOR_TYPE_WHITE:
 			//return;
-			if (strobe == 1) yellow_ball = get_image("pole.png");
-			if (strobe == 2) yellow_ball = get_image("pole_red.png");
-			if (strobe == 3) yellow_ball = get_image("pole.png");
-			if (strobe == 4) yellow_ball = get_image("pole_blue.png");
-			if (strobe == 5) yellow_ball = get_image("white_light.png");
-			if (strobe == 6) yellow_ball = get_image("pole_green.png");
+			if (strobe == 1) yellow_ball = bitmaps.auto_get("pole.png");
+			if (strobe == 2) yellow_ball = bitmaps.auto_get("pole_red.png");
+			if (strobe == 3) yellow_ball = bitmaps.auto_get("pole.png");
+			if (strobe == 4) yellow_ball = bitmaps.auto_get("pole_blue.png");
+			if (strobe == 5) yellow_ball = bitmaps.auto_get("white_light.png");
+			if (strobe == 6) yellow_ball = bitmaps.auto_get("pole_green.png");
 			break;
 		case COLOR_TYPE_RED_DEATH:
-			yellow_ball = get_image("pole_red.png");
+			yellow_ball = bitmaps.auto_get("pole_red.png");
 			strobes = true;
 			break;
 		case COLOR_TYPE_OFF:
-			yellow_ball = get_image("light_off2.png");
+			yellow_ball = bitmaps.auto_get("light_off2.png");
 			break;
 		case COLOR_TYPE_YELLOW:
-			yellow_ball = get_image("pole.png");
+			yellow_ball = bitmaps.auto_get("pole.png");
 			break;
 		case COLOR_TYPE_GREEN:
-			yellow_ball = get_image("pole_green.png");
+			yellow_ball = bitmaps.auto_get("pole_green.png");
 			break;
 		case COLOR_TYPE_BLUE:
-			yellow_ball = get_image("pole_blue.png");
+			yellow_ball = bitmaps.auto_get("pole_blue.png");
 			break;
 		case COLOR_TYPE_RED:
-			yellow_ball = get_image("pole_red.png");
+			yellow_ball = bitmaps.auto_get("pole_red.png");
 			break;
 		}
 
-		if (strobes && (strobe > 3)) yellow_ball = get_image("pole_black.png");
+		if (strobes && (strobe > 3)) yellow_ball = bitmaps.auto_get("pole_black.png");
 
 
 
 		if (!(Track::__right_color_light_belongs_to[i].second == (index_of_last_track_segment_that_collides-1)
 			|| Track::__right_color_light_belongs_to[i].second == (index_of_last_track_segment_that_collides)
 			|| Track::__right_color_light_belongs_to[i].second == (index_of_last_track_segment_that_collides+1)
-			)) yellow_ball = get_image("light_off2.png");
+			)) yellow_ball = bitmaps.auto_get("light_off2.png");
 
 
 		float depth_scale = good_camera->get_scale(right_point[i].z);
