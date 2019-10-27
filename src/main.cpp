@@ -1,9 +1,9 @@
 #include "framework.h"
 
-#define SCREEN_W 800
-#define SCREEN_H 600
-#define SCREEN_HW 400
-#define SCREEN_HH 300
+#define SCREEN_W 1920
+#define SCREEN_H 1080
+#define SCREEN_HW (SCREEN_W/2)
+#define SCREEN_HH (SCREEN_H/2)
 
 #include "profiling_timer.h"
 
