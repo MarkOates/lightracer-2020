@@ -1185,7 +1185,7 @@ void init_game()
    std::cout << "start of bitmap bin path setting" << std::endl;
    bitmaps.set_path("data/images");
    std::cout << "end of bitmap bin path setting" << std::endl;
-	animate(logo_scale, 0.7, 0.9, 7.0, interpolator::trippleFastIn);
+	animate(logo_scale, 0.7, 1.0, 7.0, interpolator::trippleFastIn);
 
 	OMG_DeltaTime = 0.6;
 

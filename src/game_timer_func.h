@@ -1,19 +1,22 @@
 void game_timer_func()
 {
+   float screen_center_x = SCREEN_HW;
+   float screen_center_y = SCREEN_HH;
+
    if (logo_showing)
    {
       al_clear_to_color(color_hex("000000"));
-      ALLEGRO_BITMAP *logo_img = bitmaps.auto_get("lightracer_logo.png");
+      ALLEGRO_BITMAP *logo_img = bitmaps.auto_get("lightracer-max-logo-02.png");
       al_draw_scaled_rotated_bitmap(logo_img, al_get_bitmap_width(logo_img)/2, al_get_bitmap_height(logo_img)/2,
-         400, 250, logo_scale, logo_scale, 0, 0);
+         screen_center_x, (250 - 300) + screen_center_y, logo_scale, logo_scale, 0, 0);
 
          al_draw_text(get_font("lacuna.ttf", -20), al_color_name("white"),
-            400, 325, ALLEGRO_ALIGN_CENTRE, "Use only the ARROW KEYS to play");
-         al_draw_text(get_font("lacuna.ttf", -25), start_text_color,
-            400, 375, ALLEGRO_ALIGN_CENTRE, "press ENTER to BEGIN");
+            screen_center_x, (325 - 300) + screen_center_y, ALLEGRO_ALIGN_CENTRE, "Use only the ARROW KEYS to play");
+         al_draw_text(get_font("lacuna.ttf", -25), al_color_name("dodgerblue"),
+            screen_center_x, (375 - 300) + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to BEGIN");
 
          al_draw_text(get_font("lacuna.ttf", -20), al_color_name("white"),
-            400, 500, ALLEGRO_ALIGN_CENTRE, "SpeedHack 2011 Entry by Mark Oates");
+            screen_center_x, (500 - 300) + screen_center_y, ALLEGRO_ALIGN_CENTRE, "SpeedHack 2011 Entry by Mark Oates");
 
 
       al_draw_filled_rectangle(0, 0, SCREEN_W, SCREEN_H, al_map_rgba_f(0, 0, 0, foreground_black_opacity));
@@ -64,21 +67,21 @@ void game_timer_func()
 
    if (game_won)
    {
-      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("dodgerblue"), 400, 200, ALLEGRO_ALIGN_CENTRE, "YOU WIN");
-      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("dodgerblue"), 400, 250, ALLEGRO_ALIGN_CENTRE, "congratulations and");
-      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("dodgerblue"), 400, 300, ALLEGRO_ALIGN_CENTRE, "thanks for playing!");
+      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("dodgerblue"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "YOU WIN");
+      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("dodgerblue"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "congratulations and");
+      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("dodgerblue"), screen_center_x, 300-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "thanks for playing!");
    }
    else if (game_over)
    {
-      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("red"), 400, 200, ALLEGRO_ALIGN_CENTRE, "GAME OVER");
-      al_draw_text(get_font("lacuna.ttf", -20), al_color_name("red"), 400, 250, ALLEGRO_ALIGN_CENTRE, "Get more contributers.");
-      al_draw_text(get_font("lacuna.ttf", -30), al_color_name("red"), 400, 350, ALLEGRO_ALIGN_CENTRE, "press ENTER to START A NEW GAME");
+      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("red"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "GAME OVER");
+      al_draw_text(get_font("lacuna.ttf", -20), al_color_name("red"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "Get more contributers.");
+      al_draw_text(get_font("lacuna.ttf", -30), al_color_name("red"), screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to START A NEW GAME");
    }
    else if (racer->dead)
    {
-      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("orange"), 400, 200, ALLEGRO_ALIGN_CENTRE, "YOU FAILED");
-      al_draw_text(get_font("lacuna.ttf", -20), al_color_name("orange"), 400, 250, ALLEGRO_ALIGN_CENTRE, "Don't close your source code.");
-      al_draw_text(get_font("lacuna.ttf", -20), al_color_name("orange"), 400, 350, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
+      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("orange"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "YOU FAILED");
+      al_draw_text(get_font("lacuna.ttf", -20), al_color_name("orange"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "Don't close your source code.");
+      al_draw_text(get_font("lacuna.ttf", -20), al_color_name("orange"), screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
    }
    else
    {
@@ -89,7 +92,7 @@ void game_timer_func()
          if ((int)racer->lap_time.size() == num_laps_to_win) lap_string = "FINAL LAP";
 
          al_draw_text(get_font("lacuna.ttf", -40), al_map_rgba_f(lap_notification_counter, lap_notification_counter, lap_notification_counter, lap_notification_counter),
-            400, 200, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
+            screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
       }
 
       if (track_begin_notification_counter > 0.4)
@@ -103,16 +106,16 @@ void game_timer_func()
 
          if (fmod(track_begin_notification_counter, 0.1f) < 0.05)
          al_draw_text(get_font("lacuna.ttf", -40), al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
-            400, 200, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
+            screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
          al_draw_text(get_font("lacuna.ttf", -40), al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
-            400, 250, ALLEGRO_ALIGN_CENTRE, lap_info_string.c_str());
+            screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_info_string.c_str());
          if (!segment_where_player_died.empty())
             al_draw_text(get_font("lacuna.ttf", -20), al_map_rgba_f(track_begin_notification_counter*0.5, track_begin_notification_counter, 0.0, track_begin_notification_counter),
-               400, 300, ALLEGRO_ALIGN_CENTRE, lap_info2_string.c_str());
+               screen_center_x, 300-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_info2_string.c_str());
 
          if (propeganda_on) 
             al_draw_text(get_font("lacuna.ttf", -20), al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
-               400, 350, ALLEGRO_ALIGN_CENTRE, "This game was made possible by open source.");
+               screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "This game was made possible by open source.");
       }
       else if (track_begin_notification_counter < 0.4 && (!(racer->velocity_magnitude > 0.01)))
       {
@@ -121,7 +124,7 @@ void game_timer_func()
          float opacity_counter = track_begin_notification_counter/0.2;
 
          al_draw_text(get_font("lacuna.ttf", -40), al_map_rgba_f(0.0, 1.0*opacity_counter, 0.0, opacity_counter),
-            400, 200, ALLEGRO_ALIGN_CENTRE, go_string.c_str());
+            screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, go_string.c_str());
       }
 
       if (FLAG_draw_profile_graph)
@@ -133,9 +136,9 @@ void game_timer_func()
 
       if (track_completed)
       {
-         al_draw_text(get_font("lacuna.ttf", -50), al_color_name("dodgerblue"), 400, 200, ALLEGRO_ALIGN_CENTRE, "TRACK COMPLETED");
-         al_draw_text(get_font("lacuna.ttf", -20), al_color_name("dodgerblue"), 400, 250, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
-         if (propeganda_on) al_draw_text(get_font("lacuna.ttf", -20), al_color_name("dodgerblue"), 400, 300, ALLEGRO_ALIGN_CENTRE, "It feels good to contribute....");
+         al_draw_text(get_font("lacuna.ttf", -50), al_color_name("dodgerblue"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "TRACK COMPLETED");
+         al_draw_text(get_font("lacuna.ttf", -20), al_color_name("dodgerblue"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
+         if (propeganda_on) al_draw_text(get_font("lacuna.ttf", -20), al_color_name("dodgerblue"), screen_center_x, 300-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "It feels good to contribute....");
          racer->velocity_magnitude *= 0.98;
          racer->throttle_on = false;
       }
