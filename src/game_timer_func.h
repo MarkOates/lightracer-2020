@@ -4,6 +4,7 @@ void game_timer_func()
    float screen_center_y = SCREEN_HH;
 
    static ALLEGRO_FONT *font_regular = get_font("venus_rising_rg.ttf", -28);
+   static ALLEGRO_FONT *font_large = get_font("venus_rising_rg.ttf", -50);
 
    if (logo_showing)
    {
@@ -63,21 +64,21 @@ void game_timer_func()
 
    if (game_won)
    {
-      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("dodgerblue"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "YOU WIN");
-      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("dodgerblue"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "congratulations and");
-      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("dodgerblue"), screen_center_x, 300-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "thanks for playing!");
+      al_draw_text(font_large, al_color_name("dodgerblue"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "YOU WIN");
+      al_draw_text(font_large, al_color_name("dodgerblue"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "congratulations and");
+      al_draw_text(font_large, al_color_name("dodgerblue"), screen_center_x, 300-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "thanks for playing!");
    }
    else if (game_over)
    {
-      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("red"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "GAME OVER");
-      al_draw_text(get_font("lacuna.ttf", -20), al_color_name("red"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "Get more contributers.");
-      al_draw_text(get_font("lacuna.ttf", -30), al_color_name("red"), screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to START A NEW GAME");
+      al_draw_text(font_large, al_color_name("red"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "GAME OVER");
+      al_draw_text(font_regular, al_color_name("red"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "Get more contributers.");
+      al_draw_text(font_regular, al_color_name("red"), screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to START A NEW GAME");
    }
    else if (racer->dead)
    {
-      al_draw_text(get_font("lacuna.ttf", -50), al_color_name("orange"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "YOU FAILED");
-      al_draw_text(get_font("lacuna.ttf", -20), al_color_name("orange"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "Don't close your source code.");
-      al_draw_text(get_font("lacuna.ttf", -20), al_color_name("orange"), screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
+      al_draw_text(font_large, al_color_name("orange"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "YOU FAILED");
+      al_draw_text(font_regular, al_color_name("orange"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "Don't close your source code.");
+      al_draw_text(font_regular, al_color_name("orange"), screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
    }
    else
    {
@@ -87,7 +88,7 @@ void game_timer_func()
          std::string lap_string = "LAP " + tostring(racer->lap_time.size()+1);
          if ((int)racer->lap_time.size() == num_laps_to_win) lap_string = "FINAL LAP";
 
-         al_draw_text(get_font("lacuna.ttf", -40), al_map_rgba_f(lap_notification_counter, lap_notification_counter, lap_notification_counter, lap_notification_counter),
+         al_draw_text(font_large, al_map_rgba_f(lap_notification_counter, lap_notification_counter, lap_notification_counter, lap_notification_counter),
             screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
       }
 
@@ -101,16 +102,16 @@ void game_timer_func()
          else lap_info2_string += "s removed";
 
          if (fmod(track_begin_notification_counter, 0.1f) < 0.05)
-         al_draw_text(get_font("lacuna.ttf", -40), al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
+         al_draw_text(font_large, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
             screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
-         al_draw_text(get_font("lacuna.ttf", -40), al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
+         al_draw_text(font_large, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
             screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_info_string.c_str());
          if (!segment_where_player_died.empty())
-            al_draw_text(get_font("lacuna.ttf", -20), al_map_rgba_f(track_begin_notification_counter*0.5, track_begin_notification_counter, 0.0, track_begin_notification_counter),
+            al_draw_text(font_regular, al_map_rgba_f(track_begin_notification_counter*0.5, track_begin_notification_counter, 0.0, track_begin_notification_counter),
                screen_center_x, 300-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_info2_string.c_str());
 
          if (propeganda_on) 
-            al_draw_text(get_font("lacuna.ttf", -20), al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
+            al_draw_text(font_regular, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
                screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "This game was made possible by open source.");
       }
       else if (track_begin_notification_counter < 0.4 && (!(racer->velocity_magnitude > 0.01)))
@@ -119,22 +120,22 @@ void game_timer_func()
 
          float opacity_counter = track_begin_notification_counter/0.2;
 
-         al_draw_text(get_font("lacuna.ttf", -40), al_map_rgba_f(0.0, 1.0*opacity_counter, 0.0, opacity_counter),
+         al_draw_text(font_large, al_map_rgba_f(0.0, 1.0*opacity_counter, 0.0, opacity_counter),
             screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, go_string.c_str());
       }
 
       if (FLAG_draw_profile_graph)
       {
-         draw_timer_profile_graph(20, 20, get_font("lacuna.ttf", -19));
+         draw_timer_profile_graph(20, 20, font_regular);
       }
          stop_profile_timer("WHOLE UPDATE");
 
 
       if (track_completed)
       {
-         al_draw_text(get_font("lacuna.ttf", -50), al_color_name("dodgerblue"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "TRACK COMPLETED");
-         al_draw_text(get_font("lacuna.ttf", -20), al_color_name("dodgerblue"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
-         if (propeganda_on) al_draw_text(get_font("lacuna.ttf", -20), al_color_name("dodgerblue"), screen_center_x, 300-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "It feels good to contribute....");
+         al_draw_text(font_large, al_color_name("dodgerblue"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "TRACK COMPLETED");
+         al_draw_text(font_regular, al_color_name("dodgerblue"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
+         if (propeganda_on) al_draw_text(font_regular, al_color_name("dodgerblue"), screen_center_x, 300-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "It feels good to contribute....");
          racer->velocity_magnitude *= 0.98;
          racer->throttle_on = false;
       }
