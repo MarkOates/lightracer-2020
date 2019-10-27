@@ -71,13 +71,11 @@ void game_timer_func()
    else if (game_over)
    {
       al_draw_text(font_large, al_color_name("red"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "GAME OVER");
-      al_draw_text(font_regular, al_color_name("red"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "Get more contributers.");
       al_draw_text(font_regular, al_color_name("red"), screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to START A NEW GAME");
    }
    else if (racer->dead)
    {
       al_draw_text(font_large, al_color_name("orange"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "YOU FAILED");
-      al_draw_text(font_regular, al_color_name("orange"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "Don't close your source code.");
       al_draw_text(font_regular, al_color_name("orange"), screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
    }
    else
@@ -109,10 +107,6 @@ void game_timer_func()
          if (!segment_where_player_died.empty())
             al_draw_text(font_regular, al_map_rgba_f(track_begin_notification_counter*0.5, track_begin_notification_counter, 0.0, track_begin_notification_counter),
                screen_center_x, 300-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_info2_string.c_str());
-
-         if (propeganda_on) 
-            al_draw_text(font_regular, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
-               screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "This game was made possible by open source.");
       }
       else if (track_begin_notification_counter < 0.4 && (!(racer->velocity_magnitude > 0.01)))
       {
@@ -135,7 +129,6 @@ void game_timer_func()
       {
          al_draw_text(font_large, al_color_name("dodgerblue"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "TRACK COMPLETED");
          al_draw_text(font_regular, al_color_name("dodgerblue"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
-         if (propeganda_on) al_draw_text(font_regular, al_color_name("dodgerblue"), screen_center_x, 300-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "It feels good to contribute....");
          racer->velocity_magnitude *= 0.98;
          racer->throttle_on = false;
       }

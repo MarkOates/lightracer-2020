@@ -94,7 +94,6 @@ bool game_won = false;
 bool game_over = false;
 
 bool final_course = false;
-bool propeganda_on = true;
 
 
 float lap_notification_counter = 0.0;
