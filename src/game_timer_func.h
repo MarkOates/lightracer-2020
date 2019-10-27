@@ -16,7 +16,7 @@ void game_timer_func()
 				400, 500, ALLEGRO_ALIGN_CENTRE, "SpeedHack 2011 Entry by Mark Oates");
 
 
-		al_draw_filled_rectangle(0, 0, 800, 600, al_map_rgba_f(0, 0, 0, foreground_black_opacity));
+		al_draw_filled_rectangle(0, 0, SCREEN_W, SCREEN_H, al_map_rgba_f(0, 0, 0, foreground_black_opacity));
 		return;
 	}
 
@@ -58,8 +58,8 @@ void game_timer_func()
 	al_identity_transform(&ident);
 	al_use_transform(&ident);
 
-	al_draw_filled_rectangle(0, 0, 800, 600, al_map_rgba_f(0, 0, 0, foreground_black_opacity));
-	al_draw_filled_rectangle(0, 0, 800, 600, al_map_rgba_f(foreground_white_opacity, foreground_white_opacity, foreground_white_opacity, foreground_white_opacity));
+	al_draw_filled_rectangle(0, 0, SCREEN_W, SCREEN_H, al_map_rgba_f(0, 0, 0, foreground_black_opacity));
+	al_draw_filled_rectangle(0, 0, SCREEN_W, SCREEN_H, al_map_rgba_f(foreground_white_opacity, foreground_white_opacity, foreground_white_opacity, foreground_white_opacity));
 
 
 	if (game_won)
