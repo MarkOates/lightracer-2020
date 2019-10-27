@@ -6,6 +6,9 @@ ALLEGRO_EVENT *current_event = NULL;
 //object2d *current_object = NULL;
 
 
+#include <iostream>
+
+
 
 void error(const char *e) { }
 
@@ -158,6 +161,8 @@ int Framework::run_loop()
 			break;
 		}
 	};
+
+   std::cout << "program aborted" << std::endl;
 
 	return 0;
 }
