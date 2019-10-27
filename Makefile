@@ -18,8 +18,8 @@ ALLEGRO_LIBS_LINK_MAIN_ARGS := $(ALLEGRO_LIBS_MAIN:%=-l%)
 
 #OBJ_FILES=$(OBJS:%=obj/%.o)
 
-bin/programs/lightracer_max:
-	g++ $(PROGRAM_SOURCES) $(ALLEGRO_LIBS_LINK_MAIN_ARGS) -o bin/programs/lightracer_max
+bin/programs/lightracermax:
+	g++ $(PROGRAM_SOURCES) $(ALLEGRO_LIBS_LINK_MAIN_ARGS) -o bin/programs/lightracermax
 
 
 
