@@ -1594,7 +1594,7 @@ void game_timer_func()
 
 int main(int argc, char **argv)
 {
-	Framework f;
+	Framework f(SCREEN_W, SCREEN_H);
 	init_profiling();
 	init_game();
 	f.timer_func = game_timer_func;
