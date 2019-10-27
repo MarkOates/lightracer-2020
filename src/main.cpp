@@ -1265,25 +1265,6 @@ void init_game()
 	al_set_sample_instance_speed(instance_hit_soft, 1.0);
 	//al_play_sample_instance(exit_sample_instance);
 
-
-
-
-
-
-
-
-;
-;
-;
-;
-
-
-
-
-
-
-
-
 	
 
 	//al_play_sample(get_sample("engine"), 0.5, 0.5, 1.0, ALLEGRO_PLAYMODE_LOOP, nullptr);
