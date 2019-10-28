@@ -64,17 +64,20 @@ void game_timer_func()
 
    if (game_won)
    {
+      stopwatch.stop();
       al_draw_text(font_large, al_color_name("dodgerblue"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "YOU WIN");
       al_draw_text(font_large, al_color_name("dodgerblue"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "congratulations and");
       al_draw_text(font_large, al_color_name("dodgerblue"), screen_center_x, 300-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "thanks for playing!");
    }
    else if (game_over)
    {
+      stopwatch.stop();
       al_draw_text(font_large, al_color_name("red"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "GAME OVER");
       al_draw_text(font_regular, al_color_name("red"), screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to START A NEW GAME");
    }
    else if (racer->dead)
    {
+      stopwatch.stop();
       al_draw_text(font_large, al_color_name("orange"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "YOU FAILED");
       al_draw_text(font_regular, al_color_name("orange"), screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
    }
@@ -110,6 +113,7 @@ void game_timer_func()
       }
       else if (track_begin_notification_counter < 0.4 && (!(racer->velocity_magnitude > 0.01)))
       {
+         stopwatch.start();
          std::string go_string = "GO";
 
          float opacity_counter = track_begin_notification_counter/0.2;
@@ -127,6 +131,7 @@ void game_timer_func()
 
       if (track_completed)
       {
+         stopwatch.stop();
          al_draw_text(font_large, al_color_name("dodgerblue"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "TRACK COMPLETED");
          al_draw_text(font_regular, al_color_name("dodgerblue"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
          racer->velocity_magnitude *= 0.98;
