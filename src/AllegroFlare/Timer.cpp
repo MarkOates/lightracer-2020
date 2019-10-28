@@ -30,7 +30,7 @@ namespace AllegroFlare
    }
 
 
-   void Timer::stop()
+   void Timer::pause()
    {
       if (!running) return;
 
