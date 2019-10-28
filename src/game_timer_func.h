@@ -95,7 +95,7 @@ void game_timer_func()
 
       if (track_begin_notification_counter > 0.4)
       {
-         stopwatch.start();
+         stopwatch = AllegroFlare::Timer();
          std::string lap_string = "READY";
          if (final_course) lap_string = "==-== FINAL COURSE ==-==";
          std::string lap_info_string = "track with " + tostring(num_of_segments_in_track) + " segments";
