@@ -998,6 +998,27 @@ void draw_stopwatch(int text_y, int horizontal_screen_padding)
 }   
 
 
+void draw_num_segments(int text_y, int num_segments)
+{
+   std::stringstream ss;
+   ss << num_segments << " SEG";
+
+   std::string string_to_write = ss.str();
+   ALLEGRO_FONT *font = get_font("venus_rising_rg.ttf", -26);
+   ALLEGRO_COLOR color = al_color_name("white");
+
+   std::string the_char = " ";
+   int letter_spacing = 12 * 2;
+   int letters_traversed = 0;
+   for (auto &c : string_to_write)
+   {
+      the_char[0] = c;
+      al_draw_text(font, color, SCREEN_W - 300 - 300 + (letters_traversed * letter_spacing), text_y, ALLEGRO_ALIGN_CENTER, the_char.c_str());
+      letters_traversed++;
+   }
+}
+
+
 void draw_hud()
 {
 	ALLEGRO_TRANSFORM transform;
@@ -1037,6 +1058,7 @@ void draw_hud()
   int text_y = 40;
   int horizontal_screen_padding = 100;
 
+   draw_num_segments(text_y, num_of_segments_in_track);
    draw_stopwatch(text_y, horizontal_screen_padding);
 
    draw_health_bar(text_y, horizontal_screen_padding);
