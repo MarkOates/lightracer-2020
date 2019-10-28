@@ -942,12 +942,12 @@ void draw_health_bar_OLD()
 }
 
 
-void draw_health_bar()
+void draw_health_bar(int text_y)
 {
    int health_bar_height = 10;
 
 	std::string lives_string = "Lives: " + tostring(num_lives);
-	al_draw_text(get_font("venus_rising_rg.ttf", -26), al_color_name("white"), 20, SCREEN_H-60, 0, lives_string.c_str());
+	al_draw_text(get_font("venus_rising_rg.ttf", -26), al_color_name("white"), 20, text_y, 0, lives_string.c_str());
 
 	float health_percentage = racer->health/racer->max_health;
 	ALLEGRO_COLOR health_bar_color;
@@ -962,7 +962,7 @@ void draw_health_bar()
 }
 
 
-void draw_stopwatch()
+void draw_stopwatch(int text_y)
 {
    std::string ellapsed_time_str = TimerFormatter(stopwatch.get_elappsed_time_msec()).format();
    ALLEGRO_FONT *font = get_font("venus_rising_rg.ttf", -26);
@@ -975,7 +975,7 @@ void draw_stopwatch()
    for (auto &c : ellapsed_time_str)
    {
       the_char[0] = c;
-      al_draw_text(font, color, SCREEN_W - 300 + (letters_traversed * letter_spacing), 40, ALLEGRO_ALIGN_RIGHT, the_char.c_str());
+      al_draw_text(font, color, SCREEN_W - 300 + (letters_traversed * letter_spacing), text_y, ALLEGRO_ALIGN_RIGHT, the_char.c_str());
       letters_traversed++;
    }
 }   
@@ -1017,9 +1017,11 @@ void draw_hud()
 	al_draw_arc(arc_radius+50, SCREEN_H-100+300, arc_radius, FULL_ROTATION/4*2, (FULL_ROTATION/8*2)*speed_percentage, al_color_name("dodgerblue"), 26);
 	*/
 
-   draw_stopwatch();
+  int text_y = 40;
 
-   draw_health_bar();
+   draw_stopwatch(text_y);
+
+   draw_health_bar(text_y);
 }
 
 
