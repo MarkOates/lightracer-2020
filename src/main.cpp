@@ -922,6 +922,26 @@ std::string format_lap_time(double time)
 
 // hud //
 
+void draw_health_bar_OLD()
+{
+   int health_bar_height = 10;
+
+	std::string lives_string = "Lives: " + tostring(num_lives);
+	al_draw_text(get_font("venus_rising_rg.ttf", -26), al_color_name("white"), 20, SCREEN_H-60, 0, lives_string.c_str());
+
+	float health_percentage = racer->health/racer->max_health;
+	ALLEGRO_COLOR health_bar_color;
+	if (health_percentage > 0.9) health_bar_color = al_color_name("yellow");
+	else if (health_percentage > 0.6) health_bar_color = al_color_name("yellow");
+	else if (health_percentage > 0.3) health_bar_color = al_color_name("orange");
+	else health_bar_color = al_color_name("red");
+
+
+	al_draw_filled_rectangle(20, SCREEN_H-20, 220, SCREEN_H-(20 + health_bar_height), al_color_name("black"));
+	al_draw_filled_rectangle(20, SCREEN_H-20, 20+200*(health_percentage), SCREEN_H-(20 + health_bar_height), health_bar_color);
+}
+
+
 void draw_health_bar()
 {
    int health_bar_height = 10;
