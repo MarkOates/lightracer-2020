@@ -27,9 +27,15 @@ void game_timer_func()
    start_profile_timer("WHOLE UPDATE");
    al_clear_to_color(color_hex("000000"));
 
+
+
    start_profile_timer("racer/track");
    update_racer_and_track(racer, track); // < as I understand, *everything* that OMG_DeltaTime affects is in here
    stop_profile_timer("racer/track");
+
+
+   int horizon_height = camera->rotation;
+   al_draw_filled_rectangle(0, 0, horizon_height, SCREEN_W, al_color_name("gray"));
 
    camera->x = racer->position.x;
    camera->y = racer->position.y;

@@ -945,9 +945,10 @@ void draw_health_bar_OLD()
 void draw_health_bar(int text_y, int horizontal_screen_padding)
 {
    int health_bar_height = 10;
+   ALLEGRO_FONT *font = get_font("venus_rising_rg.ttf", -26);
 
 	std::string lives_string = "Lives: " + tostring(num_lives);
-	al_draw_text(get_font("venus_rising_rg.ttf", -26), al_color_name("white"), horizontal_screen_padding, text_y, 0, lives_string.c_str());
+	al_draw_text(font, al_color_name("white"), horizontal_screen_padding, text_y, 0, lives_string.c_str());
 
 	float health_percentage = racer->health/racer->max_health;
 
@@ -957,14 +958,23 @@ void draw_health_bar(int text_y, int horizontal_screen_padding)
 	else if (health_percentage > 0.3) health_bar_color = al_color_name("orange");
 	else health_bar_color = al_color_name("red");
 
-   int lives_text_length = 100;
+   int lives_text_length = 140;
    int bar_length = 220;
+   int bar_y = text_y + al_get_font_ascent(font) / 2 + 2;
+   int bar_x = horizontal_screen_padding + lives_text_length + 4;
 
 	al_draw_filled_rectangle(
-         horizontal_screen_padding + lives_text_length,
-         20,
-         horizontal_screen_padding + lives_text_length + bar_length,
-         20 + health_bar_height,
+         bar_x,
+         bar_y - health_bar_height * 0.5,
+         bar_x + bar_length,
+         bar_y + health_bar_height * 0.5,
+         al_color_name("darkblue"));
+
+	al_draw_filled_rectangle(
+         bar_x,
+         bar_y - health_bar_height * 0.5,
+         bar_x + bar_length * health_percentage,
+         bar_y + health_bar_height * 0.5,
          al_color_name("lightblue"));
 }
 
@@ -982,7 +992,7 @@ void draw_stopwatch(int text_y, int horizontal_screen_padding)
    for (auto &c : ellapsed_time_str)
    {
       the_char[0] = c;
-      al_draw_text(font, color, SCREEN_W - 300 + (letters_traversed * letter_spacing), text_y, ALLEGRO_ALIGN_RIGHT, the_char.c_str());
+      al_draw_text(font, color, SCREEN_W - 300 + (letters_traversed * letter_spacing), text_y, ALLEGRO_ALIGN_CENTER, the_char.c_str());
       letters_traversed++;
    }
 }   
