@@ -25,7 +25,7 @@ void game_timer_func()
 
 
    start_profile_timer("WHOLE UPDATE");
-   al_clear_to_color(color_hex("303030"));
+   al_clear_to_color(color_hex("000000"));
 
    start_profile_timer("racer/track");
    update_racer_and_track(racer, track); // < as I understand, *everything* that OMG_DeltaTime affects is in here
