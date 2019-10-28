@@ -20,6 +20,11 @@ using AllegroFlare::BitmapBin;
 BitmapBin bitmaps;
 
 
+#include <AllegroFlare/Timer.hpp>
+#include <AllegroFlare/TimerFormatter.hpp>
+AllegroFlare::Timer stopwatch;
+
+
 
 bool logo_showing = true;
 float logo_scale = 0.0;
