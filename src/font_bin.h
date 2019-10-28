@@ -1,5 +1,4 @@
-#ifndef __FONT_BIN
-#define __FONT_BIN
+#pragma once
 
 
 #include <allegro5/allegro.h>
@@ -10,4 +9,3 @@ ALLEGRO_FONT *get_default_font();
 
 
 
-#endif __FONT_BIN

@@ -233,7 +233,7 @@ int FontBin::get_unused_record()
 
 ALLEGRO_FONT *FontBin::_load(const char64_t filename, const int size)
 {
-	if (_num_fonts >= FONT_BIN_SIZE) return false;
+	if (_num_fonts >= FONT_BIN_SIZE) return nullptr;
 
 	ALLEGRO_FONT *f=NULL;
 
