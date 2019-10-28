@@ -21,6 +21,7 @@ namespace AllegroFlare
 
       void start();
       void pause();
+      void reset();
 
       int get_elappsed_time_msec();
    };
