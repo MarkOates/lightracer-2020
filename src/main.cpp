@@ -942,27 +942,34 @@ void draw_health_bar_OLD()
 }
 
 
-void draw_health_bar(int text_y)
+void draw_health_bar(int text_y, int horizontal_screen_padding)
 {
    int health_bar_height = 10;
 
 	std::string lives_string = "Lives: " + tostring(num_lives);
-	al_draw_text(get_font("venus_rising_rg.ttf", -26), al_color_name("white"), 20, text_y, 0, lives_string.c_str());
+	al_draw_text(get_font("venus_rising_rg.ttf", -26), al_color_name("white"), horizontal_screen_padding, text_y, 0, lives_string.c_str());
 
 	float health_percentage = racer->health/racer->max_health;
+
 	ALLEGRO_COLOR health_bar_color;
-	if (health_percentage > 0.9) health_bar_color = al_color_name("yellow");
-	else if (health_percentage > 0.6) health_bar_color = al_color_name("yellow");
+	if (health_percentage > 0.9) health_bar_color = al_color_name("dodgerblue");
+	else if (health_percentage > 0.6) health_bar_color = al_color_name("violet");
 	else if (health_percentage > 0.3) health_bar_color = al_color_name("orange");
 	else health_bar_color = al_color_name("red");
 
+   int lives_text_length = 100;
+   int bar_length = 220;
 
-	al_draw_filled_rectangle(20, SCREEN_H-20, 220, SCREEN_H-(20 + health_bar_height), al_color_name("black"));
-	al_draw_filled_rectangle(20, SCREEN_H-20, 20+200*(health_percentage), SCREEN_H-(20 + health_bar_height), health_bar_color);
+	al_draw_filled_rectangle(
+         horizontal_screen_padding + lives_text_length,
+         20,
+         horizontal_screen_padding + lives_text_length + bar_length,
+         20 + health_bar_height,
+         al_color_name("lightblue"));
 }
 
 
-void draw_stopwatch(int text_y)
+void draw_stopwatch(int text_y, int horizontal_screen_padding)
 {
    std::string ellapsed_time_str = TimerFormatter(stopwatch.get_elappsed_time_msec()).format();
    ALLEGRO_FONT *font = get_font("venus_rising_rg.ttf", -26);
@@ -1018,10 +1025,11 @@ void draw_hud()
 	*/
 
   int text_y = 40;
+  int horizontal_screen_padding = 100;
 
-   draw_stopwatch(text_y);
+   draw_stopwatch(text_y, horizontal_screen_padding);
 
-   draw_health_bar(text_y);
+   draw_health_bar(text_y, horizontal_screen_padding);
 }
 
 
