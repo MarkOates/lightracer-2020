@@ -13,7 +13,8 @@ void game_timer_func()
       al_draw_scaled_rotated_bitmap(logo_img, al_get_bitmap_width(logo_img)/2, al_get_bitmap_height(logo_img)/2,
          screen_center_x, (250 - 300) + screen_center_y, logo_scale, logo_scale, 0, 0);
 
-      draw_text_with_letter_spacing(-25, screen_center_x, (375 - 300) + screen_center_y + 20, 12*2, "press ANY KEY to BEGIN");
+      int font_size = -25;
+      draw_text_with_letter_spacing(font_size, screen_center_x, (375 - 300) + screen_center_y + 20, 12*2, get_font("venus_rising_rg.ttf", font_size), "press ANY KEY to BEGIN");
       //al_draw_text(get_font("venus_rising_rg.ttf", -25), al_color_name("white"),
          //screen_center_x, (375 - 300) + screen_center_y + 20, ALLEGRO_ALIGN_CENTRE, "press ANY KEY to BEGIN");
 
@@ -110,10 +111,17 @@ void game_timer_func()
          else lap_info2_string += "s removed";
 
          if (fmod(track_begin_notification_counter, 0.1f) < 0.05)
-         al_draw_text(font_large, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
-            screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
+         {
+            ALLEGRO_COLOR color = al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter);
+            int font_size = -30;
+            draw_text_with_letter_spacing(font_size, 0, 250-300 + screen_center_y, 50, get_font("venus_rising_rg.ttf", font_size), lap_string.c_str());
 
-         draw_text_with_letter_spacing(-30, screen_center_x, 250-300 + screen_center_y, 50, lap_info_string.c_str());
+            //al_draw_text(font_large, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
+               //screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
+         }
+
+
+         draw_text_with_letter_spacing(-30, screen_center_x, screen_center_y, 50, get_font("venus_rising_rg.ttf", -30), lap_info_string.c_str());
 
          //al_draw_text(font_large, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
             //screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_info_string.c_str());

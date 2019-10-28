@@ -922,9 +922,9 @@ std::string format_lap_time(double time)
 
 // hud //
 
-void draw_text_with_letter_spacing(int font_size, int x, int y, float letter_spacing, std::string string_to_write)
+void draw_text_with_letter_spacing(int font_size, int x, int y, float letter_spacing, ALLEGRO_FONT *font, std::string string_to_write)
 {
-   ALLEGRO_FONT *font = get_font("venus_rising_rg.ttf", font_size);
+   //ALLEGRO_FONT *font = get_font("venus_rising_rg.ttf", font_size);
    ALLEGRO_COLOR color = al_color_name("white");
 
    std::string the_char = " ";
