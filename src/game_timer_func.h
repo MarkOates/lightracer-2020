@@ -14,7 +14,7 @@ void game_timer_func()
          screen_center_x, (250 - 300) + screen_center_y, logo_scale, logo_scale, 0, 0);
 
       int font_size = -25;
-      draw_text_with_letter_spacing(font_size, screen_center_x, (375 - 300) + screen_center_y + 20, 12*2, get_font("venus_rising_rg.ttf", font_size), "press ANY KEY to BEGIN");
+      draw_text_with_letter_spacing(font_size, al_color_name("white"), screen_center_x, (375 - 300) + screen_center_y + 20, 12*2, get_font("venus_rising_rg.ttf", font_size), "press ANY KEY to BEGIN");
       //al_draw_text(get_font("venus_rising_rg.ttf", -25), al_color_name("white"),
          //screen_center_x, (375 - 300) + screen_center_y + 20, ALLEGRO_ALIGN_CENTRE, "press ANY KEY to BEGIN");
 
@@ -97,8 +97,12 @@ void game_timer_func()
          std::string lap_string = "LAP " + tostring(racer->lap_time.size()+1);
          if ((int)racer->lap_time.size() == num_laps_to_win) lap_string = "FINAL LAP";
 
-         al_draw_text(font_large, al_map_rgba_f(lap_notification_counter, lap_notification_counter, lap_notification_counter, lap_notification_counter),
-            screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
+
+         int font_size = -30;
+         draw_text_with_letter_spacing(font_size, al_color_name("white"), 0, screen_center_y - 160, 40 + 30 * (1.0 - lap_notification_counter), get_font("venus_rising_rg.ttf", font_size), lap_string.c_str());
+
+         //al_draw_text(font_large, al_map_rgba_f(lap_notification_counter, lap_notification_counter, lap_notification_counter, lap_notification_counter),
+            //screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
       }
 
       if (track_begin_notification_counter > 0.4)
@@ -114,14 +118,14 @@ void game_timer_func()
          {
             ALLEGRO_COLOR color = al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter);
             int font_size = -30;
-            draw_text_with_letter_spacing(font_size, 0, 250-300 + screen_center_y, 50, get_font("venus_rising_rg.ttf", font_size), lap_string.c_str());
+            draw_text_with_letter_spacing(font_size, al_color_name("white"), 0, 250-300 + screen_center_y, 50, get_font("venus_rising_rg.ttf", font_size), lap_string.c_str());
 
             //al_draw_text(font_large, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
                //screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
          }
 
 
-         draw_text_with_letter_spacing(-30, screen_center_x, screen_center_y, 50, get_font("venus_rising_rg.ttf", -30), lap_info_string.c_str());
+         draw_text_with_letter_spacing(-30, al_color_name("white"), screen_center_x, screen_center_y, 50, get_font("venus_rising_rg.ttf", -30), lap_info_string.c_str());
 
          //al_draw_text(font_large, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
             //screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_info_string.c_str());
