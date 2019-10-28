@@ -22,6 +22,7 @@ BitmapBin bitmaps;
 
 #include <AllegroFlare/Timer.hpp>
 #include <AllegroFlare/TimerFormatter.hpp>
+using AllegroFlare::TimerFormatter;
 AllegroFlare::Timer stopwatch;
 
 
@@ -940,6 +941,26 @@ void draw_health_bar()
 	al_draw_filled_rectangle(20, SCREEN_H-20, 20+200*(health_percentage), SCREEN_H-(20 + health_bar_height), health_bar_color);
 }
 
+
+void draw_stopwatch()
+{
+   std::string ellapsed_time_str = TimerFormatter(stopwatch.get_elappsed_time_msec()).format();
+   ALLEGRO_FONT *font = get_font("venus_rising_rg.ttf", -26);
+   ALLEGRO_COLOR color = al_color_name("white");
+
+   //float text_width = al_get_text_width(font, ellapsed_time_str.c_str());
+   std::string the_char = " ";
+   int letter_spacing = 12 * 2;
+   int letters_traversed = 0;
+   for (auto &c : ellapsed_time_str)
+   {
+      the_char[0] = c;
+      al_draw_text(font, color, SCREEN_W - 300 + (letters_traversed * letter_spacing), 40, ALLEGRO_ALIGN_RIGHT, the_char.c_str());
+      letters_traversed++;
+   }
+}   
+
+
 void draw_hud()
 {
 	ALLEGRO_TRANSFORM transform;
@@ -975,6 +996,8 @@ void draw_hud()
 	al_draw_arc(arc_radius+50, SCREEN_H-100+300, arc_radius, FULL_ROTATION/4*2, FULL_ROTATION/8*2, al_color_name("darkgray"), 30);
 	al_draw_arc(arc_radius+50, SCREEN_H-100+300, arc_radius, FULL_ROTATION/4*2, (FULL_ROTATION/8*2)*speed_percentage, al_color_name("dodgerblue"), 26);
 	*/
+
+   draw_stopwatch();
 
    draw_health_bar();
 }
