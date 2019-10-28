@@ -1073,8 +1073,11 @@ void start_track()
 	track->make_segments_easy_where_player_died();
 
 	start_track_begin_text();
+   stopwatch = AllegroFlare::Timer();
+   stopwatch.start();
 
 	fade_out_of_black();
+
 }
 
 
