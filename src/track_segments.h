@@ -1,24 +1,4 @@
 
-/*
-TrackSegment *create_track_segmentA()
-{
-	TrackSegment *segment = new TrackSegment();
-	segment->add_point(LEFT_RAIL, 0, 400);
-	segment->add_point(LEFT_RAIL, 0, 200);
-	segment->add_point(LEFT_RAIL, 50, 100);
-	segment->add_point(LEFT_RAIL, 50, 0);
-
-	segment->add_point(RIGHT_RAIL, 150, 0);
-	segment->add_point(RIGHT_RAIL, 150, 150);
-	segment->add_point(RIGHT_RAIL, 100, 250);
-	segment->add_point(RIGHT_RAIL, 100, 400);
-
-	segment->move(0, -400);
-
-	return segment;
-}
-*/
-
 TrackSegment *create_track_segmentA()
 {
 	TrackSegment *segment = new TrackSegment();
