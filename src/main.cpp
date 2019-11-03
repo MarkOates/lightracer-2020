@@ -5,7 +5,8 @@
 #define SCREEN_HW (SCREEN_W/2)
 #define SCREEN_HH (SCREEN_H/2)
 
-#include "profiling_timer.h"
+#include "allegro_flare/profile_timer.h"
+using namespace allegro_flare;
 
 
 #include <vector>
@@ -3153,7 +3154,7 @@ void game_timer_func()
 
       if (FLAG_draw_profile_graph)
       {
-         draw_timer_profile_graph(20, 20, font_regular);
+         draw_profile_timer_graph(20, 20);
       }
          stop_profile_timer("WHOLE UPDATE");
 
@@ -3180,7 +3181,7 @@ void game_timer_func()
 int main(int argc, char **argv)
 {
    Framework f(SCREEN_W, SCREEN_H);
-   init_profiling();
+   //init_profiling();
    init_game();
    f.timer_func = game_timer_func;
    f.key_down_func = key_down_func;
