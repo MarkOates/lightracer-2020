@@ -2504,26 +2504,6 @@ void update_racer_and_track(Racer *r, Track *track) // includes masking
 
 
 
-/*
-void update_racer_and_track(Racer *r, Track *t)
-{
-   if (r->throttle_on) r->velocity_magnitude += 0.1;
-   if (r->turning_right) r->direction_angle -= 0.02;
-   if (r->turning_left) r->direction_angle += 0.02;
-   
-   r->direction = vec2d(sin(r->direction_angle), cos(r->direction_angle));
-
-   // friction
-   r->velocity_magnitude *= 0.98;
-   
-   vec2d position_before = r->position;
-   vec2d position_after = r->position + (r->direction.Normalized() * r->velocity_magnitude);
-
-   //if (
-
-   r->position = position_after;
-}
-*/
 
 
 
