@@ -1,6 +1,7 @@
 #include "AnimationControl.hpp"
 
-#include "interpolations.h"
+#include "AllegroFlare/Interpolators.hpp"
+using namespace AllegroFlare; // for interpolator::
 
 #include <allegro5/allegro.h>
 

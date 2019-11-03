@@ -1,10 +1,12 @@
 #pragma once
 
 
-#include "interpolations.h"
+#include "AllegroFlare/Interpolators.hpp"
 #include <allegro5/allegro.h>
 
 //class AnimationControl;
+
+using namespace AllegroFlare;
 
 
 #include "AnimationControl.hpp"
@@ -61,17 +63,17 @@ AnimationControl *find_control(float *val)
 
 
 
-static inline AnimationControl &animate(float &val, float start, float end, double length_sec=0.4, float (*interpolation)(float)=interpolator::doubleFastIn)
+static inline AnimationControl &animate(float &val, float start, float end, double length_sec=0.4, float (*interpolation)(float)=interpolator::double_fast_in)
 {
    return AnimationManager::get_instance()->get_available()->set(&val, start, end, length_sec, interpolation);
 }
 
-static inline AnimationControl &animate_to(float &val, float end, double length_sec=0.4, float (*interpolation)(float)=interpolator::doubleFastIn)
+static inline AnimationControl &animate_to(float &val, float end, double length_sec=0.4, float (*interpolation)(float)=interpolator::double_fast_in)
 {
    return AnimationManager::get_instance()->get_available()->set(&val, val, end, length_sec, interpolation);
 }
 
-static inline AnimationControl &animate_delta(float &val, float delta, double length_sec=0.4, float (*interpolation)(float)=interpolator::doubleFastIn)
+static inline AnimationControl &animate_delta(float &val, float delta, double length_sec=0.4, float (*interpolation)(float)=interpolator::double_fast_in)
 {
    return AnimationManager::get_instance()->get_available()->set(&val, val, val+delta, length_sec, interpolation);
 }

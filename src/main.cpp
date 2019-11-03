@@ -133,7 +133,7 @@ vector<int> segment_where_player_died;
 
 void start_track_begin_text()
 {
-   animate(track_begin_notification_counter, 1.0, 0.0, 4.0, interpolator::trippleFastOut);
+   animate(track_begin_notification_counter, 1.0, 0.0, 4.0, interpolator::tripple_fast_out);
 }
 
 
@@ -815,7 +815,7 @@ public:
       //lap_time = al_get_time();
       lap_time.push_back(al_get_time());
 
-      animate(lap_notification_counter, 1.0, 0.0, 3.0, interpolator::quadrupleFastOut);
+      animate(lap_notification_counter, 1.0, 0.0, 3.0, interpolator::quadruple_fast_out);
 
       if ((int)lap_time.size() > num_laps_to_win) complete_track();
    }
@@ -833,7 +833,7 @@ public:
       if (boosts == 0) { /* do nothing */ }
       if (using_boost) return;
 
-      animate(using_boost_counter, 1.0, 0.0, 2.0, interpolator::doubleFastOut).callback(mark_player_not_using_boost);
+      animate(using_boost_counter, 1.0, 0.0, 2.0, interpolator::double_fast_out).callback(mark_player_not_using_boost);
       velocity_magnitude = 4.5;
 
       using_boost = true;
@@ -1119,7 +1119,7 @@ void draw_hud()
 void kill_player(int _segment_where_player_died)
 {
    racer->dead = true;
-   animate_to(camera->zoom, 0.8, 2, interpolator::slowInOut);
+   animate_to(camera->zoom, 0.8, 2, interpolator::slow_in_out);
    //animate_delta(racer->direction_angle, FULL_ROTATION*2, 5.0, interpolator::trippleFastIn);
    al_stop_sample_instance(engine_sample_instance);
 
@@ -1167,7 +1167,7 @@ void update_racer_and_track(Racer *r, Track *t)
 
 void start_track()
 {
-   animate(camera->zoom, 0.2, 1.0, 3.0, interpolator::doubleSlowInOut);
+   animate(camera->zoom, 0.2, 1.0, 3.0, interpolator::double_slow_in_out);
    racer->position = vec2d(50, -50);
    racer->direction_angle = FULL_ROTATION/2;
    racer->velocity_magnitude = 0;
@@ -1338,7 +1338,7 @@ void init_game()
    samples.set_path("data/sounds");
    fonts.set_path("data/fonts");
    std::cout << "end of bitmap bin path setting" << std::endl;
-   animate(logo_scale, 0.7, 1.0, 7.0, interpolator::trippleFastIn);
+   animate(logo_scale, 0.7, 1.0, 7.0, interpolator::tripple_fast_in);
 
    OMG_DeltaTime = 0.6;
 
