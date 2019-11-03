@@ -75,7 +75,7 @@ inline vec2d get_dot_at_distance(int track_segment, float distance, bool left)
 					// dot is on this segment
 					float dot_distance_along_segment = distance - length_traversed;
 					//std::cout << "YAY";
-					return track->segment[track_segment]->left_rail_segment[rail]->from_start.Normalized() * dot_distance_along_segment
+					return track->segment[track_segment]->left_rail_segment[rail]->from_start.normalized() * dot_distance_along_segment
 						+ track->segment[track_segment]->left_rail_segment[rail]->start;
 				}
 
@@ -101,7 +101,7 @@ inline vec2d get_dot_at_distance(int track_segment, float distance, bool left)
 					// dot is on this segment
 					float dot_distance_along_segment = distance - length_traversed;
 					//std::cout << "YAY";
-					return track->segment[track_segment]->right_rail_segment[rail]->from_start.Normalized() * dot_distance_along_segment
+					return track->segment[track_segment]->right_rail_segment[rail]->from_start.normalized() * dot_distance_along_segment
 						+ track->segment[track_segment]->right_rail_segment[rail]->start;
 				}
 
@@ -215,7 +215,7 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
 	//////////////////////////
 	/* modify perspective angles with these!! */
 	
-	vec2d camera_target_offset = vec2d::PolarCoords(racer_direction_angle, 50);
+	vec2d camera_target_offset = vec2d::polar_coords(racer_direction_angle, 50);
 
 	vec2d racer_non_adjusted_pos(racer_x, racer_y);
 

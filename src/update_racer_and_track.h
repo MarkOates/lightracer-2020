@@ -36,7 +36,7 @@ void update_racer_and_track(Racer *r, Track *track) // includes masking
 
 
 	r->direction = vec2d(sin(r->direction_angle), cos(r->direction_angle));
-	r->velocity = (r->velocity*0.6 + r->direction*0.4).Normalized() * r->velocity_magnitude;
+	r->velocity = (r->velocity*0.6 + r->direction*0.4).normalized() * r->velocity_magnitude;
 
 
 
@@ -273,9 +273,9 @@ void update_racer_and_track(Racer *r, Track *track) // includes masking
 			flash_white();
 			
 			// rotate velocity and direction
-			player.direction_angle += track->exit_segment_info->from_start.GetAngle();
+			player.direction_angle += track->exit_segment_info->from_start.get_angle();
 			player_vel = 
-				vec2d::PolarCoords(player.velocity.GetAngle() - track->exit_segment_info->from_start.GetAngle(), 1);
+				vec2d::polar_coords(player.velocity.get_angle() - track->exit_segment_info->from_start.get_angle(), 1);
 
 			//collision_time*motion_segment.from_start
 			//player_vel = 

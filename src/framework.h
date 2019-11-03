@@ -18,7 +18,8 @@
 #include "font_bin.h"
 #include "sample_bin.h"
 #include "useful.h"
-#include "vec2d.h"
+#include "AllegroFlare/Vec2D.hpp"
+using AllegroFlare::vec2d;
 //#include "position2d.h"
 //#include "object2d.h"
 #include "animation.h"

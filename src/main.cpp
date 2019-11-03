@@ -715,19 +715,19 @@ public:
 		if (segment.empty()) { segment.push_back(ts); return; }
 
 		vec2d pipe_output_vector = *segment.back()->right_rail.front()- *segment.back()->left_rail.back();
-		float distance = pipe_output_vector.GetMagnitude();
+		float distance = pipe_output_vector.get_magnitude();
 
-		ts->rotate(pipe_output_vector.GetAngle());
+		ts->rotate(pipe_output_vector.get_angle());
 
 		/*
 		std::cout << "x: " << pipe_output_vector.x << std::endl;
 		std::cout << "y: " << pipe_output_vector.y << std::endl;
-		std::cout << "angle: " << pipe_output_vector.GetAngle() << std::endl;
-		std::cout << "angle(rad): " << degrees_to_radians(pipe_output_vector.GetAngle()) << std::endl;
+		std::cout << "angle: " << pipe_output_vector.get_angle() << std::endl;
+		std::cout << "angle(rad): " << degrees_to_radians(pipe_output_vector.get_angle()) << std::endl;
 		std::cout << "mag: " << distance << std::endl;
 		std::cout << std::endl;
 		*/
-		//std::cout << "angle(deg): " << radians_to_degrees(pipe_output_vector.GetAngle()) << std::endl;
+		//std::cout << "angle(deg): " << radians_to_degrees(pipe_output_vector.get_angle()) << std::endl;
 		ts->move(segment.back()->left_rail.back()->x, segment.back()->left_rail.back()->y);
 
 		segment.push_back(ts);
@@ -783,7 +783,7 @@ public:
 		position = vec2d(100, 100);
 		direction = vec2d(1, 0);
 		velocity = vec2d(0, 0);
-		direction_angle = direction.GetAngle();
+		direction_angle = direction.get_angle();
 		direction_angle += FULL_ROTATION/2;
 		velocity_magnitude = 0;
 		throttle_on = false;

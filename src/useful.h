@@ -11,7 +11,10 @@
 #include <allegro5/allegro_color.h>
 #include <allegro5/allegro_primitives.h>
 
-#include "vec2d.h"
+#include "AllegroFlare/Vec2D.hpp"
+using AllegroFlare::vec2d;
+
+#include <cmath>
 
 
 
