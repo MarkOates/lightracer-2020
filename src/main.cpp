@@ -223,7 +223,7 @@ CheapCamera *camera = nullptr;
 
 
 
-class camera_class : public vec2d, public uses_keyboard
+class camera_class : public vec2d
 {
 private:
 
@@ -326,47 +326,6 @@ public:
       keyboard_controls_on = false;
    }
 
-   void on_key_char()
-   {
-      //z.update();
-
-      //if (z.get_num_active_animations() != 0) debug_message("camera on dolly");
-
-      //debug_message("Camera (" + tostring(x) + ", " + tostring(y) + ", " + tostring(z) + ")");
-      //debug_message("Camera Depth (" + tostring(depth) + ")");
-
-      switch(current_event->keyboard.keycode)
-      {
-         case ALLEGRO_KEY_PAD_6: x += 2.5f; break;
-         case ALLEGRO_KEY_PAD_4: x -= 2.5f; break;
-         case ALLEGRO_KEY_PAD_8: y -= 2.5f; break;
-         case ALLEGRO_KEY_PAD_2: y += 2.5f; break;
-
-         case ALLEGRO_KEY_PAD_PLUS: z += 0.5f; break;
-         case ALLEGRO_KEY_PAD_MINUS: z -= 0.5f; break;
-         case ALLEGRO_KEY_PAD_ASTERISK: depth -= 1.0f; break;
-         case ALLEGRO_KEY_PAD_SLASH: depth += 1.0f; break;
-
-         //if (just_pressed(ALLEGRO_KEY_F2: draw_objects_in_3D_space = !draw_objects_in_3D_space;
-      }
-
-      /*
-      if (keyboard_controls_on)
-      {
-         if (pressed(ALLEGRO_KEY_PAD_6)) x += 2.5f;
-         if (pressed(ALLEGRO_KEY_PAD_4)) x -= 2.5f;
-         if (pressed(ALLEGRO_KEY_PAD_8)) y -= 2.5f;
-         if (pressed(ALLEGRO_KEY_PAD_2)) y += 2.5f;
-
-         if (pressed(ALLEGRO_KEY_PAD_PLUS)) z += 0.5f;
-         if (pressed(ALLEGRO_KEY_PAD_MINUS)) z -= 0.5f;
-         if (pressed(ALLEGRO_KEY_PAD_ASTERISK)) depth -= 1.0f;
-         if (pressed(ALLEGRO_KEY_PAD_SLASH)) depth += 1.0f;
-
-         if (just_pressed(ALLEGRO_KEY_F2)) draw_objects_in_3D_space = !draw_objects_in_3D_space;
-      }
-      */
-   }
 };
 
 
@@ -2890,6 +2849,50 @@ void init_game()
 }
 
 
+void key_char_func()
+{
+   //z.update();
+
+   //if (z.get_num_active_animations() != 0) debug_message("camera on dolly");
+
+   //debug_message("Camera (" + tostring(x) + ", " + tostring(y) + ", " + tostring(z) + ")");
+   //debug_message("Camera Depth (" + tostring(depth) + ")");
+
+   switch(current_event->keyboard.keycode)
+   {
+      case ALLEGRO_KEY_PAD_6: good_camera->x += 2.5f; break;
+      case ALLEGRO_KEY_PAD_4: good_camera->x -= 2.5f; break;
+      case ALLEGRO_KEY_PAD_8: good_camera->y -= 2.5f; break;
+      case ALLEGRO_KEY_PAD_2: good_camera->y += 2.5f; break;
+
+      case ALLEGRO_KEY_PAD_PLUS: good_camera->z += 0.5f; break;
+      case ALLEGRO_KEY_PAD_MINUS: good_camera->z -= 0.5f; break;
+      case ALLEGRO_KEY_PAD_ASTERISK: good_camera->depth -= 1.0f; break;
+      case ALLEGRO_KEY_PAD_SLASH: good_camera->depth += 1.0f; break;
+
+      //if (just_pressed(ALLEGRO_KEY_F2: draw_objects_in_3D_space = !draw_objects_in_3D_space;
+   }
+
+   /*
+   if (keyboard_controls_on)
+   {
+      if (pressed(ALLEGRO_KEY_PAD_6)) x += 2.5f;
+      if (pressed(ALLEGRO_KEY_PAD_4)) x -= 2.5f;
+      if (pressed(ALLEGRO_KEY_PAD_8)) y -= 2.5f;
+      if (pressed(ALLEGRO_KEY_PAD_2)) y += 2.5f;
+
+      if (pressed(ALLEGRO_KEY_PAD_PLUS)) z += 0.5f;
+      if (pressed(ALLEGRO_KEY_PAD_MINUS)) z -= 0.5f;
+      if (pressed(ALLEGRO_KEY_PAD_ASTERISK)) depth -= 1.0f;
+      if (pressed(ALLEGRO_KEY_PAD_SLASH)) depth += 1.0f;
+
+      if (just_pressed(ALLEGRO_KEY_F2)) draw_objects_in_3D_space = !draw_objects_in_3D_space;
+   }
+   */
+}
+
+
+
 void key_down_func()
 {
    switch(current_event->keyboard.keycode)
@@ -3207,6 +3210,7 @@ int main(int argc, char **argv)
    init_game();
    f.timer_func = game_timer_func;
    f.key_down_func = key_down_func;
+   f.key_char_func = key_char_func;
    return f.run_loop();
 
    bitmaps.clear();
