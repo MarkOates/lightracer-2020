@@ -1812,27 +1812,6 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
 
 
 
-std::string format_lap_time(double time)
-{
-   int seconds = (int)(fmod(time, 60));
-   int minutes = (int)(time / 60);
-   int mseconds = (int)(time * 1000) - seconds*1000 - minutes*60*1000;
-
-   std::string output;
-   
-   if (minutes < 10) output += "0";
-   output += tostring(minutes) + "'";
-
-   if (seconds < 10) output += "0";
-   output += tostring(seconds) + "\"";
-
-   if (mseconds < 10) output += "0";
-   if (mseconds < 100) output += "0";
-   output += tostring(mseconds);
-
-   return output;
-}
-
 // hud //
 
 void draw_text_with_letter_spacing(int font_size, ALLEGRO_COLOR color, int x, int y, float letter_spacing, ALLEGRO_FONT *font, std::string string_to_write)
@@ -1977,35 +1956,9 @@ void draw_hud()
    al_identity_transform(&transform);
    al_use_transform(&transform);
 
-   //int velocity = (int)(racer->velocity_magnitude*100);
-   //al_draw_text(fonts["HelveticaNeue.ttf", -20), al_color_name("white"), 40, 600-70, NULL, tostring(velocity).c_str());
-
-   //al_draw_text(fonts["HelveticaNeue.ttf", -20), al_color_name("white"), 20, 20, NULL,
-   // tostring(format_lap_time(al_get_time() - track->start_time)).c_str());
-
-   //al_draw_text(fonts["lacuna.ttf", -19), al_color_name("white"), 20, 300, NULL, tostring(OMG_DeltaTime).c_str());
-
    
    double lap_so_far = 0;
-   for (int i=0; i<(int)racer->lap_time.size(); i++)
-   {
-      //if (i!=0) lap_so_far = racer->lap_time[i-1];
-      //std::string laps_string = "Lap: " + format_lap_time(racer->lap_time[i] - track->start_time - lap_so_far);
-      //al_draw_text(fonts["lacuna.ttf", -20), al_color_name("white"), 40, 600-70-20*(i+1), NULL, laps_string.c_str());
-   }
    
-   /*
-
-   ALLEGRO_TRANSFORM arc_transform;
-   al_identity_transform(&arc_transform);
-   al_scale_transform(&transform, 2.0, 0.5);
-   al_use_transform(&transform);
-   float arc_radius = 80;
-   float EST_MAX_VELOCITY_MAGNITUDE = 6.0;
-   float speed_percentage = racer->velocity_magnitude / EST_MAX_VELOCITY_MAGNITUDE;
-   al_draw_arc(arc_radius+50, SCREEN_H-100+300, arc_radius, FULL_ROTATION/4*2, FULL_ROTATION/8*2, al_color_name("darkgray"), 30);
-   al_draw_arc(arc_radius+50, SCREEN_H-100+300, arc_radius, FULL_ROTATION/4*2, (FULL_ROTATION/8*2)*speed_percentage, al_color_name("dodgerblue"), 26);
-   */
 
   int text_y = 40;
   int horizontal_screen_padding = 100;
@@ -2572,18 +2525,6 @@ bool create_random_track(Track *t, int num_segments)
 
       track_segment->color_type = last_color_segment;
 
-      //track_segment->soften_left_rail();
-      //track_segment->soften_left_rail();
-      //track_segment->soften_left_rail();
-      //track_segment->soften_left_rail();
-      //track_segment->soften_left_rail();
-
-      //track_segment->soften_right_rail();
-      //track_segment->soften_right_rail();
-      //track_segment->soften_right_rail();
-      //track_segment->soften_right_rail();
-      //track_segment->soften_right_rail();
-
       // append the segment
       track->append_segment(track_segment);
    }
@@ -2738,23 +2679,6 @@ void key_char_func()
 
       //if (just_pressed(ALLEGRO_KEY_F2: draw_objects_in_3D_space = !draw_objects_in_3D_space;
    }
-
-   /*
-   if (keyboard_controls_on)
-   {
-      if (pressed(ALLEGRO_KEY_PAD_6)) x += 2.5f;
-      if (pressed(ALLEGRO_KEY_PAD_4)) x -= 2.5f;
-      if (pressed(ALLEGRO_KEY_PAD_8)) y -= 2.5f;
-      if (pressed(ALLEGRO_KEY_PAD_2)) y += 2.5f;
-
-      if (pressed(ALLEGRO_KEY_PAD_PLUS)) z += 0.5f;
-      if (pressed(ALLEGRO_KEY_PAD_MINUS)) z -= 0.5f;
-      if (pressed(ALLEGRO_KEY_PAD_ASTERISK)) depth -= 1.0f;
-      if (pressed(ALLEGRO_KEY_PAD_SLASH)) depth += 1.0f;
-
-      if (just_pressed(ALLEGRO_KEY_F2)) draw_objects_in_3D_space = !draw_objects_in_3D_space;
-   }
-   */
 }
 
 
