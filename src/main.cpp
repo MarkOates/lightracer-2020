@@ -1287,34 +1287,6 @@ void fill_track_rail_points()
 
 
 
-void fill_vertex(ALLEGRO_VERTEX &v, vec2d &point, float y_point)
-{
-   float final_x = point.x;
-   float final_y = y_point;
-   float final_z = point.y;
-      //float racer_to_draw_x = right_light_pos.x;
-      //float racer_to_draw_y = track_y_value;
-      //float racer_to_draw_z = right_light_pos.y;
-   float point_depth_scale = good_camera->get_scale(final_z);
-
-   final_x = (final_x - good_camera->x)*point_depth_scale + good_camera->center_point.x;
-   final_y = (final_y - good_camera->y)*point_depth_scale + good_camera->center_point.y;
-
-
-   v.x = final_x;
-   v.y = final_y;
-   v.z = 0;
-   v.color = al_color_name("red");
-}
-
-
-
-void draw_rectangle()
-{
-}
-
-
-
 void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float racer_x, float racer_y, float racer_speed)
 {
    start_profile_timer("DP 1");
@@ -1497,48 +1469,6 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
                               flags);
       }
 
-   }
-
-
-/*
-   vec2d racer_non_adjust_rotated = racer_non_adjusted_pos;
-
-   vec2d top_right_light_pos = racer_non_adjust_rotated + vec2d(7+2, 5);
-   vec2d bottom_right_light_pos = racer_non_adjust_rotated + vec2d(4+2, -5);
-   vec2d top_left_light_pos = racer_non_adjust_rotated + vec2d(-7+2, -5);
-   vec2d bottom_left_light_pos = racer_non_adjust_rotated + vec2d(-9+2, 5);
-
-   ALLEGRO_VERTEX rear_vertex[4];
-
-   fill_vertex(rear_vertex[0], top_right_light_pos, track_y_value);
-   fill_vertex(rear_vertex[1], bottom_right_light_pos, track_y_value);
-   fill_vertex(rear_vertex[2], bottom_left_light_pos, track_y_value);
-   fill_vertex(rear_vertex[3], top_left_light_pos, track_y_value);
-
-   al_draw_prim(rear_vertex, NULL, NULL, 0, 4, ALLEGRO_PRIM_TRIANGLE_STRIP);
-*/
-
-
-   // left tail light
-   {
-
-      //rotate_point(&left_light_pos, vec2d(racer_x, racer_y), radians_to_degrees(camera_rotation)); 
-
-/*    float racer_to_draw_x = left_light_pos.x;
-      float racer_to_draw_y = track_y_value;
-      float racer_to_draw_z = left_light_pos.y;
-
-      float racer_depth_scale = good_camera->get_scale(racer_to_draw_z);
-      al_draw_scaled_rotated_bitmap(yellow_ball,
-                              al_get_bitmap_width(yellow_ball)*_align_x,
-                              al_get_bitmap_height(yellow_ball)*_align_y,
-                              (racer_to_draw_x - good_camera->x)*racer_depth_scale + good_camera->center_point.x,
-                              (racer_to_draw_y - good_camera->y)*racer_depth_scale + good_camera->center_point.y,
-                              _scale_x*racer_depth_scale*0.2,
-                              _scale_y*racer_depth_scale*0.2,
-                              _rotation,
-                              flags);
-                              */
    }
 
 
