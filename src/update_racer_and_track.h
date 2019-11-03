@@ -362,37 +362,6 @@ void update_racer_and_track(Racer *r, Track *track) // includes masking
 				player.velocity_magnitude *= 0.95;
 				//sound("wall_deflect").vol(racer->velocity_magnitude).speed(random_float(0.9, 1.1)).play();
 				break;
-
-			// this will respond by adjusing the player's velocity parallel the terrain.
-			// The *complete* velocity is used redirected
-			//float mag = player_vel.GetMagnitude();
-			//vec2d terrain_component = ~-terrain.segment[terrain_that_collides]->from_start;
-			//if (player_vel.x > 0) terrain_component *= -1;
-			//player_vel = mag * terrain_component;
-
-			// this will respond by adjusing the player's velocity parallel the terrain.
-			// The velocity is adjusted to maintain a constant x velocity
-			//float mag = player_vel.GetMagnitude();
-			//vec2d terrain_component = ~-terrain.segment[terrain_that_collides]->from_start;
-			//if (player_vel.x > 0) terrain_component *= -1;
-			//float prev_x_vel = player_vel.x;
-			//player_vel = mag * terrain_component;
-			//player_vel *= (prev_x_vel / player_vel.x);
-
-			// this will respond by adjusing the player's velocity parallel the terrain.
-			// The remaining x velocity becomes the length of the velocity along the terrain
-			//float mag = player_vel.GetMagnitude();
-			//vec2d terrain_component = ~terrain_that_collides->segment[segment_that_collides]->from_start;
-			//if (player_vel.x < 0) terrain_component *= -1;
-			//float prev_x_vel = player_vel.x;
-			//player_vel = mag * terrain_component;
-			//player_vel *= (prev_x_vel / player_vel.x);
-
-			//player.on_ground = true;
-			//player.image_rotation = terrain_that_collides->segment[segment_that_collides]->normal.GetAngle() + degrees_to_radians(90);
-			//player.image_rotation *= 0.5;
-
-			//if(debug) draw_crosshair(player_pos, al_color_name("orange"));
 			}
 		}
 
