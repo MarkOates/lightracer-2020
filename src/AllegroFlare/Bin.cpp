@@ -1,1 +1,1 @@
-// this class is a header only file
+/Users/markoates/Repos/allegro_flare/src/AllegroFlare/Bin.cpp
