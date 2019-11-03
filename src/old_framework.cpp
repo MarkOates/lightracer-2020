@@ -1,7 +1,7 @@
-#include "framework.h"
+#include "old_framework.h"
 
 
-Framework *current_framework = NULL;
+OldFramework *current_framework = NULL;
 ALLEGRO_EVENT *current_event = NULL;
 //object2d *current_object = NULL;
 
@@ -13,7 +13,7 @@ ALLEGRO_EVENT *current_event = NULL;
 void error(const char *e) { }
 
 
-Framework::Framework(int screen_width, int screen_height) :
+OldFramework::OldFramework(int screen_width, int screen_height) :
    timer_func(NULL),
    key_up_func(NULL),
    key_down_func(NULL),
@@ -87,14 +87,14 @@ Framework::Framework(int screen_width, int screen_height) :
 }
 
 
-Framework::~Framework()
+OldFramework::~OldFramework()
 {
    al_destroy_display(display);
 }
 
 
 
-int Framework::run_loop()
+int OldFramework::run_loop()
 {
    al_clear_to_color(al_color_name("efefef"));
    al_flip_display();

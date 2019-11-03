@@ -1,4 +1,4 @@
-#include "framework.h"
+#include "old_framework.h"
 
 #define SCREEN_W 1920
 #define SCREEN_H 1080
@@ -3050,7 +3050,7 @@ void game_timer_func()
 
 int main(int argc, char **argv)
 {
-   Framework f(SCREEN_W, SCREEN_H);
+   OldFramework f(SCREEN_W, SCREEN_H);
    //init_profiling();
    init_game();
    f.timer_func = game_timer_func;

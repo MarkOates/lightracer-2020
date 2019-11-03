@@ -26,15 +26,15 @@ using AllegroFlare::vec2d;
 #include "AllegroFlare/Motion.hpp"
 
 //#include "sound.h"
-class Framework;
+class OldFramework;
 
 
 extern ALLEGRO_EVENT *current_event;
 //extern object2d *current_object;
-extern Framework *current_framework;
+extern OldFramework *current_framework;
 
 
-class Framework
+class OldFramework
 {
 private:
    ALLEGRO_DISPLAY *display;
@@ -55,8 +55,8 @@ public:
    void (*joy_down_func)();
    void (*joy_axis_func)();
 
-   Framework(int screen_width=800, int screen_height=600);
-   ~Framework();
+   OldFramework(int screen_width=800, int screen_height=600);
+   ~OldFramework();
    int run_loop();
 };
 
