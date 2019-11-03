@@ -9,6 +9,7 @@
 
 
 #include <vector>
+#include <cmath>
 
 
 using std::vector;
@@ -367,11 +368,6 @@ void zoom_way_out()
 void zoom_normal()
 {
    animate_to(camera->zoom, 1.0);
-}
-
-vec2d rotate_point(vec2d point, float angle)
-{
-   return vec2d(point.x*cos(angle) - point.y*sin(angle), point.x*sin(angle) + point.y*cos(angle));
 }
 
 
@@ -3019,7 +3015,7 @@ void game_timer_func()
 
    if (logo_showing)
    {
-      al_clear_to_color(color_hex("000000"));
+      al_clear_to_color(al_color_name("black"));
       ALLEGRO_BITMAP *logo_img = bitmaps.auto_get("lightracer-max-logo-02.png");
       al_draw_scaled_rotated_bitmap(logo_img, al_get_bitmap_width(logo_img)/2, al_get_bitmap_height(logo_img)/2,
          screen_center_x, (250 - 300) + screen_center_y, logo_scale, logo_scale, 0, 0);
@@ -3038,7 +3034,7 @@ void game_timer_func()
 
 
    start_profile_timer("WHOLE UPDATE");
-   al_clear_to_color(color_hex("000000"));
+   al_clear_to_color(al_color_name("black"));
 
 
 

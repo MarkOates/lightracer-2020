@@ -17,7 +17,7 @@
 
 #include "AllegroFlare/FontBin.hpp"
 #include "AllegroFlare/SampleBin.hpp"
-#include "useful.h"
+#include "AllegroFlare/Useful.hpp"
 #include "AllegroFlare/Vec2D.hpp"
 using AllegroFlare::vec2d;
 //#include "position2d.h"
