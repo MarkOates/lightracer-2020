@@ -15,7 +15,7 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_native_dialog.h>
 
-#include "font_bin.h"
+#include "AllegroFlare/FontBin.hpp"
 #include "AllegroFlare/SampleBin.hpp"
 #include "useful.h"
 #include "AllegroFlare/Vec2D.hpp"

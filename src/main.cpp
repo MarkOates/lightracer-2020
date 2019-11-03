@@ -20,6 +20,11 @@ using AllegroFlare::BitmapBin;
 BitmapBin bitmaps;
 
 
+#include <AllegroFlare/FontBin.hpp>
+using AllegroFlare::FontBin;
+FontBin fonts;
+
+
 #include <AllegroFlare/SampleBin.hpp>
 using AllegroFlare::SampleBin;
 SampleBin samples;
@@ -929,7 +934,7 @@ std::string format_lap_time(double time)
 
 void draw_text_with_letter_spacing(int font_size, ALLEGRO_COLOR color, int x, int y, float letter_spacing, ALLEGRO_FONT *font, std::string string_to_write)
 {
-   //ALLEGRO_FONT *font = get_font("venus_rising_rg.ttf", font_size);
+   //ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf", font_size);
    //ALLEGRO_COLOR color = al_color_name("white");
 
    std::string the_char = " ";
@@ -950,7 +955,7 @@ void draw_health_bar_OLD()
    int health_bar_height = 10;
 
    std::string lives_string = "Lives: " + tostring(num_lives);
-   al_draw_text(get_font("venus_rising_rg.ttf", -26), al_color_name("white"), 20, SCREEN_H-60, 0, lives_string.c_str());
+   al_draw_text(fonts["venus_rising_rg.ttf 26"], al_color_name("white"), 20, SCREEN_H-60, 0, lives_string.c_str());
 
    float health_percentage = racer->health/racer->max_health;
    ALLEGRO_COLOR health_bar_color;
@@ -968,7 +973,7 @@ void draw_health_bar_OLD()
 void draw_health_bar(int text_y, int horizontal_screen_padding)
 {
    int health_bar_height = 10;
-   ALLEGRO_FONT *font = get_font("venus_rising_rg.ttf", -26);
+   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
 
    std::string lives_string = "Lives: " + tostring(num_lives);
    al_draw_text(font, al_color_name("white"), horizontal_screen_padding, text_y, 0, lives_string.c_str());
@@ -1005,7 +1010,7 @@ void draw_health_bar(int text_y, int horizontal_screen_padding)
 void draw_stopwatch(int text_y, int horizontal_screen_padding)
 {
    std::string ellapsed_time_str = TimerFormatter(stopwatch.get_elappsed_time_msec()).format();
-   ALLEGRO_FONT *font = get_font("venus_rising_rg.ttf", -26);
+   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
 
    //float text_width = al_get_text_width(font, ellapsed_time_str.c_str());
@@ -1027,7 +1032,7 @@ void draw_num_segments(int text_y, int num_segments)
    ss << num_segments << " SEG";
 
    std::string string_to_write = ss.str();
-   ALLEGRO_FONT *font = get_font("venus_rising_rg.ttf", -26);
+   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
 
    std::string the_char = " ";
@@ -1048,7 +1053,7 @@ void draw_num_laps(int text_y, int num_laps_passed, int total_num_laps)
    ss << num_laps_passed << " / " << total_num_laps;
 
    std::string string_to_write = ss.str();
-   ALLEGRO_FONT *font = get_font("venus_rising_rg.ttf", -26);
+   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
 
    std::string the_char = " ";
@@ -1070,12 +1075,12 @@ void draw_hud()
    al_use_transform(&transform);
 
    //int velocity = (int)(racer->velocity_magnitude*100);
-   //al_draw_text(get_font("HelveticaNeue.ttf", -20), al_color_name("white"), 40, 600-70, NULL, tostring(velocity).c_str());
+   //al_draw_text(fonts["HelveticaNeue.ttf", -20), al_color_name("white"), 40, 600-70, NULL, tostring(velocity).c_str());
 
-   //al_draw_text(get_font("HelveticaNeue.ttf", -20), al_color_name("white"), 20, 20, NULL,
+   //al_draw_text(fonts["HelveticaNeue.ttf", -20), al_color_name("white"), 20, 20, NULL,
    // tostring(format_lap_time(al_get_time() - track->start_time)).c_str());
 
-   //al_draw_text(get_font("lacuna.ttf", -19), al_color_name("white"), 20, 300, NULL, tostring(OMG_DeltaTime).c_str());
+   //al_draw_text(fonts["lacuna.ttf", -19), al_color_name("white"), 20, 300, NULL, tostring(OMG_DeltaTime).c_str());
 
    
    double lap_so_far = 0;
@@ -1083,7 +1088,7 @@ void draw_hud()
    {
       //if (i!=0) lap_so_far = racer->lap_time[i-1];
       //std::string laps_string = "Lap: " + format_lap_time(racer->lap_time[i] - track->start_time - lap_so_far);
-      //al_draw_text(get_font("lacuna.ttf", -20), al_color_name("white"), 40, 600-70-20*(i+1), NULL, laps_string.c_str());
+      //al_draw_text(fonts["lacuna.ttf", -20), al_color_name("white"), 40, 600-70-20*(i+1), NULL, laps_string.c_str());
    }
    
    /*
@@ -1331,6 +1336,7 @@ void init_game()
    std::cout << "start of bitmap bin path setting" << std::endl;
    bitmaps.set_path("data/images");
    samples.set_path("data/sounds");
+   fonts.set_path("data/fonts");
    std::cout << "end of bitmap bin path setting" << std::endl;
    animate(logo_scale, 0.7, 1.0, 7.0, interpolator::trippleFastIn);
 

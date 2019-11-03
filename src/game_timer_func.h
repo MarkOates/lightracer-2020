@@ -3,8 +3,8 @@ void game_timer_func()
    float screen_center_x = SCREEN_HW;
    float screen_center_y = SCREEN_HH;
 
-   static ALLEGRO_FONT *font_regular = get_font("venus_rising_rg.ttf", -28);
-   static ALLEGRO_FONT *font_large = get_font("venus_rising_rg.ttf", -50);
+   static ALLEGRO_FONT *font_regular = fonts["venus_rising_rg.ttf 28"];
+   static ALLEGRO_FONT *font_large = fonts["venus_rising_rg.ttf 50"];
 
    if (logo_showing)
    {
@@ -14,8 +14,8 @@ void game_timer_func()
          screen_center_x, (250 - 300) + screen_center_y, logo_scale, logo_scale, 0, 0);
 
       int font_size = -25;
-      draw_text_with_letter_spacing(font_size, al_color_name("white"), screen_center_x, (375 - 300) + screen_center_y + 20, 12*2, get_font("venus_rising_rg.ttf", font_size), "press ANY KEY to BEGIN");
-      //al_draw_text(get_font("venus_rising_rg.ttf", -25), al_color_name("white"),
+      draw_text_with_letter_spacing(font_size, al_color_name("white"), screen_center_x, (375 - 300) + screen_center_y + 20, 12*2, fonts["venus_rising_rg.ttf 25"], "press ANY KEY to BEGIN");
+      //al_draw_text(fonts["venus_rising_rg.ttf", -25), al_color_name("white"),
          //screen_center_x, (375 - 300) + screen_center_y + 20, ALLEGRO_ALIGN_CENTRE, "press ANY KEY to BEGIN");
 
       al_draw_filled_rectangle(0, 0, SCREEN_W, SCREEN_H, al_map_rgba_f(0, 0, 0, foreground_black_opacity));
@@ -99,7 +99,7 @@ void game_timer_func()
 
 
          int font_size = -30;
-         draw_text_with_letter_spacing(font_size, al_color_name("white"), 0, screen_center_y - 160, 40 + 30 * (1.0 - lap_notification_counter), get_font("venus_rising_rg.ttf", font_size), lap_string.c_str());
+         draw_text_with_letter_spacing(font_size, al_color_name("white"), 0, screen_center_y - 160, 40 + 30 * (1.0 - lap_notification_counter), fonts["venus_rising_rg.ttf 30"], lap_string.c_str());
 
          //al_draw_text(font_large, al_map_rgba_f(lap_notification_counter, lap_notification_counter, lap_notification_counter, lap_notification_counter),
             //screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
@@ -118,14 +118,14 @@ void game_timer_func()
          {
             ALLEGRO_COLOR color = al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter);
             int font_size = -30;
-            draw_text_with_letter_spacing(font_size, al_color_name("white"), 0, 250-300 + screen_center_y, 50, get_font("venus_rising_rg.ttf", font_size), lap_string.c_str());
+            draw_text_with_letter_spacing(font_size, al_color_name("white"), 0, 250-300 + screen_center_y, 50, fonts["venus_rising_rg.ttf 30"], lap_string.c_str());
 
             //al_draw_text(font_large, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
                //screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
          }
 
 
-         draw_text_with_letter_spacing(-30, al_color_name("white"), screen_center_x, screen_center_y, 50, get_font("venus_rising_rg.ttf", -30), lap_info_string.c_str());
+         draw_text_with_letter_spacing(-30, al_color_name("white"), screen_center_x, screen_center_y, 50, fonts["venus_rising_rg.ttf 30"], lap_info_string.c_str());
 
          //al_draw_text(font_large, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
             //screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_info_string.c_str());
