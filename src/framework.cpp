@@ -110,7 +110,6 @@ int Framework::run_loop()
       {
       case ALLEGRO_EVENT_TIMER:
          //al_clear_to_color(al_color_html("efefef"));
-         update_animations();
          if (timer_func) timer_func();
          //draw_all_objects();
          al_flip_display();

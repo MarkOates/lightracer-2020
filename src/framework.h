@@ -22,7 +22,8 @@
 using AllegroFlare::vec2d;
 //#include "position2d.h"
 //#include "object2d.h"
-#include "animation.h"
+#include "AllegroFlare/Interpolators.hpp"
+#include "AllegroFlare/Motion.hpp"
 
 //#include "sound.h"
 #include "event_object.h"

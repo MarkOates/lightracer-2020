@@ -9,6 +9,10 @@
 using namespace allegro_flare;
 
 
+using namespace AllegroFlare;
+Motion motion;
+
+
 #include <vector>
 #include <cmath>
 
@@ -135,7 +139,9 @@ vector<int> segment_where_player_died;
 
 void start_track_begin_text()
 {
-   animate(track_begin_notification_counter, 1.0, 0.0, 4.0, interpolator::tripple_fast_out);
+   float start_time = al_get_time();
+   float end_time = start_time + 4.0;
+   motion.animate(&track_begin_notification_counter, 1.0, 0.0, start_time, end_time, interpolator::tripple_fast_out);
 }
 
 
@@ -161,17 +167,23 @@ int index_of_last_track_segment_that_collides = 0;
 
 void fade_to_black()
 {
-   animate(foreground_black_opacity, 0.0, 1.0, 3.0);
+   float start_time = al_get_time();
+   float end_time = start_time + 3.0;
+   motion.animate(&foreground_black_opacity, 0.0, 1.0, start_time, end_time);
 }
 
 void fade_out_of_black()
 {
-   animate(foreground_black_opacity, 1.0, 0.0, 3.6);
+   float start_time = al_get_time();
+   float end_time = start_time + 3.6;
+   motion.animate(&foreground_black_opacity, 1.0, 0.0, start_time, end_time);
 }
 
 void flash_white()
 {
-   animate(foreground_white_opacity, 1.0, 0.0, 2.0);
+   float start_time = al_get_time();
+   float end_time = start_time + 2.0;
+   motion.animate(&foreground_white_opacity, 1.0, 0.0, start_time, end_time);
    al_stop_sample_instance(exit_sample_instance);
    al_play_sample_instance(exit_sample_instance);
 }
@@ -363,12 +375,12 @@ camera_class *good_camera = nullptr;
 
 void zoom_way_out()
 {
-   animate_to(camera->zoom, 0.05);
+   motion.move_to(&camera->zoom, 0.05, 0.4);
 }
 
 void zoom_normal()
 {
-   animate_to(camera->zoom, 1.0);
+   motion.move_to(&camera->zoom, 1.0, 0.4);
 }
 
 
@@ -1033,7 +1045,7 @@ vector<std::pair<bool, int> > Track::__right_color_light_belongs_to;
 
 
 void complete_track();
-void mark_player_not_using_boost();
+void mark_player_not_using_boost(void *);
 
 class Racer : public uses_keyboard
 {
@@ -1083,7 +1095,9 @@ public:
       //lap_time = al_get_time();
       lap_time.push_back(al_get_time());
 
-      animate(lap_notification_counter, 1.0, 0.0, 3.0, interpolator::quadruple_fast_out);
+      float start_time = al_get_time();
+      float end_time = start_time + 3.0;
+      motion.animate(&lap_notification_counter, 1.0, 0.0, start_time, end_time, interpolator::quadruple_fast_out);
 
       if ((int)lap_time.size() > num_laps_to_win) complete_track();
    }
@@ -1101,7 +1115,9 @@ public:
       if (boosts == 0) { /* do nothing */ }
       if (using_boost) return;
 
-      animate(using_boost_counter, 1.0, 0.0, 2.0, interpolator::double_fast_out).callback(mark_player_not_using_boost);
+      float start_time = al_get_time();
+      float end_time = start_time + 2.0;
+      motion.animate(&using_boost_counter, 1.0, 0.0, start_time, end_time, interpolator::double_fast_out, mark_player_not_using_boost);
       velocity_magnitude = 4.5;
 
       using_boost = true;
@@ -1167,7 +1183,7 @@ Racer *racer = nullptr;
 
 
 
-void mark_player_not_using_boost()
+void mark_player_not_using_boost(void *)
 {
    racer->using_boost = false;
 }
@@ -2161,7 +2177,7 @@ void draw_hud()
 void kill_player(int _segment_where_player_died)
 {
    racer->dead = true;
-   animate_to(camera->zoom, 0.8, 2, interpolator::slow_in_out);
+   motion.move_to(&camera->zoom, 0.8, 2, interpolator::slow_in_out);
    //animate_delta(racer->direction_angle, FULL_ROTATION*2, 5.0, interpolator::trippleFastIn);
    al_stop_sample_instance(engine_sample_instance);
 
@@ -2598,7 +2614,9 @@ void update_racer_and_track(Racer *r, Track *t)
 
 void start_track()
 {
-   animate(camera->zoom, 0.2, 1.0, 3.0, interpolator::double_slow_in_out);
+   float start_time = al_get_time();
+   float end_time = start_time + 3.0;
+   motion.animate(&camera->zoom, 0.2, 1.0, start_time, end_time, interpolator::double_slow_in_out);
    racer->position = vec2d(50, -50);
    racer->direction_angle = FULL_ROTATION/2;
    racer->velocity_magnitude = 0;
@@ -2769,7 +2787,9 @@ void init_game()
    samples.set_path("data/sounds");
    fonts.set_path("data/fonts");
    std::cout << "end of bitmap bin path setting" << std::endl;
-   animate(logo_scale, 0.7, 1.0, 7.0, interpolator::tripple_fast_in);
+   float start_time = al_get_time();
+   float end_time = start_time + 7.0;
+   motion.animate(&logo_scale, 0.7, 1.0, start_time, end_time, interpolator::tripple_fast_in);
 
    OMG_DeltaTime = 0.6;
 
@@ -3008,6 +3028,8 @@ std::string get_number_string(int num)
 
 void game_timer_func()
 {
+   motion.update(al_get_time());
+
    float screen_center_x = SCREEN_HW;
    float screen_center_y = SCREEN_HH;
 
