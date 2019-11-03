@@ -119,15 +119,12 @@ int Framework::run_loop()
             al_drop_next_event(queue);
          break;
       case ALLEGRO_EVENT_KEY_DOWN:
-         uses_keyboard::update_all_on_key_down();
          if (key_down_func) key_down_func();
          break;
       case ALLEGRO_EVENT_KEY_UP:
-         uses_keyboard::update_all_on_key_up();
          if (key_up_func) key_up_func();
          break;
       case ALLEGRO_EVENT_KEY_CHAR:
-         uses_keyboard::update_all_on_key_char();
          if (key_char_func) key_char_func();
          break;
       case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:

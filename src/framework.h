@@ -26,7 +26,7 @@ using AllegroFlare::vec2d;
 #include "AllegroFlare/Motion.hpp"
 
 //#include "sound.h"
-#include "event_object.h"
+class Framework;
 
 
 extern ALLEGRO_EVENT *current_event;
