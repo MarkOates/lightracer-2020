@@ -1006,7 +1006,7 @@ vector<std::pair<bool, int> > Track::__right_color_light_belongs_to;
 void complete_track();
 void mark_player_not_using_boost(void *);
 
-class Racer : public uses_keyboard
+class Racer
 {
 public:
    vec2d position, direction, velocity;
@@ -1080,50 +1080,6 @@ public:
       velocity_magnitude = 4.5;
 
       using_boost = true;
-   }
-
-   void on_key_up()
-   {
-      if (dead) return;
-
-      switch(current_event->keyboard.keycode)
-      {
-      case ALLEGRO_KEY_UP:
-         throttle_on = false;
-         break;
-      case ALLEGRO_KEY_LEFT:
-         turning_left = false;
-         break;
-      case ALLEGRO_KEY_RIGHT:
-         turning_right = false;
-         break;
-      case ALLEGRO_KEY_DOWN:
-         break_on = false;
-         break;
-      }
-   }
-   void on_key_down()
-   {
-      if (dead) return;
-
-      switch(current_event->keyboard.keycode)
-      {
-      case ALLEGRO_KEY_UP:
-         throttle_on = true;
-         break;
-      case ALLEGRO_KEY_LEFT:
-         turning_left = true;
-         break;
-      case ALLEGRO_KEY_RIGHT:
-         turning_right = true;
-         break;
-      case ALLEGRO_KEY_DOWN:
-         break_on = true;
-         break;
-      case ALLEGRO_KEY_SPACE:
-         //use_boost();
-         break;
-      }
    }
 };
 
@@ -2892,9 +2848,64 @@ void key_char_func()
 }
 
 
+void racer__on_key_up()
+{
+   if (racer->dead) return;
+
+   switch(current_event->keyboard.keycode)
+   {
+   case ALLEGRO_KEY_UP:
+      racer->throttle_on = false;
+      break;
+   case ALLEGRO_KEY_LEFT:
+      racer->turning_left = false;
+      break;
+   case ALLEGRO_KEY_RIGHT:
+      racer->turning_right = false;
+      break;
+   case ALLEGRO_KEY_DOWN:
+      racer->break_on = false;
+      break;
+   }
+}
+
+
+void racer__on_key_down()
+{
+   if (racer->dead) return;
+
+   switch(current_event->keyboard.keycode)
+   {
+   case ALLEGRO_KEY_UP:
+      racer->throttle_on = true;
+      break;
+   case ALLEGRO_KEY_LEFT:
+      racer->turning_left = true;
+      break;
+   case ALLEGRO_KEY_RIGHT:
+      racer->turning_right = true;
+      break;
+   case ALLEGRO_KEY_DOWN:
+      racer->break_on = true;
+      break;
+   case ALLEGRO_KEY_SPACE:
+      //use_boost();
+      break;
+   }
+}
+
+
+
+void key_up_func()
+{
+   racer__on_key_up();
+}
+
 
 void key_down_func()
 {
+   racer__on_key_down();
+
    switch(current_event->keyboard.keycode)
    {
    case ALLEGRO_KEY_ESCAPE:
@@ -3209,6 +3220,7 @@ int main(int argc, char **argv)
    //init_profiling();
    init_game();
    f.timer_func = game_timer_func;
+   f.key_up_func = key_up_func;
    f.key_down_func = key_down_func;
    f.key_char_func = key_char_func;
    return f.run_loop();
