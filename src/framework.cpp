@@ -131,27 +131,21 @@ int Framework::run_loop()
          if (key_char_func) key_char_func();
          break;
       case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-         uses_mouse::update_all_on_mouse_down();
          if (mouse_down_func) mouse_down_func();
          break;
       case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-         uses_mouse::update_all_on_mouse_up();
          if (mouse_up_func) mouse_up_func();
          break;
       case ALLEGRO_EVENT_MOUSE_AXES:
-         uses_mouse::update_all_on_mouse_axes();
          if (mouse_axes_func) mouse_axes_func();
          break;
       case ALLEGRO_EVENT_JOYSTICK_BUTTON_DOWN:
-         uses_joystick::update_all_on_joy_button_down();
          if (joy_down_func) joy_down_func();
          break;
       case ALLEGRO_EVENT_JOYSTICK_BUTTON_UP:
-         uses_joystick::update_all_on_joy_button_up();
          if (joy_up_func) joy_up_func();
          break;
       case ALLEGRO_EVENT_JOYSTICK_AXIS:
-         uses_joystick::update_all_on_joy_axes();
          if (joy_axis_func) joy_axis_func();
          break;
       case ALLEGRO_EVENT_DISPLAY_CLOSE:
