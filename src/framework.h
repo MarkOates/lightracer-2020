@@ -36,27 +36,27 @@ extern Framework *current_framework;
 class Framework
 {
 private:
-	ALLEGRO_DISPLAY *display;
-	ALLEGRO_TIMER *timer;
-	ALLEGRO_EVENT_QUEUE *queue;
+   ALLEGRO_DISPLAY *display;
+   ALLEGRO_TIMER *timer;
+   ALLEGRO_EVENT_QUEUE *queue;
 
 public:
-	bool abort_program;
-	void (*timer_func)();
-	void (*mouse_axes_func)();
-	void (*mouse_down_func)();
-	void (*mouse_up_func)();
-	void (*key_down_func)();
-	void (*key_up_func)();
-	void (*key_char_func)();
-	void (*display_close_func)();
-	void (*joy_up_func)();
-	void (*joy_down_func)();
-	void (*joy_axis_func)();
+   bool abort_program;
+   void (*timer_func)();
+   void (*mouse_axes_func)();
+   void (*mouse_down_func)();
+   void (*mouse_up_func)();
+   void (*key_down_func)();
+   void (*key_up_func)();
+   void (*key_char_func)();
+   void (*display_close_func)();
+   void (*joy_up_func)();
+   void (*joy_down_func)();
+   void (*joy_axis_func)();
 
-	Framework(int screen_width=800, int screen_height=600);
-	~Framework();
-	int run_loop();
+   Framework(int screen_width=800, int screen_height=600);
+   ~Framework();
+   int run_loop();
 };
 
 
