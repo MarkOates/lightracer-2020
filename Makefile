@@ -3,8 +3,6 @@
 
 ALLEGRO_DIR=/Users/markoates/Repos/allegro5/include/
 
-OBJS=animation event_object font_bin framework image_bin profiling timer sample_bin
-
 PROGRAM_SOURCES := $(shell find src -name '*.cpp')
 
 
@@ -15,8 +13,6 @@ ALLEGRO_LIBS_LINK_MAIN_ARGS := $(ALLEGRO_LIBS_MAIN:%=-l%)
 
 
 
-
-#OBJ_FILES=$(OBJS:%=obj/%.o)
 
 bin/programs/lightracermax:
 	g++ -std=c++17 -Wno-everything $(PROGRAM_SOURCES) $(ALLEGRO_LIBS_LINK_MAIN_ARGS) -o bin/programs/lightracermax -I./include
