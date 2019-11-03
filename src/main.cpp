@@ -20,6 +20,11 @@ using AllegroFlare::BitmapBin;
 BitmapBin bitmaps;
 
 
+#include <AllegroFlare/SampleBin.hpp>
+using AllegroFlare::SampleBin;
+SampleBin samples;
+
+
 #include <AllegroFlare/Timer.hpp>
 #include <AllegroFlare/TimerFormatter.hpp>
 using AllegroFlare::TimerFormatter;
@@ -1325,6 +1330,7 @@ void init_game()
 {
    std::cout << "start of bitmap bin path setting" << std::endl;
    bitmaps.set_path("data/images");
+   samples.set_path("data/sounds");
    std::cout << "end of bitmap bin path setting" << std::endl;
    animate(logo_scale, 0.7, 1.0, 7.0, interpolator::trippleFastIn);
 
@@ -1338,7 +1344,7 @@ void init_game()
    engine_mixer = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
    al_attach_mixer_to_voice(engine_mixer, engine_voice);
 
-   engine_sample_instance = al_create_sample_instance(get_sample("engine"));
+   engine_sample_instance = al_create_sample_instance(samples["engine.ogg"]);
    al_attach_sample_instance_to_mixer(engine_sample_instance, engine_mixer);
    al_set_sample_instance_playmode(engine_sample_instance, ALLEGRO_PLAYMODE_LOOP);
    al_set_sample_instance_gain(engine_sample_instance, 0.0);
@@ -1359,7 +1365,7 @@ void init_game()
 
    // gate pass-through sound
 
-   passthough_sample_instance = al_create_sample_instance(get_sample("click"));
+   passthough_sample_instance = al_create_sample_instance(samples["click.ogg"]);
    al_attach_sample_instance_to_mixer(passthough_sample_instance, engine_mixer);
    al_set_sample_instance_playmode(passthough_sample_instance, ALLEGRO_PLAYMODE_ONCE);
    al_set_sample_instance_gain(passthough_sample_instance, 1.0);
@@ -1367,7 +1373,7 @@ void init_game()
 
    // exit pass-through sound
 
-   exit_sample_instance = al_create_sample_instance(get_sample("through_gate"));
+   exit_sample_instance = al_create_sample_instance(samples["through_gate.ogg"]);
    al_attach_sample_instance_to_mixer(exit_sample_instance, engine_mixer);
    al_set_sample_instance_playmode(exit_sample_instance, ALLEGRO_PLAYMODE_ONCE);
    al_set_sample_instance_gain(exit_sample_instance, 0.7);
@@ -1377,14 +1383,14 @@ void init_game()
 
 
 
-   instance_hit_bad = al_create_sample_instance(get_sample("hit_bad"));
+   instance_hit_bad = al_create_sample_instance(samples["hit_bad.ogg"]);
    al_attach_sample_instance_to_mixer(instance_hit_bad, engine_mixer);
    al_set_sample_instance_playmode(instance_hit_bad, ALLEGRO_PLAYMODE_ONCE);
    al_set_sample_instance_gain(instance_hit_bad, 0.7);
    al_set_sample_instance_speed(instance_hit_bad, 1.0);
    //al_play_sample_instance(exit_sample_instance);
 
-   instance_hit_bounce = al_create_sample_instance(get_sample("hit_bounce"));
+   instance_hit_bounce = al_create_sample_instance(samples["hit_bounce.ogg"]);
    al_attach_sample_instance_to_mixer(instance_hit_bounce, engine_mixer);
    al_set_sample_instance_playmode(instance_hit_bounce, ALLEGRO_PLAYMODE_ONCE);
    al_set_sample_instance_gain(instance_hit_bounce, 0.7);
@@ -1392,14 +1398,14 @@ void init_game()
    //al_play_sample_instance(exit_sample_instance);
 
 
-   instance_hit_med = al_create_sample_instance(get_sample("hit_med2"));
+   instance_hit_med = al_create_sample_instance(samples["hit_med2.ogg"]);
    al_attach_sample_instance_to_mixer(instance_hit_med, engine_mixer);
    al_set_sample_instance_playmode(instance_hit_med, ALLEGRO_PLAYMODE_ONCE);
    al_set_sample_instance_gain(instance_hit_med, 0.7);
    al_set_sample_instance_speed(instance_hit_med, 1.0);
    //al_play_sample_instance(exit_sample_instance);
 
-   instance_hit_soft = al_create_sample_instance(get_sample("hit_soft"));
+   instance_hit_soft = al_create_sample_instance(samples["hit_soft.ogg"]);
    al_attach_sample_instance_to_mixer(instance_hit_soft, engine_mixer);
    al_set_sample_instance_playmode(instance_hit_soft, ALLEGRO_PLAYMODE_ONCE);
    al_set_sample_instance_gain(instance_hit_soft, 0.7);
@@ -1408,7 +1414,7 @@ void init_game()
 
    
 
-   //al_play_sample(get_sample("engine"), 0.5, 0.5, 1.0, ALLEGRO_PLAYMODE_LOOP, nullptr);
+   //al_play_sample(samples["engine"), 0.5, 0.5, 1.0, ALLEGRO_PLAYMODE_LOOP, nullptr);
 
    track = new Track();
    create_random_track(track, num_of_segments_in_track);
