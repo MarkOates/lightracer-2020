@@ -1,4 +1,4 @@
-bool development = false;
+bool development = true;
 
 
 #include <allegro5/allegro.h>
@@ -866,7 +866,7 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
    float _scale_x = 0.5;
    float _scale_y = 0.5;
    float _rotation = 0.0;
-   int flags = NULL;
+   static int NO_FLAGS = 0;
 
 
 
@@ -903,7 +903,7 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
                               _scale_x*racer_depth_scale*0.8,
                               _scale_y*racer_depth_scale*0.8,
                               _rotation,
-                              flags);
+                              NO_FLAGS);
 
       float engine_alpha = racer->velocity_magnitude;
 
@@ -916,7 +916,7 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
                               _scale_x*racer_depth_scale*0.8,
                               _scale_y*racer_depth_scale*0.8,
                               _rotation,
-                              flags);
+                              NO_FLAGS);
 
       if ((fmod(engine_alpha, 1.0f) < 0.2) && (racer->velocity_magnitude > 3))
       {
@@ -930,7 +930,7 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
                               _scale_x*racer_depth_scale*0.8,
                               _scale_y*racer_depth_scale*0.8,
                               _rotation,
-                              flags);
+                              NO_FLAGS);
       }
 
    }
@@ -977,7 +977,7 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
                                    _scale_x*depth_scale,
                                    _scale_y*depth_scale,
                                    _rotation,
-                                   flags);
+                                   NO_FLAGS);
 
             //particle_draw_count++;
          }
@@ -1077,7 +1077,7 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
                                 _scale_x*depth_scale,
                                 _scale_y*depth_scale*depth_scale*height_multplier,
                                 _rotation,
-                                flags);
+                                NO_FLAGS);
 
       //std::cout << "point( " << track_rail_point[i].x << ", \t\t" << track_rail_point[i].y <<  std::endl;
       //al_draw_bitmap(yellow_ball, track_rail_point[i].x, track_rail_point[i].y, NULL);
@@ -1176,7 +1176,7 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
                                 _scale_x*depth_scale,
                                 _scale_y*depth_scale,
                                 _rotation,
-                                flags);
+                                NO_FLAGS);
    }
 
    // draw axis points
@@ -1242,7 +1242,7 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
                                 _scale_x*depth_scale,
                                 _scale_y*depth_scale,
                                 _rotation,
-                                flags);
+                                NO_FLAGS);
       
 //    al_draw_bitmap(yellow_ball, left_point[i].x, left_point[i].y, NULL);
    }
