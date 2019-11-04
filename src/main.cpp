@@ -1971,24 +1971,24 @@ void draw_num_segments(int text_y, int num_segments)
 }
 
 
-void draw_num_laps(int text_y, int num_laps_passed, int total_num_laps)
+void draw_num_laps(int text_y, int current_lap_num, int total_num_laps)
 {
-   std::stringstream ss;
-   ss << num_laps_passed << " / " << total_num_laps;
+   std::string string_to_write = "";
 
-   std::string string_to_write = ss.str();
+   if (current_lap_num <= total_num_laps)
+   {
+      std::stringstream ss;
+      ss << current_lap_num << " / " << total_num_laps;
+      string_to_write = ss.str();
+   }
+   else
+   {
+      string_to_write = "FIN";
+   }
+
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
-
-   std::string the_char = " ";
-   int letter_spacing = 12 * 2;
-   int letters_traversed = 0;
-   for (auto &c : string_to_write)
-   {
-      the_char[0] = c;
-      al_draw_text(font, color, SCREEN_W - 300 - 300 - 200 + (letters_traversed * letter_spacing), text_y, ALLEGRO_ALIGN_CENTER, the_char.c_str());
-      letters_traversed++;
-   }
+   al_draw_text(font, color, SCREEN_W - 300 - 300 - 200, text_y, ALLEGRO_ALIGN_CENTER, string_to_write.c_str());
 }
 
 
@@ -2007,7 +2007,7 @@ void draw_hud()
 
    draw_num_segments(text_y, num_of_segments_in_track);
 
-   draw_num_laps(text_y, (int)racer->lap_time.size(), num_laps_to_win);
+   draw_num_laps(text_y, (int)racer->lap_time.size()+1, num_laps_to_win);
    draw_stopwatch(text_y, horizontal_screen_padding);
 
    draw_health_bar(text_y, horizontal_screen_padding);
@@ -3024,7 +3024,7 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
    }
    else
    {
-      if (lap_notification_counter != 0 && ((racer->lap_time.size()+1) != 5))
+      if (lap_notification_counter != 0 && ((racer->lap_time.size()) != num_laps_to_win))
       {
 
          std::string lap_string = "LAP " + tostring(racer->lap_time.size()+1);
