@@ -133,7 +133,7 @@ bool FLAG_draw_profile_graph = false;
 ALLEGRO_COLOR start_text_color;
 
 
-int max_num_lives = 6;
+int max_num_lives = 3;
 int num_lives = max_num_lives;
 
 
