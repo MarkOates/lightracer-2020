@@ -2522,9 +2522,97 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
 }
 
 
-
-void draw_gl_projection(ALLEGRO_BITMAP *bitmap)
+class Camera3
 {
+public:
+	vec3d position;
+	vec3d stepout;
+	float spin;
+	float tilt;
+	Camera3()
+		: position(0, 0, 0)
+		, stepout(0, 0, 0)
+		, spin(0)
+		, tilt(0)
+	{}
+	void position_transform(ALLEGRO_TRANSFORM *t)
+	{
+		al_identity_transform(t);
+
+		al_translate_transform_3d(t, stepout.x, stepout.y, stepout.z);
+		al_rotate_transform_3d(t, -1, 0, 0, tilt);
+		al_rotate_transform_3d(t, 0, -1, 0, spin);
+	}
+	void reverse_position_transform(ALLEGRO_TRANSFORM *t)
+	{
+		// note: this is EXACTLY the same as position transform, except the
+		// order of transformations is reversed, and the values are negated
+		al_identity_transform(t);
+
+		al_rotate_transform_3d(t, 0, 1, 0, spin);
+		al_rotate_transform_3d(t, 1, 0, 0, tilt);
+		al_translate_transform_3d(t, -stepout.x, -stepout.y, -stepout.z);
+	}
+	vec3d get_real_position()
+	{
+		vec3d real_position(0, 0, 0);
+		ALLEGRO_TRANSFORM t;
+
+		position_transform(&t);
+		al_transform_coordinates_3d(&t, &real_position.x, &real_position.y, &real_position.z);
+
+		return real_position;
+	}
+};
+
+
+
+
+void setup_projection_SCENE(Camera3 &camera_to_use, ALLEGRO_BITMAP *backbuffer_sub_bitmap, ALLEGRO_TRANSFORM *transform_to_fill=NULL)
+{
+   // setup the render settings
+   al_set_render_state(ALLEGRO_DEPTH_TEST, 1);
+   al_set_render_state(ALLEGRO_WRITE_MASK, ALLEGRO_MASK_DEPTH | ALLEGRO_MASK_RGBA);
+   al_clear_depth_buffer(1);
+
+
+   ALLEGRO_TRANSFORM t;
+
+   camera_to_use.reverse_position_transform(&t);
+
+   float aspect_ratio = (float)al_get_bitmap_height(backbuffer_sub_bitmap) / al_get_bitmap_width(backbuffer_sub_bitmap);
+   al_perspective_transform(&t, -1, aspect_ratio, 1, 1, -aspect_ratio, 100);
+//	al_perspective_transform(&t, -1, aspect_ratio, 4, 1, -aspect_ratio, 100);
+/*
+   float w = al_get_bitmap_width(backbuffer_sub_bitmap);
+//	   al_orthographic_transform(&t, -1*w, aspect_ratio*w, -100, -1*w, -aspect_ratio*w, 1000);
+   ALLEGRO_BITMAP *bitmap = backbuffer_sub_bitmap;
+//al_orthographic_transform(&t, -al_get_bitmap_width(bitmap), -al_get_bitmap_height(bitmap), -100.0, al_get_bitmap_width(bitmap),
+                       //al_get_bitmap_height(bitmap), 100.0);
+
+   //al_scale_transform_3d(&t, al_display_width(bitmap), al_display_height(bitmap));
+   al_scale_transform_3d(&t, 150, 150, 1); 
+*/		
+/*
+al_orthographic_transform(&t, -al_get_bitmap_width(bitmap), al_get_bitmap_height(bitmap), 30.0, al_get_bitmap_width(bitmap),
+                       -al_get_bitmap_height(bitmap), -30.0);
+*/
+   if (transform_to_fill != NULL)
+   {
+      al_copy_transform(transform_to_fill, &t);
+   }
+
+   //al_set_target_bitmap(backbuffer_sub_bitmap); << I don't think this is necessairy, it also occours just prior to this function
+   al_use_projection_transform(&t);
+}
+
+
+
+
+
+void draw_gl_projection(Camera3 &camera3, ALLEGRO_BITMAP *bitmap)
+{
+   setup_projection_SCENE(camera3, bitmap, NULL);
    int width = al_get_bitmap_width(bitmap);
    int height = al_get_bitmap_height(bitmap);
    if (development) al_draw_text(fonts["venus_rising_rg.ttf 30"], al_color_name("white"), width/2, height/2 - 20, ALLEGRO_ALIGN_CENTER, "Hello Backbuffer Sub");
@@ -2541,10 +2629,12 @@ class LightracerMax : public Screen
 {
 public:
    ALLEGRO_BITMAP *sub_bitmap_backbuffer_of_display_for_gl_projection;
+   Camera3 camera3;
 
    LightracerMax(Framework &framework, Screens &screens, Display *display)
       : Screen(framework, screens, display)
       , sub_bitmap_backbuffer_of_display_for_gl_projection(nullptr)
+      , camera3()
    {}
 
    void initialize()
@@ -2559,7 +2649,12 @@ public:
    void primary_timer_func() override
    {
       game_timer_func(framework.current_event);
-      draw_gl_projection(sub_bitmap_backbuffer_of_display_for_gl_projection);
+
+      ALLEGRO_STATE previous_bitmap_state;
+      al_store_state(&previous_bitmap_state, ALLEGRO_STATE_TARGET_BITMAP);
+      al_set_target_bitmap(sub_bitmap_backbuffer_of_display_for_gl_projection);
+      draw_gl_projection(camera3, sub_bitmap_backbuffer_of_display_for_gl_projection);
+      al_restore_state(&previous_bitmap_state);
    }
 
    void key_up_func() override
@@ -2577,8 +2672,6 @@ public:
       ::key_char_func(framework.current_event);
    }
 };
-
-
 
 
 int main(int argc, char **argv)
