@@ -1,4 +1,4 @@
-bool development = true;
+bool development = false;
 
 
 #include <allegro5/allegro.h>
@@ -2608,18 +2608,61 @@ al_orthographic_transform(&t, -al_get_bitmap_width(bitmap), al_get_bitmap_height
 
 
 
+#include "allegro_flare/placement3d.h"
 
 
-void draw_gl_projection(Camera3 &camera3, ALLEGRO_BITMAP *bitmap, ModelBin &models)
+void draw_gl_projection(Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track_)
 {
    setup_projection_SCENE(camera3, bitmap, NULL);
    int width = al_get_bitmap_width(bitmap);
    int height = al_get_bitmap_height(bitmap);
 
-   if (development) al_draw_text(fonts["venus_rising_rg.ttf 30"], al_color_name("white"), width/2, height/2 - 20, ALLEGRO_ALIGN_CENTER, "Hello Backbuffer Sub");
-
    Model3D &cube_model = *models["rounded_unit_cube-01.obj"];
    cube_model.draw();
+
+   placement3d place;
+   float multiplier = 0.01;
+
+   if (track_)
+   {
+      vec3d exit_p1_pos = vec3d(track->exit_p1.x * multiplier, 0, track->exit_p1.y * multiplier);
+      vec3d exit_p2_pos = vec3d(track->exit_p2.x * multiplier, 0, track->exit_p2.y * multiplier);
+
+      place.position = exit_p1_pos;
+      place.start_transform();
+      cube_model.draw();
+      place.restore_transform();
+
+      place.position = exit_p2_pos;
+      place.start_transform();
+      cube_model.draw();
+      place.restore_transform();
+
+      vec3d enter_p1_pos = vec3d(track->enter_p1.x * multiplier, 0, track->enter_p1.y * multiplier);
+      vec3d enter_p2_pos = vec3d(track->enter_p2.x * multiplier, 0, track->enter_p2.y * multiplier);
+
+      place.position = enter_p1_pos;
+      place.start_transform();
+      cube_model.draw();
+      place.restore_transform();
+
+      place.position = enter_p2_pos;
+      place.start_transform();
+      cube_model.draw();
+      place.restore_transform();
+
+   }
+   
+   // draw the racer
+
+   if (racer)
+   {
+      vec3d racer_pos = vec3d(racer->position.x * multiplier, 0, racer->position.y * multiplier);
+      place.position = racer_pos;
+      place.start_transform();
+      cube_model.draw();
+      place.restore_transform();
+   }
 }
 
 
@@ -2646,7 +2689,17 @@ public:
    void initialize()
    {
       init_game();
+      if (development) initialize_gl_render();
+   }
 
+   void primary_timer_func() override
+   {
+      game_timer_func(framework.current_event);
+      if (development) gl_render_func();
+   }
+
+   void initialize_gl_render()
+   {
       camera3.stepout = vec3d(0, 0, 10);
 		camera3.tilt = 0.6;
 
@@ -2656,16 +2709,20 @@ public:
          0, 0, al_get_bitmap_width(main_target), al_get_bitmap_height(main_target));
    }
 
-   void primary_timer_func() override
+   void gl_render_func()
    {
-      game_timer_func(framework.current_event);
+      float racer_speed = racer->velocity_magnitude;
+      good_camera->z += 100 + 30*(4.0-racer_speed);
+      float camera_y = 550 - 65*racer_speed;  // higher numbers (400) mean flatter, more birds-eye perspective
+      float track_y_value = 50 + 50*(4.0-racer_speed) + (1.0-camera->zoom)*1000;
 
-      camera3.spin += 0.02;
+      camera3.spin = -camera->rotation + FULL_ROTATION/2;
+      camera3.stepout = vec3d(0, 0, 10 + camera_y * 0.05);
 
       ALLEGRO_STATE previous_bitmap_state;
       al_store_state(&previous_bitmap_state, ALLEGRO_STATE_TARGET_BITMAP);
       al_set_target_bitmap(sub_bitmap_backbuffer_of_display_for_gl_projection);
-      draw_gl_projection(camera3, sub_bitmap_backbuffer_of_display_for_gl_projection, models);
+      draw_gl_projection(camera3, racer, sub_bitmap_backbuffer_of_display_for_gl_projection, models, track);
       al_restore_state(&previous_bitmap_state);
    }
 
