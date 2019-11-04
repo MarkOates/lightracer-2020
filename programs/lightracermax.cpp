@@ -395,31 +395,7 @@ void zoom_normal()
 #define LEFT_RAIL 1
 #define RIGHT_RAIL 2
 
-class LineSegmentInfo
-{
-public:
-   vec2d start;
-   vec2d end;
-   vec2d from_start;
-   vec2d perpendicular;
-   vec2d normal;
-   vec2d middle;
-   float radius;
-   float length;
-
-   LineSegmentInfo() {}
-   LineSegmentInfo(vec2d &start, vec2d &end)
-   {
-      this->start = start;
-      this->end = end;
-      from_start = end - start;
-      middle = from_start/2 + start;
-      length = distance(start, end);
-      radius = length/2;
-      perpendicular = vec2d(-from_start.y, from_start.x);
-      normal = ~-perpendicular;
-   }
-};
+#include "Lightracer/LineSegmentInfo.hpp"
 
 
 
