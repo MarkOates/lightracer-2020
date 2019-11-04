@@ -1956,18 +1956,10 @@ void draw_num_segments(int text_y, int num_segments)
    ss << num_segments << " SEG";
 
    std::string string_to_write = ss.str();
+
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
-
-   std::string the_char = " ";
-   int letter_spacing = 12 * 2;
-   int letters_traversed = 0;
-   for (auto &c : string_to_write)
-   {
-      the_char[0] = c;
-      al_draw_text(font, color, SCREEN_W - 300 - 300 + (letters_traversed * letter_spacing), text_y, ALLEGRO_ALIGN_CENTER, the_char.c_str());
-      letters_traversed++;
-   }
+   al_draw_text(font, color, SCREEN_W - 300 - 300, text_y, ALLEGRO_ALIGN_CENTER, string_to_write.c_str());
 }
 
 
