@@ -2630,17 +2630,20 @@ class LightracerMax : public Screen
 public:
    ALLEGRO_BITMAP *sub_bitmap_backbuffer_of_display_for_gl_projection;
    Camera3 camera3;
+   ModelBin models;
 
    LightracerMax(Framework &framework, Screens &screens, Display *display)
       : Screen(framework, screens, display)
       , sub_bitmap_backbuffer_of_display_for_gl_projection(nullptr)
       , camera3()
+      , models()
    {}
 
    void initialize()
    {
       init_game();
 
+      models.set_path("data/models");
       ALLEGRO_BITMAP *main_target = al_get_backbuffer(display->al_display);
       sub_bitmap_backbuffer_of_display_for_gl_projection = al_create_sub_bitmap(main_target,
          0, 0, al_get_bitmap_width(main_target), al_get_bitmap_height(main_target));
