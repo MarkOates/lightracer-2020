@@ -1331,15 +1331,16 @@ void draw_health_bar(int text_y, int horizontal_screen_padding)
 
    int lives_text_length = 170;
    int bar_length = 220;
-   int bar_y = text_y + al_get_font_ascent(font) / 2 + 2;
+   int bar_y = text_y + al_get_font_ascent(font) / 2 + 4;
    int bar_x = horizontal_screen_padding + lives_text_length + 4;
 
-   al_draw_filled_rectangle(
-         bar_x,
-         bar_y - health_bar_height * 0.5,
-         bar_x + bar_length,
-         bar_y + health_bar_height * 0.5,
-         al_color_name("darkblue"));
+   al_draw_rounded_rectangle(
+         bar_x - 4,
+         bar_y - 4 - health_bar_height * 0.5,
+         bar_x + 4 + bar_length,
+         bar_y + 4 + health_bar_height * 0.5,
+         4, 4,
+         al_color_name("lightblue"), 2.0);
 
    al_draw_filled_rectangle(
          bar_x,
