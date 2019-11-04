@@ -1916,7 +1916,7 @@ void draw_health_bar(int text_y, int horizontal_screen_padding)
    else if (health_percentage > 0.3) health_bar_color = al_color_name("orange");
    else health_bar_color = al_color_name("red");
 
-   int lives_text_length = 140;
+   int lives_text_length = 170;
    int bar_length = 220;
    int bar_y = text_y + al_get_font_ascent(font) / 2 + 2;
    int bar_x = horizontal_screen_padding + lives_text_length + 4;
