@@ -768,7 +768,7 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
 
    float camera_y = 550 - 65*racer_speed;  // higher numbers (400) mean flatter, more birds-eye perspective
    float track_y_value = 50 + 50*(4.0-racer_speed) + (1.0-camera->zoom)*1000;
-   float multiplier = 0.15;
+   //float multiplier = 0.15;
 
    //////////////////////////
 
@@ -1002,8 +1002,8 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
 
    //std::cout << track_rail_point.size() << std::endl;
 
-   float distance_from_closest_light = 99999;
-   float distance_from_light = 0;
+   //float distance_from_closest_light = 99999;
+   //float distance_from_light = 0;
 
    start_profile_timer("DP int vector copy");
    //Track::track_rail_light_projected = Track::track_rail_light;
@@ -1031,10 +1031,10 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
    vec2d racer_vector(racer_x, racer_y);
 
    float bitmap_h_width_cache = al_get_bitmap_width(yellow_ball)*_align_x;
-   float bitmap_h_height_cache = al_get_bitmap_height(yellow_ball)*_align_y;
+   //float bitmap_h_height_cache = al_get_bitmap_height(yellow_ball)*_align_y;
 
    start_profile_timer("DP rail drawing");
-   int draw_tinted = 0;
+   //int draw_tinted = 0;
    ALLEGRO_BITMAP *image_to_use = NULL;
    for (int i=0; i<(int)track_rail_point.size(); i++)
    {
@@ -1416,9 +1416,6 @@ void draw_hud()
    al_use_transform(&transform);
 
    
-   double lap_so_far = 0;
-   
-
   int text_y = 40;
   int horizontal_screen_padding = 100;
 
@@ -1521,7 +1518,6 @@ void update_racer_and_track(Racer *r, Track *track) // includes masking
 
    vec2d player_pos = start_point;
    vec2d player_vel = end_point - start_point;
-   vec2d player_end_pos = end_point;
 
 
    //player.position = end_point;
@@ -2478,7 +2474,7 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
 
          if (fmod(track_begin_notification_counter, 0.1f) < 0.05)
          {
-            ALLEGRO_COLOR color = al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter);
+            //ALLEGRO_COLOR color = al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter);
             int font_size = -30;
             draw_text_with_letter_spacing(font_size, al_color_name("white"), 0, 250-300 + screen_center_y, 50, fonts["venus_rising_rg.ttf 30"], lap_string.c_str());
 
@@ -2622,8 +2618,6 @@ al_orthographic_transform(&t, -al_get_bitmap_width(bitmap), al_get_bitmap_height
 void draw_gl_projection(Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track_)
 {
    setup_projection_SCENE(camera3, bitmap, NULL);
-   int width = al_get_bitmap_width(bitmap);
-   int height = al_get_bitmap_height(bitmap);
 
    Model3D &cube_model = *models["rounded_unit_cube-01.obj"];
    cube_model.draw();
@@ -2722,7 +2716,7 @@ public:
       float racer_speed = racer->velocity_magnitude;
       good_camera->z += 100 + 30*(4.0-racer_speed);
       float camera_y = 550 - 65*racer_speed;  // higher numbers (400) mean flatter, more birds-eye perspective
-      float track_y_value = 50 + 50*(4.0-racer_speed) + (1.0-camera->zoom)*1000;
+      //float track_y_value = 50 + 50*(4.0-racer_speed) + (1.0-camera->zoom)*1000;
 
       camera3.spin = -camera->rotation + FULL_ROTATION/2;
       camera3.stepout = vec3d(0, 0, 10 + camera_y * 0.05);
@@ -2764,4 +2758,6 @@ int main(int argc, char **argv)
    framework.run_loop();
 
    destroy_game();
+
+   return 0;
 }
