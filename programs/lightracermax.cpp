@@ -2134,7 +2134,6 @@ void destroy_game()
    samples.clear();
    fonts.clear();
    bitmaps.clear();
-   models.clear();
    std::cout << CONSOLE_COLOR_YELLOW << "...done." << CONSOLE_COLOR_DEFAULT << std::endl;
 }
 
