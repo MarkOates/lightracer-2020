@@ -90,6 +90,10 @@ ALLEGRO_SAMPLE_INSTANCE *instance_hit_soft = nullptr;
 
 
 
+ALLEGRO_BITMAP *black_screen_overlay = nullptr;
+
+
+
 void play_hit_bad()
 {
     al_stop_sample_instance(instance_hit_bad);
@@ -141,6 +145,29 @@ bool final_course = false;
 
 float lap_notification_counter = 0.0;
 float track_begin_notification_counter = 0.0;
+
+
+void init_black_screen_overlay()
+{
+   ALLEGRO_STATE previous_bitmap_state;
+   al_store_state(&previous_bitmap_state, ALLEGRO_STATE_TARGET_BITMAP);
+
+   black_screen_overlay = al_create_bitmap(SCREEN_W/3, SCREEN_H/3);
+   al_set_target_bitmap(black_screen_overlay);
+   al_clear_to_color(al_color_name("white"));
+
+   al_restore_state(&previous_bitmap_state);
+}
+
+
+void draw_black_screen_overlay(ALLEGRO_COLOR color)
+{
+   static int NO_FLAGS = 0;
+   al_draw_tinted_scaled_bitmap(black_screen_overlay, color,
+      0, 0, al_get_bitmap_width(black_screen_overlay), al_get_bitmap_height(black_screen_overlay),
+      0, 0, SCREEN_W, SCREEN_H, NO_FLAGS);
+}
+
 
 
 void restart_music()
@@ -2569,6 +2596,8 @@ bool create_random_track(Track *t, int num_segments)
 
 void init_game()
 {
+   init_black_screen_overlay();
+
    std::cout << "start of bitmap bin path setting" << std::endl;
    bitmaps.set_path("data/images");
    samples.set_path("data/sounds");
@@ -2909,9 +2938,13 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
    static ALLEGRO_FONT *font_regular = fonts["venus_rising_rg.ttf 28"];
    static ALLEGRO_FONT *font_large = fonts["venus_rising_rg.ttf 50"];
 
+
+   start_profile_timer("WHOLE UPDATE");
+   al_clear_to_color(al_color_name("black"));
+
+
    if (logo_showing)
    {
-      al_clear_to_color(al_color_name("black"));
       ALLEGRO_BITMAP *logo_img = bitmaps.auto_get("lightracer-max-logo-02.png");
       al_draw_scaled_rotated_bitmap(logo_img, al_get_bitmap_width(logo_img)/2, al_get_bitmap_height(logo_img)/2,
          screen_center_x, (250 - 300) + screen_center_y, logo_scale, logo_scale, 0, 0);
@@ -2921,16 +2954,13 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
       //al_draw_text(fonts["venus_rising_rg.ttf", -25), al_color_name("white"),
          //screen_center_x, (375 - 300) + screen_center_y + 20, ALLEGRO_ALIGN_CENTRE, "press ANY KEY to BEGIN");
 
-      al_draw_filled_rectangle(0, 0, SCREEN_W, SCREEN_H, al_map_rgba_f(0, 0, 0, foreground_black_opacity));
+      draw_black_screen_overlay(al_map_rgba_f(0, 0, 0, foreground_black_opacity));
       return;
    }
 
    delay_time_since_last_affect -= 0.2;
    if (delay_time_since_last_affect < 0) delay_time_since_last_affect = -0.1f;
 
-
-   start_profile_timer("WHOLE UPDATE");
-   al_clear_to_color(al_color_name("black"));
 
 
 
@@ -2966,8 +2996,10 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
    al_identity_transform(&ident);
    al_use_transform(&ident);
 
-   al_draw_filled_rectangle(0, 0, SCREEN_W, SCREEN_H, al_map_rgba_f(0, 0, 0, foreground_black_opacity));
-   al_draw_filled_rectangle(0, 0, SCREEN_W, SCREEN_H, al_map_rgba_f(foreground_white_opacity, foreground_white_opacity, foreground_white_opacity, foreground_white_opacity));
+   if (foreground_black_opacity >= 0.01) draw_black_screen_overlay(al_map_rgba_f(0, 0, 0, foreground_black_opacity));
+
+   ALLEGRO_COLOR __foreground_color = al_map_rgba_f(foreground_white_opacity, foreground_white_opacity, foreground_white_opacity, foreground_white_opacity);
+   draw_black_screen_overlay(__foreground_color);
 
 
    if (game_won)
