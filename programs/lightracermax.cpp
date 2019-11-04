@@ -2127,6 +2127,19 @@ void init_game()
 }
 
 
+
+void destroy_game()
+{
+   std::cout << CONSOLE_COLOR_YELLOW << "Shutting down game..." << CONSOLE_COLOR_DEFAULT << std::endl;
+   samples.clear();
+   fonts.clear();
+   bitmaps.clear();
+   models.clear();
+   std::cout << CONSOLE_COLOR_YELLOW << "...done." << CONSOLE_COLOR_DEFAULT << std::endl;
+}
+
+
+
 void key_char_func(ALLEGRO_EVENT *current_event)
 {
    //z.update();
@@ -2754,4 +2767,6 @@ int main(int argc, char **argv)
    lightracer_max.initialize();
 
    framework.run_loop();
+
+   destroy_game();
 }
