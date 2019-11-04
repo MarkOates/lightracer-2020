@@ -2946,7 +2946,8 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
    if (logo_showing)
    {
       ALLEGRO_BITMAP *logo_img = bitmaps.auto_get("lightracer-max-logo-02.png");
-      al_draw_scaled_rotated_bitmap(logo_img, al_get_bitmap_width(logo_img)/2, al_get_bitmap_height(logo_img)/2,
+      ALLEGRO_COLOR logo_fade_opacity = al_map_rgba_f(1.0 - foreground_black_opacity, 1.0 - foreground_black_opacity, 1.0 - foreground_black_opacity, 1.0 - foreground_black_opacity);
+      al_draw_tinted_scaled_rotated_bitmap(logo_img, logo_fade_opacity, al_get_bitmap_width(logo_img)/2, al_get_bitmap_height(logo_img)/2,
          screen_center_x, (250 - 300) + screen_center_y, logo_scale, logo_scale, 0, 0);
 
       int font_size = -25;
@@ -2954,7 +2955,7 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
       //al_draw_text(fonts["venus_rising_rg.ttf", -25), al_color_name("white"),
          //screen_center_x, (375 - 300) + screen_center_y + 20, ALLEGRO_ALIGN_CENTRE, "press ANY KEY to BEGIN");
 
-      draw_black_screen_overlay(al_map_rgba_f(0, 0, 0, foreground_black_opacity));
+      //draw_black_screen_overlay(al_map_rgba_f(0, 0, 0, foreground_black_opacity));
       return;
    }
 
@@ -2996,10 +2997,10 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
    al_identity_transform(&ident);
    al_use_transform(&ident);
 
-   if (foreground_black_opacity >= 0.01) draw_black_screen_overlay(al_map_rgba_f(0, 0, 0, foreground_black_opacity));
+   //if (foreground_black_opacity >= 0.01) draw_black_screen_overlay(al_map_rgba_f(0, 0, 0, foreground_black_opacity));
 
-   ALLEGRO_COLOR __foreground_color = al_map_rgba_f(foreground_white_opacity, foreground_white_opacity, foreground_white_opacity, foreground_white_opacity);
-   draw_black_screen_overlay(__foreground_color);
+   //ALLEGRO_COLOR __foreground_color = al_map_rgba_f(foreground_white_opacity, foreground_white_opacity, foreground_white_opacity, foreground_white_opacity);
+   //draw_black_screen_overlay(__foreground_color);
 
 
    if (game_won)
