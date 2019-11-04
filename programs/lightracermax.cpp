@@ -1318,7 +1318,7 @@ void draw_health_bar(int text_y, int horizontal_screen_padding)
    int health_bar_height = 10;
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
 
-   std::string lives_string = "Lives: " + tostring(num_lives);
+   std::string lives_string = "LIV " + tostring(num_lives);
    al_draw_text(font, al_color_name("white"), horizontal_screen_padding, text_y, 0, lives_string.c_str());
 
    float health_percentage = racer->health/racer->max_health;
@@ -1329,8 +1329,8 @@ void draw_health_bar(int text_y, int horizontal_screen_padding)
    else if (health_percentage > 0.3) health_bar_color = al_color_name("orange");
    else health_bar_color = al_color_name("red");
 
-   int lives_text_length = 170;
-   int bar_length = 220;
+   int lives_text_length = 120;
+   int bar_length = 200;
    int bar_y = text_y + al_get_font_ascent(font) / 2 + 4;
    int bar_x = horizontal_screen_padding + lives_text_length + 4;
 
@@ -1379,32 +1379,34 @@ void draw_num_segments(int text_y, int num_segments)
 
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
-   al_draw_text(font, color, SCREEN_W - 300 - 300, text_y, ALLEGRO_ALIGN_CENTER, string_to_write.c_str());
+   al_draw_text(font, color, SCREEN_W - 300 - 235, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
 }
 
 
 void draw_num_laps(int text_y, int current_lap_num, int total_num_laps)
 {
    std::string string_to_write = "";
+   std::stringstream ss;
 
+   ss << "LAP ";
    if (current_lap_num < total_num_laps)
    {
-      std::stringstream ss;
       ss << current_lap_num << " / " << total_num_laps;
-      string_to_write = ss.str();
    }
    else if (current_lap_num == total_num_laps)
    {
-      string_to_write = "FIN";
+      ss << "FIN";
    }
    else
    {
-      string_to_write = "";
+      ss << "-";
    }
+   string_to_write = ss.str();
+
 
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
-   al_draw_text(font, color, SCREEN_W - 300 - 300 - 200, text_y, ALLEGRO_ALIGN_CENTER, string_to_write.c_str());
+   al_draw_text(font, color, SCREEN_W - 300 - 300 - 200, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
 }
 
 
