@@ -395,7 +395,7 @@ void zoom_normal()
 #define LEFT_RAIL 1
 #define RIGHT_RAIL 2
 
-class SegmentInfo
+class LineSegmentInfo
 {
 public:
    vec2d start;
@@ -407,8 +407,8 @@ public:
    float radius;
    float length;
 
-   SegmentInfo() {}
-   SegmentInfo(vec2d &start, vec2d &end)
+   LineSegmentInfo() {}
+   LineSegmentInfo(vec2d &start, vec2d &end)
    {
       this->start = start;
       this->end = end;
@@ -501,17 +501,17 @@ public:
    //vec2d displacement;
 
    std::vector<vec2d *> left_rail;
-   std::vector<SegmentInfo *> left_rail_segment;
+   std::vector<LineSegmentInfo *> left_rail_segment;
    float left_rail_length;
 
    std::vector<vec2d *> right_rail;
-   std::vector<SegmentInfo *> right_rail_segment;
+   std::vector<LineSegmentInfo *> right_rail_segment;
    float right_rail_length;
 
 
    vec2d *entrance_p1;
    vec2d *entrance_p2;
-   SegmentInfo *entrance_segment_info;
+   LineSegmentInfo *entrance_segment_info;
 
 
    int color_type;
@@ -707,12 +707,12 @@ public:
       for (int i=0; i<(int)left_rail_segment.size(); i++) delete left_rail_segment[i];
 
       left_rail_segment.clear();
-      left_rail_segment.push_back(new SegmentInfo());
+      left_rail_segment.push_back(new LineSegmentInfo());
       left_rail_length = 0;
 
       for (int i=1; i<(int)left_rail.size(); i++)
       {
-         left_rail_segment.push_back(new SegmentInfo(*left_rail[i-1], *left_rail[i]));
+         left_rail_segment.push_back(new LineSegmentInfo(*left_rail[i-1], *left_rail[i]));
          left_rail_length += left_rail_segment.back()->length;
       }
 
@@ -722,12 +722,12 @@ public:
       for (int i=0; i<(int)right_rail_segment.size(); i++) delete right_rail_segment[i];
 
       right_rail_segment.clear();
-      right_rail_segment.push_back(new SegmentInfo());
+      right_rail_segment.push_back(new LineSegmentInfo());
       right_rail_length = 0;
 
       for (int i=1; i<(int)right_rail.size(); i++)
       {
-         right_rail_segment.push_back(new SegmentInfo(*right_rail[i-1], *right_rail[i]));
+         right_rail_segment.push_back(new LineSegmentInfo(*right_rail[i-1], *right_rail[i]));
          right_rail_length += right_rail_segment.back()->length;
       }
 
@@ -738,12 +738,12 @@ public:
 
       //entrance_p1 = new vec2d(0, 1);
       //entrance_p2 = new vec2d(1, 0);
-      //entrance_segment_info = new SegmentInfo(*entrance_p1, *entrance_p2);
+      //entrance_segment_info = new LineSegmentInfo(*entrance_p1, *entrance_p2);
 
       entrance_p1 = left_rail.back();
       entrance_p2 = right_rail.front();
       if (entrance_segment_info) delete entrance_segment_info;
-      entrance_segment_info = new SegmentInfo(*entrance_p1, *entrance_p2);
+      entrance_segment_info = new LineSegmentInfo(*entrance_p1, *entrance_p2);
    }
 };
 
@@ -905,7 +905,7 @@ public:
    vec2d exit_p2;
    vec2d enter_p1;
    vec2d enter_p2;
-   SegmentInfo *exit_segment_info;
+   LineSegmentInfo *exit_segment_info;
    double start_time;
 
    std::vector<TrackSegment *> segment;
@@ -943,7 +943,7 @@ public:
    void update_exit_slope_info()
    {
       if (exit_segment_info) delete exit_segment_info;
-      exit_segment_info = new SegmentInfo(exit_p1, exit_p2);
+      exit_segment_info = new LineSegmentInfo(exit_p1, exit_p2);
    }
 
    void __HACK_finalize_track()
@@ -2102,7 +2102,7 @@ void update_racer_and_track(Racer *r, Track *track) // includes masking
 
       vec2d __start = player_pos;
       vec2d __end = player_pos+player_vel*time_left_in_timestep;
-      SegmentInfo motion_segment(__start, __end);
+      LineSegmentInfo motion_segment(__start, __end);
 
       vec2d &E = motion_segment.from_start;//*terrain.point[i] - *terrain.point[i-1];
       vec2d &P1 = motion_segment.perpendicular;//Vec2d(-F.y, F.x);
