@@ -1,3 +1,6 @@
+bool development = true;
+
+
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
@@ -2520,6 +2523,15 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
 
 
 
+void draw_gl_projection(ALLEGRO_BITMAP *bitmap)
+{
+   int width = al_get_bitmap_width(bitmap);
+   int height = al_get_bitmap_height(bitmap);
+   if (development) al_draw_text(fonts["venus_rising_rg.ttf 30"], al_color_name("white"), width/2, height/2 - 20, ALLEGRO_ALIGN_CENTER, "Hello Backbuffer Sub");
+}
+
+
+
 #include "AllegroFlare/Framework.hpp"
 #include "AllegroFlare/Screen.hpp"
 
@@ -2528,18 +2540,26 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
 class LightracerMax : public Screen
 {
 public:
+   ALLEGRO_BITMAP *sub_bitmap_backbuffer_of_display_for_gl_projection;
+
    LightracerMax(Framework &framework, Screens &screens, Display *display)
       : Screen(framework, screens, display)
+      , sub_bitmap_backbuffer_of_display_for_gl_projection(nullptr)
    {}
 
    void initialize()
    {
       init_game();
+
+      ALLEGRO_BITMAP *main_target = al_get_backbuffer(display->al_display);
+      sub_bitmap_backbuffer_of_display_for_gl_projection = al_create_sub_bitmap(main_target,
+         0, 0, al_get_bitmap_width(main_target), al_get_bitmap_height(main_target));
    }
 
    void primary_timer_func() override
    {
       game_timer_func(framework.current_event);
+      draw_gl_projection(sub_bitmap_backbuffer_of_display_for_gl_projection);
    }
 
    void key_up_func() override
