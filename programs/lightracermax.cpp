@@ -482,41 +482,6 @@ void mark_particle_unused(particle_effect *p)
 
 
 
-void create_particle_spread(float x, float y)
-{
-   return;
-
-   particle_effect *particle = nullptr;
-   int num_balls_in_spread = 20;
-   for (int i=0; i<num_balls_in_spread; i++)
-   {
-      particle = particle_effect::get_one();
-      if (!particle) return;
-      particle->position = vec2d(x, y);
-      particle->position_z = 0;
-      particle->opacity = 1.0;
-      particle->start_time = al_get_time();
-      particle->duration = 10.0;
-      particle->in_use = true;
-   // potential crash right here
-      //if () particle->position
-      particle->image = bitmaps.auto_get("yellow_ball.png");
-
-      float rotation = FULL_ROTATION/num_balls_in_spread * i;
-
-      particle->velocity = vec2d(sin(rotation), cos(rotation)) * 10;
-      particle->opacity = 0.5;
-
-   }
-
-      //std::cout << "PARTICLE!" << std::endl;
-}
-
-
-
-
-
-
 enum { COLOR_TYPE_WHITE = 0,
    COLOR_TYPE_OFF,
    COLOR_TYPE_YELLOW,
