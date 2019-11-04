@@ -952,8 +952,6 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
 
    if (draw_particles)
    {
-
-      int particle_draw_count = 0;
       for (int i=0; i<(int)particle_effect::particle.size(); i++)
       {
          particle_effect *particle = particle_effect::particle[i];
@@ -978,8 +976,6 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
                                    _scale_y*depth_scale,
                                    _rotation,
                                    NO_FLAGS);
-
-            //particle_draw_count++;
          }
       }
    }
