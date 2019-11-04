@@ -202,7 +202,7 @@ double OMG_DeltaTime = 1.0;
 float finish_track_animation_counter = 1.0;
 bool track_completed = false;
 
-int num_laps_to_win = 3;
+int num_laps_to_win = 4;
 
 float foreground_black_opacity = 1.0;
 float foreground_white_opacity = 0.0;
@@ -1975,15 +1975,19 @@ void draw_num_laps(int text_y, int current_lap_num, int total_num_laps)
 {
    std::string string_to_write = "";
 
-   if (current_lap_num <= total_num_laps)
+   if (current_lap_num < total_num_laps)
    {
       std::stringstream ss;
       ss << current_lap_num << " / " << total_num_laps;
       string_to_write = ss.str();
    }
-   else
+   else if (current_lap_num == total_num_laps)
    {
       string_to_write = "FIN";
+   }
+   else
+   {
+      string_to_write = "";
    }
 
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
