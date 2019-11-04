@@ -46,7 +46,7 @@ public:
 
    void clear();
    void draw();
-   void draw_projected(CheapCamera *cam, float racer_facing_angle, float racer_x, float racer_y, float racer_speed);;
+   void draw_projected(float racer_facing_angle, float racer_x, float racer_y, float racer_speed);;
    void update_exit_slope_info();
    void __HACK_finalize_track();
    void make_segments_easy_where_player_died();

@@ -751,7 +751,7 @@ void fill_track_rail_points()
 
 
 
-void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float racer_x, float racer_y, float racer_speed)
+void Track::draw_projected(float racer_direction_angle, float racer_x, float racer_y, float racer_speed)
 {
    start_profile_timer("DP 1");
    //////////////////////////
@@ -767,7 +767,7 @@ void Track::draw_projected(CheapCamera *cam, float racer_direction_angle, float 
    good_camera->z += 100 + 30*(4.0-racer_speed);
 
    float camera_y = 550 - 65*racer_speed;  // higher numbers (400) mean flatter, more birds-eye perspective
-   float track_y_value = 50 + 50*(4.0-racer_speed) + (1.0-cam->zoom)*1000;
+   float track_y_value = 50 + 50*(4.0-racer_speed) + (1.0-camera->zoom)*1000;
    float multiplier = 0.15;
 
    //////////////////////////
@@ -2408,7 +2408,7 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
    stop_profile_timer("particle update");
 
    start_profile_timer("draw projected");
-   track->draw_projected(camera, racer->direction_angle, racer->position.x, racer->position.y, racer->velocity_magnitude);
+   track->draw_projected(racer->direction_angle, racer->position.x, racer->position.y, racer->velocity_magnitude);
    stop_profile_timer("draw projected");
 
    draw_hud();
