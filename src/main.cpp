@@ -1101,12 +1101,6 @@ public:
       //num_laps++;
       //lap_time = al_get_time();
       lap_time.push_back(al_get_time());
-
-      float start_time = al_get_time();
-      float end_time = start_time + 3.0;
-      motion.animate(&lap_notification_counter, 1.0, 0.0, start_time, end_time, interpolator::quadruple_fast_out);
-
-      if ((int)lap_time.size() > num_laps_to_win) complete_track();
    }
 
    void draw()
@@ -2316,6 +2310,12 @@ void update_racer_and_track(Racer *r, Track *track) // includes masking
          
          player.complete_lap();
 
+         if ((int)player.lap_time.size() >= num_laps_to_win) complete_track();
+
+         float start_time = al_get_time();
+         float end_time = start_time + 3.0;
+         motion.animate(&lap_notification_counter, 1.0, 0.0, start_time, end_time, interpolator::quadruple_fast_out);
+
          flash_white();
          
          // rotate velocity and direction
@@ -3027,7 +3027,7 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
       {
 
          std::string lap_string = "LAP " + tostring(racer->lap_time.size()+1);
-         if ((int)racer->lap_time.size() == num_laps_to_win) lap_string = "FINAL LAP";
+         if ((int)racer->lap_time.size() == (num_laps_to_win-1)) lap_string = "FINAL LAP";
 
 
          int font_size = -30;
