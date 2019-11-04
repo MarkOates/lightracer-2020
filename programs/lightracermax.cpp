@@ -757,7 +757,7 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
    //////////////////////////
    /* modify perspective angles with these!! */
    
-   vec2d camera_target_offset = vec2d::polar_coords(racer_direction_angle, 50);
+   //vec2d camera_target_offset = vec2d::polar_coords(racer_direction_angle, 50);
 
    vec2d racer_non_adjusted_pos(racer_x, racer_y);
 
