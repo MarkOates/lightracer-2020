@@ -2610,12 +2610,16 @@ al_orthographic_transform(&t, -al_get_bitmap_width(bitmap), al_get_bitmap_height
 
 
 
-void draw_gl_projection(Camera3 &camera3, ALLEGRO_BITMAP *bitmap)
+void draw_gl_projection(Camera3 &camera3, ALLEGRO_BITMAP *bitmap, ModelBin &models)
 {
    setup_projection_SCENE(camera3, bitmap, NULL);
    int width = al_get_bitmap_width(bitmap);
    int height = al_get_bitmap_height(bitmap);
+
    if (development) al_draw_text(fonts["venus_rising_rg.ttf 30"], al_color_name("white"), width/2, height/2 - 20, ALLEGRO_ALIGN_CENTER, "Hello Backbuffer Sub");
+
+   Model3D &cube_model = *models["rounded_unit_cube-01.obj"];
+   cube_model.draw();
 }
 
 
@@ -2643,6 +2647,9 @@ public:
    {
       init_game();
 
+      camera3.stepout = vec3d(0, 0, 10);
+		camera3.tilt = 0.6;
+
       models.set_path("data/models");
       ALLEGRO_BITMAP *main_target = al_get_backbuffer(display->al_display);
       sub_bitmap_backbuffer_of_display_for_gl_projection = al_create_sub_bitmap(main_target,
@@ -2653,10 +2660,12 @@ public:
    {
       game_timer_func(framework.current_event);
 
+      camera3.spin += 0.02;
+
       ALLEGRO_STATE previous_bitmap_state;
       al_store_state(&previous_bitmap_state, ALLEGRO_STATE_TARGET_BITMAP);
       al_set_target_bitmap(sub_bitmap_backbuffer_of_display_for_gl_projection);
-      draw_gl_projection(camera3, sub_bitmap_backbuffer_of_display_for_gl_projection);
+      draw_gl_projection(camera3, sub_bitmap_backbuffer_of_display_for_gl_projection, models);
       al_restore_state(&previous_bitmap_state);
    }
 
