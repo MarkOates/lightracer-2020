@@ -1,4 +1,25 @@
-#include "old_framework.h"
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_color.h>
+#include <allegro5/allegro_memfile.h>
+#include <allegro5/allegro_image.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_native_dialog.h>
+
+#include "AllegroFlare/FontBin.hpp"
+#include "AllegroFlare/SampleBin.hpp"
+#include "AllegroFlare/Useful.hpp"
+#include "AllegroFlare/Vec2D.hpp"
+using AllegroFlare::vec2d;
+//#include "position2d.h"
+//#include "object2d.h"
+#include "AllegroFlare/Interpolators.hpp"
+#include "AllegroFlare/Motion.hpp"
+
+
 
 #define SCREEN_W 1920
 #define SCREEN_H 1080
@@ -2656,7 +2677,7 @@ void init_game()
 }
 
 
-void key_char_func()
+void key_char_func(ALLEGRO_EVENT *current_event)
 {
    //z.update();
 
@@ -2682,7 +2703,7 @@ void key_char_func()
 }
 
 
-void racer__on_key_up()
+void racer__on_key_up(ALLEGRO_EVENT *current_event)
 {
    if (racer->dead) return;
 
@@ -2704,7 +2725,7 @@ void racer__on_key_up()
 }
 
 
-void racer__on_key_down()
+void racer__on_key_down(ALLEGRO_EVENT *current_event)
 {
    if (racer->dead) return;
 
@@ -2730,20 +2751,24 @@ void racer__on_key_down()
 
 
 
-void key_up_func()
+void key_up_func(ALLEGRO_EVENT *current_event)
 {
-   racer__on_key_up();
+   racer__on_key_up(current_event);
 }
 
 
-void key_down_func()
+#include "AllegroFlare/Framework.hpp"
+
+
+
+void key_down_func(Framework &framework, ALLEGRO_EVENT *current_event)
 {
-   racer__on_key_down();
+   racer__on_key_down(current_event);
 
    switch(current_event->keyboard.keycode)
    {
    case ALLEGRO_KEY_ESCAPE:
-      current_framework->abort_program = true;
+      framework.shutdown_program = true;
       break;
    case ALLEGRO_KEY_ENTER:
       if (game_over || game_won)
@@ -2874,7 +2899,7 @@ std::string get_number_string(int num)
 
 
 
-void game_timer_func()
+void game_timer_func(ALLEGRO_EVENT *current_event)
 {
    motion.update(al_get_time());
 
@@ -3047,17 +3072,56 @@ void game_timer_func()
 
 
 
+#include "AllegroFlare/Framework.hpp"
+#include "AllegroFlare/Screen.hpp"
+
+
+
+class LightracerMax : public Screen
+{
+public:
+   LightracerMax(Framework &framework, Screens &screens, Display *display)
+      : Screen(framework, screens, display)
+   {}
+
+   void initialize()
+   {
+      init_game();
+   }
+
+   void primary_timer_func() override
+   {
+      game_timer_func(framework.current_event);
+   }
+
+   void key_up_func() override
+   {
+      ::key_up_func(framework.current_event);
+   }
+
+   void key_down_func() override
+   {
+      ::key_down_func(framework, framework.current_event);
+   }
+
+   void key_char_func() override
+   {
+      ::key_char_func(framework.current_event);
+   }
+};
+
+
+
 
 int main(int argc, char **argv)
 {
-   OldFramework f(SCREEN_W, SCREEN_H);
-   //init_profiling();
-   init_game();
-   f.timer_func = game_timer_func;
-   f.key_up_func = key_up_func;
-   f.key_down_func = key_down_func;
-   f.key_char_func = key_char_func;
-   return f.run_loop();
+   Screens screens;
+   Framework framework(screens);
+   framework.initialize();
+   Display *display = framework.create_display(SCREEN_W, SCREEN_H);
 
-   bitmaps.clear();
+   LightracerMax lightracer_max(framework, screens, display);
+   lightracer_max.initialize();
+
+   framework.run_loop();
 }
