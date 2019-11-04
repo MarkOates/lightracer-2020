@@ -2939,9 +2939,6 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
    stop_profile_timer("racer/track");
 
 
-   int horizon_height = camera->rotation;
-   al_draw_filled_rectangle(0, 0, horizon_height, SCREEN_W, al_color_name("gray"));
-
    camera->x = racer->position.x;
    camera->y = racer->position.y;
    camera->rotation = racer->direction_angle;
