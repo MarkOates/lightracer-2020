@@ -47,6 +47,7 @@ ALLEGRO_LIBS_LINK_MAIN_ARGS := $(ALLEGRO_LIBS_MAIN:%=-l%)
 
 
 TERMINAL_COLOR_YELLOW=\033[1;33m
+TERMINAL_COLOR_GREEN=\033[1;92m
 TERMINAL_COLOR_RESET=\033[0m
 
 
@@ -58,28 +59,25 @@ endef
 
 
 
+define output_success_message
+	@echo "\n"
+	@echo "$(TERMINAL_COLOR_GREEN)🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫$(TERMINAL_COLOR_RESET)"
+	@echo "$(TERMINAL_COLOR_GREEN)🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 PASS! 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫$(TERMINAL_COLOR_RESET)"
+	@echo "$(TERMINAL_COLOR_GREEN)🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫 🀫$(TERMINAL_COLOR_RESET)"
+endef
+
+
+
 .PHONY: main quintessence programs objects examples library tests run_tests
 
 
 
 main:
-	#$(call output_terminal_message,"Compose componets from all quintessence files")
-	#@make quintessences
 	$(call output_terminal_message,"Make all the component object files")
 	@make objects
-	#$(call output_terminal_message,"Make all the test objects")
-	#@make test_objects
-	#$(call output_terminal_message,"Make all the test executables")
-	#@make tests
-	#$(call output_terminal_message,"Run the tests for all the components")
-	#@make run_tests
-	#$(call output_terminal_message,"Build the library")
-	#@make library
 	$(call output_terminal_message,"Make all the programs")
 	@make programs
-	#$(call output_terminal_message,"Make all the example programs")
-	#@make examples
-	$(call output_terminal_message,"🀫 🀫 🀫 🀫 🀫 🀫 🀫 FINISHED! 🀫 🀫 🀫 🀫 🀫 🀫 🀫")
+	$(call output_success_message)
 
 
 
