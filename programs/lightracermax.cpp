@@ -1431,129 +1431,132 @@ void update_racer_and_track(Racer *racer, Track *track) // includes masking
 
    while(time_left_in_timestep > 0)
    {
-      entrance_that_collides = 0;
       //
       // find the soonest intersection time
       //
 
-      float collision_time = 1.0;
-
-      vec2d __start = player_pos;
-      vec2d __end = player_pos+player_vel*time_left_in_timestep;
-      LineSegmentInfo motion_segment(__start, __end);
-
-      vec2d &E = motion_segment.from_start;
-      vec2d &P1 = motion_segment.perpendicular;
-      terrain_that_collides = nullptr;
-      collides_through_exit = false;
-      collides_through_entrance = false;
-
-      int track_segment_start = std::max(index_of_last_track_segment_that_collides-2, 0);
-      int track_segment_end = std::min(index_of_last_track_segment_that_collides+2, (int)track->segment.size()-1);
-
-      for (int t=track_segment_start; t<(int)(track_segment_end+1); t++)
+      float minimum_collision_time_normal_during_this_pass = 1.0;
       {
-         // just the left rails first
+         entrance_that_collides = 0;
+         minimum_collision_time_normal_during_this_pass = 1.0;
 
-         TrackSegment *terrain = track->segment[t];
-         
-         for (int i=1; i<(int)terrain->left_rail.size(); i++)
+         vec2d __start = player_pos;
+         vec2d __end = player_pos+player_vel*time_left_in_timestep;
+         LineSegmentInfo motion_segment(__start, __end);
+
+         vec2d &E = motion_segment.from_start;
+         vec2d &P1 = motion_segment.perpendicular;
+         terrain_that_collides = nullptr;
+         collides_through_exit = false;
+         collides_through_entrance = false;
+
+         int track_segment_start = std::max(index_of_last_track_segment_that_collides-2, 0);
+         int track_segment_end = std::min(index_of_last_track_segment_that_collides+2, (int)track->segment.size()-1);
+
+         for (int t=track_segment_start; t<(int)(track_segment_end+1); t++)
          {
-            vec2d &F = terrain->left_rail_segment[i]->from_start;
-            vec2d &P2 = terrain->left_rail_segment[i]->perpendicular;
+            // just the left rails first
 
-            float h = ((motion_segment.start - terrain->left_rail_segment[i]->start) * P1) / (F * P1);
-            float g = ((terrain->left_rail_segment[i]->start - motion_segment.start) * P2) / (E * P2);
-
-            if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
+            TrackSegment *terrain = track->segment[t];
+            
+            for (int i=1; i<(int)terrain->left_rail.size(); i++)
             {
-               // there is a collision in this time-step
-               // if it's less than another collision that occured, set the values
-               if (g < collision_time)
+               vec2d &F = terrain->left_rail_segment[i]->from_start;
+               vec2d &P2 = terrain->left_rail_segment[i]->perpendicular;
+
+               float h = ((motion_segment.start - terrain->left_rail_segment[i]->start) * P1) / (F * P1);
+               float g = ((terrain->left_rail_segment[i]->start - motion_segment.start) * P2) / (E * P2);
+
+               if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
                {
-                  collision_time = g;
-                  segment_that_collides = i;
-                  point_of_intersection = g*motion_segment.from_start + motion_segment.start;
-                  terrain_that_collides = terrain;
-                  terrain_segment_where_player_collides = t;
-                  collides_on_left_terrain = true;
-                  collides_through_exit = false;
-                  collides_through_entrance = false;
+                  // there is a collision in this time-step
+                  // if it's less than another collision that occured, set the values
+                  if (g < minimum_collision_time_normal_during_this_pass)
+                  {
+                     minimum_collision_time_normal_during_this_pass = g;
+                     segment_that_collides = i;
+                     point_of_intersection = g*motion_segment.from_start + motion_segment.start;
+                     terrain_that_collides = terrain;
+                     terrain_segment_where_player_collides = t;
+                     collides_on_left_terrain = true;
+                     collides_through_exit = false;
+                     collides_through_entrance = false;
+                  }
                }
             }
-         }
 
-         // check the exit
+            // check the exit
 
-         vec2d &F = track->exit_segment_info->from_start;
-         vec2d &P2 = track->exit_segment_info->perpendicular;
+            vec2d &F = track->exit_segment_info->from_start;
+            vec2d &P2 = track->exit_segment_info->perpendicular;
 
-         float h = ((motion_segment.start - track->exit_segment_info->start) * P1) / (F * P1);
-         float g = ((track->exit_segment_info->start - motion_segment.start) * P2) / (E * P2);
-
-         if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
-         {
-            // there is a collision in this time-step
-            // if it's less than another collision that occured, set the values
-            if (g < collision_time)
-            {
-               collides_through_exit = true;
-               collision_time = g;
-               point_of_intersection = g*motion_segment.from_start + motion_segment.start;
-               terrain_that_collides = nullptr;
-               collides_through_entrance = false;
-            }
-         }
-
-         // check the entrance to the next segment
-
-         {
-            vec2d &F = track->segment[t]->entrance_segment_info->from_start;
-            vec2d &P2 = track->segment[t]->entrance_segment_info->perpendicular;
-
-            float h = ((motion_segment.start - track->segment[t]->entrance_segment_info->start) * P1) / (F * P1);
-            float g = ((track->segment[t]->entrance_segment_info->start - motion_segment.start) * P2) / (E * P2);
+            float h = ((motion_segment.start - track->exit_segment_info->start) * P1) / (F * P1);
+            float g = ((track->exit_segment_info->start - motion_segment.start) * P2) / (E * P2);
 
             if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
             {
                // there is a collision in this time-step
                // if it's less than another collision that occured, set the values
-               if (g < collision_time)
+               if (g < minimum_collision_time_normal_during_this_pass)
                {
-                  collides_through_entrance = true;
-                  entrance_that_collides = t;
-                  collides_through_exit = false;
-                  collision_time = g;
+                  collides_through_exit = true;
+                  minimum_collision_time_normal_during_this_pass = g;
                   point_of_intersection = g*motion_segment.from_start + motion_segment.start;
                   terrain_that_collides = nullptr;
+                  collides_through_entrance = false;
                }
             }
-         }
 
-         // now the right rails
+            // check the entrance to the next segment
 
-         for (int i=1; i<(int)terrain->right_rail.size(); i++)
-         {
-            vec2d &F = terrain->right_rail_segment[i]->from_start;
-            vec2d &P2 = terrain->right_rail_segment[i]->perpendicular;
-
-            float h = ((motion_segment.start - terrain->right_rail_segment[i]->start) * P1) / (F * P1);
-            float g = ((terrain->right_rail_segment[i]->start - motion_segment.start) * P2) / (E * P2);
-
-            if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
             {
-               // there is a collision in this time-step
-               // if it's less than another collision that occured, set the values
-               if (g < collision_time)
+               vec2d &F = track->segment[t]->entrance_segment_info->from_start;
+               vec2d &P2 = track->segment[t]->entrance_segment_info->perpendicular;
+
+               float h = ((motion_segment.start - track->segment[t]->entrance_segment_info->start) * P1) / (F * P1);
+               float g = ((track->segment[t]->entrance_segment_info->start - motion_segment.start) * P2) / (E * P2);
+
+               if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
                {
-                  collision_time = g;
-                  segment_that_collides = i;
-                  terrain_segment_where_player_collides = t;
-                  point_of_intersection = g*motion_segment.from_start + motion_segment.start;
-                  terrain_that_collides = terrain;
-                  collides_on_left_terrain = false;
-                  collides_through_exit = false;
-                  collides_through_entrance = false;
+                  // there is a collision in this time-step
+                  // if it's less than another collision that occured, set the values
+                  if (g < minimum_collision_time_normal_during_this_pass)
+                  {
+                     collides_through_entrance = true;
+                     entrance_that_collides = t;
+                     collides_through_exit = false;
+                     minimum_collision_time_normal_during_this_pass = g;
+                     point_of_intersection = g*motion_segment.from_start + motion_segment.start;
+                     terrain_that_collides = nullptr;
+                  }
+               }
+            }
+
+            // now the right rails
+
+            for (int i=1; i<(int)terrain->right_rail.size(); i++)
+            {
+               vec2d &F = terrain->right_rail_segment[i]->from_start;
+               vec2d &P2 = terrain->right_rail_segment[i]->perpendicular;
+
+               float h = ((motion_segment.start - terrain->right_rail_segment[i]->start) * P1) / (F * P1);
+               float g = ((terrain->right_rail_segment[i]->start - motion_segment.start) * P2) / (E * P2);
+
+               if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
+               {
+                  // there is a collision in this time-step
+                  // if it's less than another collision that occured, set the values
+                  if (g < minimum_collision_time_normal_during_this_pass)
+                  {
+                     minimum_collision_time_normal_during_this_pass = g;
+                     segment_that_collides = i;
+                     terrain_segment_where_player_collides = t;
+                     point_of_intersection = g*motion_segment.from_start + motion_segment.start;
+                     terrain_that_collides = terrain;
+                     collides_on_left_terrain = false;
+                     collides_through_exit = false;
+                     collides_through_entrance = false;
+                  }
                }
             }
          }
@@ -1564,110 +1567,112 @@ void update_racer_and_track(Racer *racer, Track *track) // includes masking
       // adjust velocities of colliding objects
       // decrement timestep by amount within timestep
       //
-
-      player_pos += player_vel*time_left_in_timestep*collision_time;
-
-      if (collides_through_entrance && (__HACK_entrance_already_collided==0))
       {
-         __HACK_entrance_already_collided++;
-         player_pos += player_vel * 0.01; // < this is a solution that causes a *rare* *rare* bug where the player
-                                  // can escape the track by colliding precicely with the segment entrance and wall
-                                  // 
 
-            index_of_last_track_segment_that_collides = entrance_that_collides;
-            al_stop_sample_instance(passthough_sample_instance);
-            al_play_sample_instance(passthough_sample_instance);
-      }
+         player_pos += player_vel*time_left_in_timestep*minimum_collision_time_normal_during_this_pass;
 
-      if (collides_through_exit)
-      {
-         index_of_last_track_segment_that_collides = 0;
-
-         player_pos = (track->enter_p2 - track->enter_p1) / 2 + track->enter_p1;
-         
-         player.complete_lap();
-
-         if ((int)player.lap_time.size() >= num_laps_to_win) complete_track();
-
-         float start_time = al_get_time();
-         float end_time = start_time + 3.0;
-         motion.animate(&lap_notification_counter, 1.0, 0.0, start_time, end_time, interpolator::quadruple_fast_out);
-
-         flash_white();
-         
-         // rotate velocity and direction
-         player.direction_angle += track->exit_segment_info->from_start.get_angle();
-         player_vel = 
-            vec2d::polar_coords(player.velocity.get_angle() - track->exit_segment_info->from_start.get_angle(), 1);
-      }
-      else if (terrain_that_collides != nullptr) 
-      {
-            if (collides_on_left_terrain) player_pos += terrain_that_collides->left_rail_segment[segment_that_collides]->normal * 0.1;
-            if (!collides_on_left_terrain) player_pos += terrain_that_collides->right_rail_segment[segment_that_collides]->normal * 0.1;
-
-            // this will reflect along the terrain segment (as if a ball bouncing, or light reflecting)
-            if (collides_on_left_terrain) player_vel = reflect(player_vel, terrain_that_collides->left_rail_segment[segment_that_collides]->normal);
-            if (!collides_on_left_terrain) player_vel = reflect(player_vel, terrain_that_collides->right_rail_segment[segment_that_collides]->normal);
-
-
-
-         switch(terrain_that_collides->color_type)
+         if (collides_through_entrance && (__HACK_entrance_already_collided==0))
          {
-         case COLOR_TYPE_RED:
-            player.velocity_magnitude *= 0.95;
-            if (delay_time_since_last_affect < 0)
-            {
-               play_hit_bad();
-               delay_time_since_last_affect = 1.0f;
-               player.health -= 20;
-            }
-            if (player.health < 0) { player.health = 0; kill_player(terrain_segment_where_player_collides); }
-            break;
+            __HACK_entrance_already_collided++;
+            player_pos += player_vel * 0.01; // < this is a solution that causes a *rare* *rare* bug where the player
+                                     // can escape the track by colliding precicely with the segment entrance and wall
+                                     // 
 
-         case COLOR_TYPE_RED_DEATH:
-            player.velocity_magnitude *= 0.95;
-            player.health = 0;
-            play_hit_bad();
-            kill_player(terrain_segment_where_player_collides);
-            break;
+               index_of_last_track_segment_that_collides = entrance_that_collides;
+               al_stop_sample_instance(passthough_sample_instance);
+               al_play_sample_instance(passthough_sample_instance);
+         }
 
-         case COLOR_TYPE_GREEN:
-            if (delay_time_since_last_affect < 0)
-            {
-               delay_time_since_last_affect = 1.0f;
-               player.health += 10.0;
-               play_hit_soft();
-            }
-            if (player.health > player.max_health) player.health = player.max_health;
-            break;
+         if (collides_through_exit)
+         {
+            index_of_last_track_segment_that_collides = 0;
 
-         case COLOR_TYPE_BLUE: // bouncy
-            if (delay_time_since_last_affect < 0)
-            {
-               play_hit_bounce();
-               delay_time_since_last_affect = 1.0f;
-               player.velocity_magnitude = 4.5;
-            }
-            break;
+            player_pos = (track->enter_p2 - track->enter_p1) / 2 + track->enter_p1;
+            
+            player.complete_lap();
 
-         case COLOR_TYPE_YELLOW:
-            player.velocity_magnitude *= 0.95;
-            if (delay_time_since_last_affect < 0)
+            if ((int)player.lap_time.size() >= num_laps_to_win) complete_track();
+
+            float start_time = al_get_time();
+            float end_time = start_time + 3.0;
+            motion.animate(&lap_notification_counter, 1.0, 0.0, start_time, end_time, interpolator::quadruple_fast_out);
+
+            flash_white();
+            
+            // rotate velocity and direction
+            player.direction_angle += track->exit_segment_info->from_start.get_angle();
+            player_vel = 
+               vec2d::polar_coords(player.velocity.get_angle() - track->exit_segment_info->from_start.get_angle(), 1);
+         }
+         else if (terrain_that_collides != nullptr) 
+         {
+               if (collides_on_left_terrain) player_pos += terrain_that_collides->left_rail_segment[segment_that_collides]->normal * 0.1;
+               if (!collides_on_left_terrain) player_pos += terrain_that_collides->right_rail_segment[segment_that_collides]->normal * 0.1;
+
+               // this will reflect along the terrain segment (as if a ball bouncing, or light reflecting)
+               if (collides_on_left_terrain) player_vel = reflect(player_vel, terrain_that_collides->left_rail_segment[segment_that_collides]->normal);
+               if (!collides_on_left_terrain) player_vel = reflect(player_vel, terrain_that_collides->right_rail_segment[segment_that_collides]->normal);
+
+
+
+            switch(terrain_that_collides->color_type)
             {
-               play_hit_med();
-               delay_time_since_last_affect = 1.0f;
-               player.health -= 4;
+            case COLOR_TYPE_RED:
+               player.velocity_magnitude *= 0.95;
+               if (delay_time_since_last_affect < 0)
+               {
+                  play_hit_bad();
+                  delay_time_since_last_affect = 1.0f;
+                  player.health -= 20;
+               }
                if (player.health < 0) { player.health = 0; kill_player(terrain_segment_where_player_collides); }
-            }
-            break;
+               break;
 
-         default:       
-            player.velocity_magnitude *= 0.95;
-            break;
+            case COLOR_TYPE_RED_DEATH:
+               player.velocity_magnitude *= 0.95;
+               player.health = 0;
+               play_hit_bad();
+               kill_player(terrain_segment_where_player_collides);
+               break;
+
+            case COLOR_TYPE_GREEN:
+               if (delay_time_since_last_affect < 0)
+               {
+                  delay_time_since_last_affect = 1.0f;
+                  player.health += 10.0;
+                  play_hit_soft();
+               }
+               if (player.health > player.max_health) player.health = player.max_health;
+               break;
+
+            case COLOR_TYPE_BLUE: // bouncy
+               if (delay_time_since_last_affect < 0)
+               {
+                  play_hit_bounce();
+                  delay_time_since_last_affect = 1.0f;
+                  player.velocity_magnitude = 4.5;
+               }
+               break;
+
+            case COLOR_TYPE_YELLOW:
+               player.velocity_magnitude *= 0.95;
+               if (delay_time_since_last_affect < 0)
+               {
+                  play_hit_med();
+                  delay_time_since_last_affect = 1.0f;
+                  player.health -= 4;
+                  if (player.health < 0) { player.health = 0; kill_player(terrain_segment_where_player_collides); }
+               }
+               break;
+
+            default:       
+               player.velocity_magnitude *= 0.95;
+               break;
+            }
          }
       }
 
-      time_left_in_timestep -= (time_left_in_timestep*collision_time);
+      time_left_in_timestep -= (time_left_in_timestep*minimum_collision_time_normal_during_this_pass);
       num_steps++;
    }
    
