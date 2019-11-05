@@ -1373,29 +1373,31 @@ void update_racer_and_track(Racer *racer, Track *track) // includes masking
    Racer &player = *racer;
 
 
-   static float turn_direction_velocity = 0;
-   //if (player.throttle_on) player.velocity_magnitude += 0.065; // good
 
+   // update_player_velocity_and_direction
+   {
+      static float turn_direction_velocity = 0;
+      //if (player.throttle_on) player.velocity_magnitude += 0.065; // good
 
-   if (player.throttle_on) player.velocity_magnitude += 0.085;
-   if (player.break_on) player.velocity_magnitude *= 0.9;
-   if (player.turning_right) turn_direction_velocity -= 0.014; // good
-   if (player.turning_left) turn_direction_velocity += 0.014; // good
+      if (player.throttle_on) player.velocity_magnitude += 0.085;
+      if (player.break_on) player.velocity_magnitude *= 0.9;
+      if (player.turning_right) turn_direction_velocity -= 0.014; // good
+      if (player.turning_left) turn_direction_velocity += 0.014; // good
 
-   turn_direction_velocity = (turn_direction_velocity * 0.8); // good
+      turn_direction_velocity = (turn_direction_velocity * 0.8); // good
 
-   player.direction_angle += turn_direction_velocity * OMG_DeltaTime;
+      player.direction_angle += turn_direction_velocity * OMG_DeltaTime;
 
-   player.velocity_magnitude *= (1.0-abs(turn_direction_velocity*0.05));// = (turn_direction_velocity * 0.8); // good
-   
-   // friction
-   //player.velocity_magnitude *= 0.98;
-   player.velocity_magnitude *= 0.98; // good
+      player.velocity_magnitude *= (1.0-abs(turn_direction_velocity*0.05));// = (turn_direction_velocity * 0.8); // good
 
+      // friction
+      //player.velocity_magnitude *= 0.98;
+      player.velocity_magnitude *= 0.98; // good
 
+      player.direction = vec2d(sin(player.direction_angle), cos(player.direction_angle));
+      player.velocity = (player.velocity*0.6 + player.direction*0.4).normalized() * player.velocity_magnitude;
+   }
 
-   player.direction = vec2d(sin(player.direction_angle), cos(player.direction_angle));
-   player.velocity = (player.velocity*0.6 + player.direction*0.4).normalized() * player.velocity_magnitude;
 
 
 
