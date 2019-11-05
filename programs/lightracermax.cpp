@@ -1373,12 +1373,6 @@ void update_racer_and_track(Racer *racer, Track *track) // includes masking
    Racer &player = *racer;
 
 
-
-   static int every_other = 0;
-   every_other++;
-
-   //if ((every_other%2) != 0) return;
-
    static float turn_direction_velocity = 0;
    //if (player.throttle_on) player.velocity_magnitude += 0.065; // good
 
