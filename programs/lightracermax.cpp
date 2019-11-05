@@ -1368,8 +1368,11 @@ void kill_player(int _segment_where_player_died)
 
 
 
-void update_racer_and_track(Racer *r, Track *track) // includes masking
+void update_racer_and_track(Racer *racer, Track *track) // includes masking
 {
+   Racer &player = *racer;
+
+
 
    static int every_other = 0;
    every_other++;
@@ -1377,33 +1380,28 @@ void update_racer_and_track(Racer *r, Track *track) // includes masking
    //if ((every_other%2) != 0) return;
 
    static float turn_direction_velocity = 0;
-   //if (r->throttle_on) r->velocity_magnitude += 0.065; // good
+   //if (player.throttle_on) player.velocity_magnitude += 0.065; // good
 
 
-   if (r->throttle_on) r->velocity_magnitude += 0.085;
-   if (r->break_on) r->velocity_magnitude *= 0.9;
-   if (r->turning_right) turn_direction_velocity -= 0.014; // good
-   if (r->turning_left) turn_direction_velocity += 0.014; // good
+   if (player.throttle_on) player.velocity_magnitude += 0.085;
+   if (player.break_on) player.velocity_magnitude *= 0.9;
+   if (player.turning_right) turn_direction_velocity -= 0.014; // good
+   if (player.turning_left) turn_direction_velocity += 0.014; // good
 
    turn_direction_velocity = (turn_direction_velocity * 0.8); // good
 
-   r->direction_angle += turn_direction_velocity * OMG_DeltaTime;
+   player.direction_angle += turn_direction_velocity * OMG_DeltaTime;
 
-   r->velocity_magnitude *= (1.0-abs(turn_direction_velocity*0.05));// = (turn_direction_velocity * 0.8); // good
+   player.velocity_magnitude *= (1.0-abs(turn_direction_velocity*0.05));// = (turn_direction_velocity * 0.8); // good
    
    // friction
-   //r->velocity_magnitude *= 0.98;
-   r->velocity_magnitude *= 0.98; // good
+   //player.velocity_magnitude *= 0.98;
+   player.velocity_magnitude *= 0.98; // good
 
 
 
-   r->direction = vec2d(sin(r->direction_angle), cos(r->direction_angle));
-   r->velocity = (r->velocity*0.6 + r->direction*0.4).normalized() * r->velocity_magnitude;
-
-
-
-   Racer &player = *r;
-
+   player.direction = vec2d(sin(player.direction_angle), cos(player.direction_angle));
+   player.velocity = (player.velocity*0.6 + player.direction*0.4).normalized() * player.velocity_magnitude;
 
 
 
