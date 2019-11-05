@@ -400,63 +400,6 @@ void zoom_normal()
 
 
 
-class particle_effect;
-
-void mark_particle_unused(particle_effect *p);
-
-class particle_effect
-{
-public:
-   static vector<particle_effect *> particle;
-public:
-   static int last_particle_index;
-   particle_effect() : image(nullptr), in_use(false) {}
-   static void reserve_particles(int num)
-   {
-      for (int i=0; i<(int)particle.size(); i++) delete particle[i];
-      particle.clear();
-
-      for (int i=0; i<num; i++)
-         particle.push_back(new particle_effect());
-   }
-   static particle_effect *get_one()
-   {
-      return particle[++last_particle_index % particle.size()];
-   }
-   static void update_all()
-   {
-      for (int i=0; i<(int)particle.size(); i++) particle[i]->update();
-   }
-
-   bool update()
-   {
-      //if ((start_time + duration) > al_get_time()) return (in_use = false);
-      position += velocity;
-      return true;
-   }
-   float start_time;
-   float duration;
-   vec2d position;
-   vec2d velocity;
-
-   float position_z;
-   float opacity;
-   ALLEGRO_BITMAP *image;
-   bool in_use;
-
-   vec2d projected_position; // < ignore... it's for use the outside world
-};
-vector<particle_effect *> particle_effect::particle;
-int particle_effect::last_particle_index = 0;
-
-void mark_particle_unused(particle_effect *p)
-{
-   p->in_use = false;
-}
-
-
-
-
 
 #include "Lightracer/TrackSegment.hpp"
 
@@ -946,41 +889,6 @@ void Track::draw_projected(float racer_direction_angle, float racer_x, float rac
 
    //// DRAW PARTICLES
 
-   //goto no_particles_yo;
-
-   bool draw_particles = false;
-
-   if (draw_particles)
-   {
-      for (int i=0; i<(int)particle_effect::particle.size(); i++)
-      {
-         particle_effect *particle = particle_effect::particle[i];
-         if (particle->in_use && particle->image)
-         {
-            particle->projected_position = particle->position;
-            rotate_point(&particle->projected_position, vec2d(racer_x, racer_y), radians_to_degrees(camera_rotation)); 
-
-            float point_x = particle->projected_position.x;
-            float point_y = track_y_value;
-            float point_z = particle->projected_position.y;
-
-            if (point_z < 0) continue;
-
-            float depth_scale = good_camera->get_scale(point_z);
-            al_draw_scaled_rotated_bitmap(particle->image,
-                                   al_get_bitmap_width(particle->image)*_align_x,
-                                   al_get_bitmap_height(particle->image)*_align_y,
-                                   (point_x - good_camera->x)*depth_scale + good_camera->center_point.x,
-                                   (point_y - good_camera->y)*depth_scale + good_camera->center_point.y,
-                                   _scale_x*depth_scale,
-                                   _scale_y*depth_scale,
-                                   _rotation,
-                                   NO_FLAGS);
-         }
-      }
-   }
-
-   //no_particles_yo:
    stop_profile_timer("DP 2");
 
    //std::cout << "drawing particles : " << particle_draw_count << std::endl;
@@ -2022,8 +1930,6 @@ void init_game()
 
    OMG_DeltaTime = 0.6;
 
-   particle_effect::reserve_particles(100);
-
    start_text_color = al_color_name("white");
 
    engine_voice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
@@ -2406,10 +2312,6 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
 
    al_set_sample_instance_speed(engine_sample_instance, 0.8+(racer->velocity_magnitude*racer->velocity_magnitude)/7);
    al_set_sample_instance_gain(engine_sample_instance, 0.6);
-
-   start_profile_timer("particle update");
-   particle_effect::update_all();
-   stop_profile_timer("particle update");
 
    start_profile_timer("draw projected");
    track->draw_projected(racer->direction_angle, racer->position.x, racer->position.y, racer->velocity_magnitude);
