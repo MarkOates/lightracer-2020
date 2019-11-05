@@ -1421,8 +1421,8 @@ public:
 
       float time_left_in_timestep = 1.0;
       int segment_that_collides = 0;
-      TrackSegment *terrain_that_collides = nullptr;
-      bool collides_on_left_terrain = false;
+      TrackSegment *track_segment_that_collides = nullptr;
+      bool collides_on_left_track_segment = false;
       vec2d point_of_intersection;
 
       int num_steps = 0;
@@ -1432,7 +1432,7 @@ public:
       bool collides_through_entrance = false;
       int entrance_that_collides = 0;
 
-      int terrain_segment_where_player_collides = 0;
+      int track_segment_segment_where_player_collides = 0;
 
       while(time_left_in_timestep > 0)
       {
@@ -1451,7 +1451,7 @@ public:
 
             vec2d &E = motion_segment.from_start;
             vec2d &P1 = motion_segment.perpendicular;
-            terrain_that_collides = nullptr;
+            track_segment_that_collides = nullptr;
             collides_through_exit = false;
             collides_through_entrance = false;
 
@@ -1460,18 +1460,18 @@ public:
 
             for (int t=track_segment_start; t<(int)(track_segment_end+1); t++)
             {
-               TrackSegment *terrain = track->segment[t];
+               TrackSegment *track_segment = track->segment[t];
 
 
                // just the left rails first
                
-               for (int i=1; i<(int)terrain->left_rail.size(); i++)
+               for (int i=1; i<(int)track_segment->left_rail.size(); i++)
                {
-                  vec2d &F = terrain->left_rail_segment[i]->from_start;
-                  vec2d &P2 = terrain->left_rail_segment[i]->perpendicular;
+                  vec2d &F = track_segment->left_rail_segment[i]->from_start;
+                  vec2d &P2 = track_segment->left_rail_segment[i]->perpendicular;
 
-                  float h = ((motion_segment.start - terrain->left_rail_segment[i]->start) * P1) / (F * P1);
-                  float g = ((terrain->left_rail_segment[i]->start - motion_segment.start) * P2) / (E * P2);
+                  float h = ((motion_segment.start - track_segment->left_rail_segment[i]->start) * P1) / (F * P1);
+                  float g = ((track_segment->left_rail_segment[i]->start - motion_segment.start) * P2) / (E * P2);
 
                   if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
                   {
@@ -1482,9 +1482,9 @@ public:
                         minimum_collision_time_normal_during_this_pass = g;
                         segment_that_collides = i;
                         point_of_intersection = g*motion_segment.from_start + motion_segment.start;
-                        terrain_that_collides = terrain;
-                        terrain_segment_where_player_collides = t;
-                        collides_on_left_terrain = true;
+                        track_segment_that_collides = track_segment;
+                        track_segment_segment_where_player_collides = t;
+                        collides_on_left_track_segment = true;
                         collides_through_exit = false;
                         collides_through_entrance = false;
                      }
@@ -1494,13 +1494,13 @@ public:
 
                // now the right rails
 
-               for (int i=1; i<(int)terrain->right_rail.size(); i++)
+               for (int i=1; i<(int)track_segment->right_rail.size(); i++)
                {
-                  vec2d &F = terrain->right_rail_segment[i]->from_start;
-                  vec2d &P2 = terrain->right_rail_segment[i]->perpendicular;
+                  vec2d &F = track_segment->right_rail_segment[i]->from_start;
+                  vec2d &P2 = track_segment->right_rail_segment[i]->perpendicular;
 
-                  float h = ((motion_segment.start - terrain->right_rail_segment[i]->start) * P1) / (F * P1);
-                  float g = ((terrain->right_rail_segment[i]->start - motion_segment.start) * P2) / (E * P2);
+                  float h = ((motion_segment.start - track_segment->right_rail_segment[i]->start) * P1) / (F * P1);
+                  float g = ((track_segment->right_rail_segment[i]->start - motion_segment.start) * P2) / (E * P2);
 
                   if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
                   {
@@ -1510,10 +1510,10 @@ public:
                      {
                         minimum_collision_time_normal_during_this_pass = g;
                         segment_that_collides = i;
-                        terrain_segment_where_player_collides = t;
+                        track_segment_segment_where_player_collides = t;
                         point_of_intersection = g*motion_segment.from_start + motion_segment.start;
-                        terrain_that_collides = terrain;
-                        collides_on_left_terrain = false;
+                        track_segment_that_collides = track_segment;
+                        collides_on_left_track_segment = false;
                         collides_through_exit = false;
                         collides_through_entrance = false;
                      }
@@ -1539,7 +1539,7 @@ public:
                         collides_through_exit = true;
                         minimum_collision_time_normal_during_this_pass = g;
                         point_of_intersection = g*motion_segment.from_start + motion_segment.start;
-                        terrain_that_collides = nullptr;
+                        track_segment_that_collides = nullptr;
                         collides_through_entrance = false;
                      }
                   }
@@ -1566,13 +1566,17 @@ public:
                         collides_through_exit = false;
                         minimum_collision_time_normal_during_this_pass = g;
                         point_of_intersection = g*motion_segment.from_start + motion_segment.start;
-                        terrain_that_collides = nullptr;
+                        track_segment_that_collides = nullptr;
                      }
                   }
                }
             }
          }
 
+
+         TrackSegment *terrain_that_collides = track_segment_that_collides;
+         bool collides_on_left_terrain = collides_on_left_track_segment;
+         int terrain_segment_where_player_collides = track_segment_segment_where_player_collides;
          //
          // move everything by that timestep
          // adjust velocities of colliding objects
