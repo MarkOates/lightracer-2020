@@ -1621,12 +1621,16 @@ public:
             }
             else if (terrain_that_collides != nullptr) 
             {
-                  if (collides_on_left_terrain) player_pos += terrain_that_collides->left_rail_segment[segment_that_collides]->normal * 0.1;
-                  if (!collides_on_left_terrain) player_pos += terrain_that_collides->right_rail_segment[segment_that_collides]->normal * 0.1;
-
-                  // this will reflect along the terrain segment (as if a ball bouncing, or light reflecting)
-                  if (collides_on_left_terrain) player_vel = reflect(player_vel, terrain_that_collides->left_rail_segment[segment_that_collides]->normal);
-                  if (!collides_on_left_terrain) player_vel = reflect(player_vel, terrain_that_collides->right_rail_segment[segment_that_collides]->normal);
+               if (collides_on_left_terrain)
+               {
+                  player_pos += terrain_that_collides->left_rail_segment[segment_that_collides]->normal * 0.1;
+                  player_vel = reflect(player_vel, terrain_that_collides->left_rail_segment[segment_that_collides]->normal);
+               }
+               if (!collides_on_left_terrain)
+               {
+                  player_pos += terrain_that_collides->right_rail_segment[segment_that_collides]->normal * 0.1;
+                  player_vel = reflect(player_vel, terrain_that_collides->right_rail_segment[segment_that_collides]->normal);
+               }
 
 
 
