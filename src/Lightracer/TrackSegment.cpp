@@ -94,7 +94,7 @@ void TrackSegment::__HACK_reverse_order_of_points()
 {
    std::reverse(left_rail.begin(), left_rail.end());
    std::reverse(right_rail.begin(), right_rail.end());
-   std::reverse(left_rail_segment.begin(), left_rail_segment.end());
+   std::reverse(left_rail_segments.begin(), left_rail_segments.end());
    std::reverse(right_rail_segment.begin(), right_rail_segment.end());
    update_slope_info();
 }
@@ -196,16 +196,16 @@ void TrackSegment::update_slope_info()
    // for the left //
 
    if (left_rail.size() <= 1) return;
-   for (int i=0; i<(int)left_rail_segment.size(); i++) delete left_rail_segment[i];
+   for (int i=0; i<(int)left_rail_segments.size(); i++) delete left_rail_segments[i];
 
-   left_rail_segment.clear();
-   left_rail_segment.push_back(new LineSegmentInfo());
+   left_rail_segments.clear();
+   left_rail_segments.push_back(new LineSegmentInfo());
    left_rail_length = 0;
 
    for (int i=1; i<(int)left_rail.size(); i++)
    {
-      left_rail_segment.push_back(new LineSegmentInfo(*left_rail[i-1], *left_rail[i]));
-      left_rail_length += left_rail_segment.back()->length;
+      left_rail_segments.push_back(new LineSegmentInfo(*left_rail[i-1], *left_rail[i]));
+      left_rail_length += left_rail_segments.back()->length;
    }
 
    // for the right //

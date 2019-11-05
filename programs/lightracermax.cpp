@@ -579,7 +579,7 @@ inline vec2d get_dot_at_distance(int track_segment, float distance, bool left)
       //{
          for (int rail=1; rail<(int)track->segment[track_segment]->left_rail.size(); rail++)
          {
-            float segment_length = track->segment[track_segment]->left_rail_segment[rail]->length;
+            float segment_length = track->segment[track_segment]->left_rail_segments[rail]->length;
             //std::cout << "segment_length: " << segment_length << std::endl;
 
             if (distance <= (length_traversed + segment_length)
@@ -588,8 +588,8 @@ inline vec2d get_dot_at_distance(int track_segment, float distance, bool left)
                // dot is on this segment
                float dot_distance_along_segment = distance - length_traversed;
                //std::cout << "YAY";
-               return track->segment[track_segment]->left_rail_segment[rail]->from_start.normalized() * dot_distance_along_segment
-                  + track->segment[track_segment]->left_rail_segment[rail]->start;
+               return track->segment[track_segment]->left_rail_segments[rail]->from_start.normalized() * dot_distance_along_segment
+                  + track->segment[track_segment]->left_rail_segments[rail]->start;
             }
 
             length_traversed += segment_length;
@@ -648,7 +648,7 @@ void fill_track_rail_points()
       int rail = 1;
       for (; rail<(int)track->segment[segment_num]->left_rail.size(); rail++)
       {
-         total_length += track->segment[segment_num]->left_rail_segment[rail]->length;
+         total_length += track->segment[segment_num]->left_rail_segments[rail]->length;
       }
 
       int d=0;
@@ -1467,11 +1467,11 @@ public:
                
                for (int i=1; i<(int)track_segment->left_rail.size(); i++)
                {
-                  vec2d &F = track_segment->left_rail_segment[i]->from_start;
-                  vec2d &P2 = track_segment->left_rail_segment[i]->perpendicular;
+                  vec2d &F = track_segment->left_rail_segments[i]->from_start;
+                  vec2d &P2 = track_segment->left_rail_segments[i]->perpendicular;
 
-                  float h = ((motion_segment.start - track_segment->left_rail_segment[i]->start) * P1) / (F * P1);
-                  float g = ((track_segment->left_rail_segment[i]->start - motion_segment.start) * P2) / (E * P2);
+                  float h = ((motion_segment.start - track_segment->left_rail_segments[i]->start) * P1) / (F * P1);
+                  float g = ((track_segment->left_rail_segments[i]->start - motion_segment.start) * P2) / (E * P2);
 
                   if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
                   {
@@ -1623,8 +1623,8 @@ public:
             {
                if (collides_on_left_terrain)
                {
-                  player_pos += terrain_that_collides->left_rail_segment[segment_that_collides]->normal * 0.1;
-                  player_vel = reflect(player_vel, terrain_that_collides->left_rail_segment[segment_that_collides]->normal);
+                  player_pos += terrain_that_collides->left_rail_segments[segment_that_collides]->normal * 0.1;
+                  player_vel = reflect(player_vel, terrain_that_collides->left_rail_segments[segment_that_collides]->normal);
                }
                if (!collides_on_left_terrain)
                {

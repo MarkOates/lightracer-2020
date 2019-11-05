@@ -32,7 +32,7 @@ public:
    //vec2d displacement;
 
    std::vector<vec2d *> left_rail;
-   std::vector<LineSegmentInfo *> left_rail_segment;
+   std::vector<LineSegmentInfo *> left_rail_segments;
    float left_rail_length;
 
    std::vector<vec2d *> right_rail;
