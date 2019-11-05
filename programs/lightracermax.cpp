@@ -1686,6 +1686,12 @@ public:
       player.velocity.x = player_vel.x;
       player.velocity.y = player_vel.y;
    }
+
+   void resolve()
+   {
+      update_player_velocity_and_direction();
+      update_racer_along_track(); // < as I understand, *everything* that OMG_DeltaTime affects is in here
+   }
 };
 
 
@@ -2550,8 +2556,7 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
 
    start_profile_timer("racer/track");
    RacerTrackCollisionResolver collision_resolver(racer, track);
-   collision_resolver.update_player_velocity_and_direction();
-   collision_resolver.update_racer_along_track(); // < as I understand, *everything* that OMG_DeltaTime affects is in here
+   collision_resolver.resolve();
    stop_profile_timer("racer/track");
 
 
