@@ -2353,10 +2353,29 @@ std::string get_number_string(int num)
 
 
 
+
+void main_menu_timer_func(ALLEGRO_EVENT *event)
+{
+   float screen_center_x = SCREEN_HW;
+   float screen_center_y = SCREEN_HH;
+
+   ALLEGRO_BITMAP *logo_img = bitmaps.auto_get("lightracer-max-logo-02.png");
+   ALLEGRO_COLOR logo_fade_opacity = al_map_rgba_f(1.0 - foreground_black_opacity, 1.0 - foreground_black_opacity, 1.0 - foreground_black_opacity, 1.0 - foreground_black_opacity);
+   al_draw_tinted_scaled_rotated_bitmap(logo_img, logo_fade_opacity, al_get_bitmap_width(logo_img)/2, al_get_bitmap_height(logo_img)/2,
+      screen_center_x, (250 - 300) + screen_center_y, logo_scale, logo_scale, 0, 0);
+
+   int font_size = -25;
+   draw_text_with_letter_spacing(font_size, al_color_name("white"), screen_center_x, (375 - 300) + screen_center_y + 20, 12*2, fonts["venus_rising_rg.ttf 25"], "press ANY KEY to BEGIN");
+   //al_draw_text(fonts["venus_rising_rg.ttf", -25), al_color_name("white"),
+      //screen_center_x, (375 - 300) + screen_center_y + 20, ALLEGRO_ALIGN_CENTRE, "press ANY KEY to BEGIN");
+
+   //draw_black_screen_overlay(al_map_rgba_f(0, 0, 0, foreground_black_opacity));
+}
+
+
+
 void game_timer_func(ALLEGRO_EVENT *current_event)
 {
-   motion.update(al_get_time());
-
    float screen_center_x = SCREEN_HW;
    float screen_center_y = SCREEN_HH;
 
@@ -2364,25 +2383,6 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
    static ALLEGRO_FONT *font_large = fonts["venus_rising_rg.ttf 50"];
 
 
-   start_profile_timer("WHOLE UPDATE");
-   al_clear_to_color(al_color_name("black"));
-
-
-   if (logo_showing)
-   {
-      ALLEGRO_BITMAP *logo_img = bitmaps.auto_get("lightracer-max-logo-02.png");
-      ALLEGRO_COLOR logo_fade_opacity = al_map_rgba_f(1.0 - foreground_black_opacity, 1.0 - foreground_black_opacity, 1.0 - foreground_black_opacity, 1.0 - foreground_black_opacity);
-      al_draw_tinted_scaled_rotated_bitmap(logo_img, logo_fade_opacity, al_get_bitmap_width(logo_img)/2, al_get_bitmap_height(logo_img)/2,
-         screen_center_x, (250 - 300) + screen_center_y, logo_scale, logo_scale, 0, 0);
-
-      int font_size = -25;
-      draw_text_with_letter_spacing(font_size, al_color_name("white"), screen_center_x, (375 - 300) + screen_center_y + 20, 12*2, fonts["venus_rising_rg.ttf 25"], "press ANY KEY to BEGIN");
-      //al_draw_text(fonts["venus_rising_rg.ttf", -25), al_color_name("white"),
-         //screen_center_x, (375 - 300) + screen_center_y + 20, ALLEGRO_ALIGN_CENTRE, "press ANY KEY to BEGIN");
-
-      //draw_black_screen_overlay(al_map_rgba_f(0, 0, 0, foreground_black_opacity));
-      return;
-   }
 
    delay_time_since_last_affect -= 0.2;
    if (delay_time_since_last_affect < 0) delay_time_since_last_affect = -0.1f;
@@ -2501,13 +2501,6 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
          al_draw_text(font_large, al_map_rgba_f(0.0, 1.0*opacity_counter, 0.0, opacity_counter),
             screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, go_string.c_str());
       }
-
-      if (FLAG_draw_profile_graph)
-      {
-         draw_profile_timer_graph(20, 20);
-      }
-         stop_profile_timer("WHOLE UPDATE");
-
 
       if (track_completed)
       {
@@ -2696,8 +2689,23 @@ public:
 
    void primary_timer_func() override
    {
-      game_timer_func(framework.current_event);
-      if (development) gl_render_func();
+      motion.update(al_get_time());
+
+      start_profile_timer("WHOLE UPDATE");
+      al_clear_to_color(al_color_name("black"));
+
+      if (logo_showing)
+      {
+         main_menu_timer_func(framework.current_event);
+      }
+      else
+      {
+         game_timer_func(framework.current_event);
+         if (development) gl_render_func();
+      }
+
+      stop_profile_timer("WHOLE UPDATE");
+      if (FLAG_draw_profile_graph) draw_profile_timer_graph(20, 20);
    }
 
    void initialize_gl_render()
