@@ -1490,6 +1490,34 @@ public:
                   }
                }
 
+               // now the right rails
+
+               for (int i=1; i<(int)terrain->right_rail.size(); i++)
+               {
+                  vec2d &F = terrain->right_rail_segment[i]->from_start;
+                  vec2d &P2 = terrain->right_rail_segment[i]->perpendicular;
+
+                  float h = ((motion_segment.start - terrain->right_rail_segment[i]->start) * P1) / (F * P1);
+                  float g = ((terrain->right_rail_segment[i]->start - motion_segment.start) * P2) / (E * P2);
+
+                  if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
+                  {
+                     // there is a collision in this time-step
+                     // if it's less than another collision that occured, set the values
+                     if (g < minimum_collision_time_normal_during_this_pass)
+                     {
+                        minimum_collision_time_normal_during_this_pass = g;
+                        segment_that_collides = i;
+                        terrain_segment_where_player_collides = t;
+                        point_of_intersection = g*motion_segment.from_start + motion_segment.start;
+                        terrain_that_collides = terrain;
+                        collides_on_left_terrain = false;
+                        collides_through_exit = false;
+                        collides_through_entrance = false;
+                     }
+                  }
+               }
+
                // check the exit
 
                // for (just_the_exit)
@@ -1544,34 +1572,6 @@ public:
                   }
                }
                // }
-
-               // now the right rails
-
-               for (int i=1; i<(int)terrain->right_rail.size(); i++)
-               {
-                  vec2d &F = terrain->right_rail_segment[i]->from_start;
-                  vec2d &P2 = terrain->right_rail_segment[i]->perpendicular;
-
-                  float h = ((motion_segment.start - terrain->right_rail_segment[i]->start) * P1) / (F * P1);
-                  float g = ((terrain->right_rail_segment[i]->start - motion_segment.start) * P2) / (E * P2);
-
-                  if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
-                  {
-                     // there is a collision in this time-step
-                     // if it's less than another collision that occured, set the values
-                     if (g < minimum_collision_time_normal_during_this_pass)
-                     {
-                        minimum_collision_time_normal_during_this_pass = g;
-                        segment_that_collides = i;
-                        terrain_segment_where_player_collides = t;
-                        point_of_intersection = g*motion_segment.from_start + motion_segment.start;
-                        terrain_that_collides = terrain;
-                        collides_on_left_terrain = false;
-                        collides_through_exit = false;
-                        collides_through_entrance = false;
-                     }
-                  }
-               }
             }
          }
 
