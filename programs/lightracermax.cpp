@@ -1460,9 +1460,10 @@ public:
 
             for (int t=track_segment_start; t<(int)(track_segment_end+1); t++)
             {
-               // just the left rails first
-
                TrackSegment *terrain = track->segment[t];
+
+
+               // just the left rails first
                
                for (int i=1; i<(int)terrain->left_rail.size(); i++)
                {
@@ -1489,6 +1490,7 @@ public:
                      }
                   }
                }
+
 
                // now the right rails
 
@@ -1518,10 +1520,9 @@ public:
                   }
                }
 
+
                // check the exit
 
-               // for (just_the_exit)
-               // {
                {
                   vec2d &F = track->exit_segment_info->from_start;
                   vec2d &P2 = track->exit_segment_info->perpendicular;
@@ -1543,12 +1544,10 @@ public:
                      }
                   }
                }
-               // }
+
 
                // check the entrance to the next segment
 
-               // for (just_the_entrance)
-               // {
                {
                   vec2d &F = track->segment[t]->entrance_segment_info->from_start;
                   vec2d &P2 = track->segment[t]->entrance_segment_info->perpendicular;
@@ -1571,7 +1570,6 @@ public:
                      }
                   }
                }
-               // }
             }
          }
 
