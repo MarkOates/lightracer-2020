@@ -36,7 +36,7 @@ public:
    float left_rail_length;
 
    std::vector<vec2d *> right_rail;
-   std::vector<LineSegmentInfo *> right_rail_segment;
+   std::vector<LineSegmentInfo *> right_rail_segments;
    float right_rail_length;
 
 
