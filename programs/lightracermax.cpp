@@ -1404,20 +1404,42 @@ public:
       player.velocity = (player.velocity*0.6 + player.direction*0.4).normalized() * player.velocity_magnitude;
    }
 
-   float find_minimum_time_collision_normal(
-         int &entrance_that_collides,
-         vec2d &player_pos,
-         vec2d &player_vel,
-         float &time_left_in_timestep,
-         TrackSegment *terrain_that_collides,
-         bool &collides_through_exit,
-         int &segment_that_collides,
-         bool &collides_through_entrance,
-         vec2d &point_of_intersection,
-         int &terrain_segment_where_player_collides,
-         bool &collides_on_left_terrain
-      )
+   void update_racer_along_track()
    {
+      int __HACK_entrance_already_collided = 0;
+
+
+
+      vec2d start_point = vec2d(player.position.x, player.position.y);
+      vec2d end_point = start_point + vec2d(player.velocity.x, player.velocity.y) * player.velocity_magnitude * OMG_DeltaTime;
+      
+
+      vec2d player_pos = start_point;
+      vec2d player_vel = end_point - start_point;
+
+
+
+      float time_left_in_timestep = 1.0;
+      int segment_that_collides = 0;
+      TrackSegment *terrain_that_collides = nullptr;
+      bool collides_on_left_terrain = false;
+      vec2d point_of_intersection;
+
+      int num_steps = 0;
+
+      bool collides_through_exit = false;
+      
+      bool collides_through_entrance = false;
+      int entrance_that_collides = 0;
+
+      int terrain_segment_where_player_collides = 0;
+
+      while(time_left_in_timestep > 0)
+      {
+         //
+         // find the soonest intersection time
+         //
+
          float minimum_collision_time_normal_during_this_pass = 1.0;
          {
             entrance_that_collides = 0;
@@ -1544,59 +1566,6 @@ public:
                }
             }
          }
-
-         return minimum_collision_time_normal_during_this_pass;
-   }
-
-   void update_racer_along_track()
-   {
-      int __HACK_entrance_already_collided = 0;
-
-
-
-      vec2d start_point = vec2d(player.position.x, player.position.y);
-      vec2d end_point = start_point + vec2d(player.velocity.x, player.velocity.y) * player.velocity_magnitude * OMG_DeltaTime;
-      
-
-      vec2d player_pos = start_point;
-      vec2d player_vel = end_point - start_point;
-
-
-
-      float time_left_in_timestep = 1.0;
-      int segment_that_collides = 0;
-      TrackSegment *terrain_that_collides = nullptr;
-      bool collides_on_left_terrain = false;
-      vec2d point_of_intersection;
-
-      int num_steps = 0;
-
-      bool collides_through_exit = false;
-      
-      bool collides_through_entrance = false;
-      int entrance_that_collides = 0;
-
-      int terrain_segment_where_player_collides = 0;
-
-      while(time_left_in_timestep > 0)
-      {
-         //
-         // find the soonest intersection time
-         //
-
-         float minimum_collision_time_normal_during_this_pass = find_minimum_time_collision_normal(
-               entrance_that_collides,
-               player_pos,
-               player_vel,
-               time_left_in_timestep,
-               terrain_that_collides,
-               collides_through_exit,
-               segment_that_collides,
-               collides_through_entrance,
-               point_of_intersection,
-               terrain_segment_where_player_collides,
-               collides_on_left_terrain
-            );
 
          //
          // move everything by that timestep
