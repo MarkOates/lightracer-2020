@@ -419,77 +419,8 @@ void fill_track_rail_points();
 void complete_track();
 void mark_player_not_using_boost(void *);
 
-class Racer
-{
-public:
-   vec2d position, direction, velocity;
-   float velocity_magnitude;
-   float direction_angle;
 
-   std::vector<double> lap_time;
-
-   float max_health, health;
-   int max_boosts;
-   int boosts;
-   bool throttle_on;
-   bool break_on;
-   bool turning_right, turning_left;
-   bool dead;
-
-   bool using_boost;
-   float using_boost_counter;
-
-   Racer()
-   {
-      //num_laps = 0;
-      position = vec2d(100, 100);
-      direction = vec2d(1, 0);
-      velocity = vec2d(0, 0);
-      direction_angle = direction.get_angle();
-      direction_angle += FULL_ROTATION/2;
-      velocity_magnitude = 0;
-      throttle_on = false;
-      turning_right = false;
-      turning_left = false;
-      break_on = false;
-      health = 100;
-      max_health = 100;
-      max_boosts = 3;
-      boosts = max_boosts;
-      dead = false;
-      using_boost = false;
-      using_boost_counter = 0.0;
-   }
-
-   void complete_lap()
-   {
-      //num_laps++;
-      //lap_time = al_get_time();
-      lap_time.push_back(al_get_time());
-   }
-
-   void draw()
-   {
-      //vec2d direction_vector;
-      al_draw_circle(position.x, position.y, 10, al_color_name("pink"), 2.0);
-      al_draw_line(position.x, position.y, position.x+velocity.x*20, position.y+velocity.y*20, al_color_name("pink"), 2.0);
-      al_draw_line(position.x, position.y, position.x+direction.x*20, position.y+direction.y*20, al_color_name("yellow"), 2.0);
-   }
-
-   void use_boost()
-   {
-      if (boosts == 0) { /* do nothing */ }
-      if (using_boost) return;
-
-      float start_time = al_get_time();
-      float end_time = start_time + 2.0;
-      motion.animate(&using_boost_counter, 1.0, 0.0, start_time, end_time, interpolator::double_fast_out, mark_player_not_using_boost);
-      velocity_magnitude = 4.5;
-
-      using_boost = true;
-   }
-};
-
+#include "Lightracer/Racer.hpp"
 
 
 
@@ -2058,7 +1989,7 @@ void racer__on_key_down(ALLEGRO_EVENT *current_event)
       racer->break_on = true;
       break;
    case ALLEGRO_KEY_SPACE:
-      //use_boost();
+      //use_boost(motion, mark_player_not_using_boost);
       break;
    }
 }
