@@ -1492,28 +1492,35 @@ public:
 
                // check the exit
 
-               vec2d &F = track->exit_segment_info->from_start;
-               vec2d &P2 = track->exit_segment_info->perpendicular;
-
-               float h = ((motion_segment.start - track->exit_segment_info->start) * P1) / (F * P1);
-               float g = ((track->exit_segment_info->start - motion_segment.start) * P2) / (E * P2);
-
-               if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
+               // for (just_the_exit)
+               // {
                {
-                  // there is a collision in this time-step
-                  // if it's less than another collision that occured, set the values
-                  if (g < minimum_collision_time_normal_during_this_pass)
+                  vec2d &F = track->exit_segment_info->from_start;
+                  vec2d &P2 = track->exit_segment_info->perpendicular;
+
+                  float h = ((motion_segment.start - track->exit_segment_info->start) * P1) / (F * P1);
+                  float g = ((track->exit_segment_info->start - motion_segment.start) * P2) / (E * P2);
+
+                  if (h >= 0 && h <= 1 && g >= 0 && g <= 1)
                   {
-                     collides_through_exit = true;
-                     minimum_collision_time_normal_during_this_pass = g;
-                     point_of_intersection = g*motion_segment.from_start + motion_segment.start;
-                     terrain_that_collides = nullptr;
-                     collides_through_entrance = false;
+                     // there is a collision in this time-step
+                     // if it's less than another collision that occured, set the values
+                     if (g < minimum_collision_time_normal_during_this_pass)
+                     {
+                        collides_through_exit = true;
+                        minimum_collision_time_normal_during_this_pass = g;
+                        point_of_intersection = g*motion_segment.from_start + motion_segment.start;
+                        terrain_that_collides = nullptr;
+                        collides_through_entrance = false;
+                     }
                   }
                }
+               // }
 
                // check the entrance to the next segment
 
+               // for (just_the_entrance)
+               // {
                {
                   vec2d &F = track->segment[t]->entrance_segment_info->from_start;
                   vec2d &P2 = track->segment[t]->entrance_segment_info->perpendicular;
@@ -1536,6 +1543,7 @@ public:
                      }
                   }
                }
+               // }
 
                // now the right rails
 
