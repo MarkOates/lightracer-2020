@@ -47,7 +47,7 @@ void Hud::draw_hud()
 
    draw_num_segments(text_y, num_of_segments_in_track);
 
-   draw_num_laps(text_y, (int)racer->lap_time.size()+1, num_laps_to_win);
+   draw_num_laps(text_y, num_laps_to_win);
    draw_stopwatch(text_y, horizontal_screen_padding);
 
    draw_health_bar(text_y, horizontal_screen_padding);
@@ -67,7 +67,7 @@ void Hud::draw_num_segments(int text_y, int num_segments)
 }
 
 
-void Hud::draw_num_laps(int text_y, int current_lap_num, int total_num_laps)
+void Hud::draw_num_laps(int text_y, int total_num_laps)
 {
    std::string string_to_write = "";
    std::stringstream ss;
