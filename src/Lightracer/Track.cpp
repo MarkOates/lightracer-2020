@@ -9,7 +9,7 @@ using std::vector;
 #include <allegro5/allegro_color.h> // for al_color_name
 
 extern vector<int> segment_where_player_died;
-extern vec2d get_dot_at_distance(int track_segment, float distance, bool left);
+//extern vec2d get_dot_at_distance(int track_segment, float distance, bool left);
 
 
 
@@ -196,6 +196,68 @@ void Track::fill_track_rail_points()
       Track::car_distance_cache.push_back(0);
    }
 }
+
+
+
+vec2d Track::get_dot_at_distance(int track_segment, float distance, bool left)
+{
+   Track *track = this;
+
+   // does left rail only
+   if (left)
+   {
+      float length_traversed = 0;
+      //for (int i=0; i<(int)track->segment.size(); i++)
+      //{
+         for (int rail=1; rail<(int)track->segment[track_segment]->left_rail.size(); rail++)
+         {
+            float segment_length = track->segment[track_segment]->left_rail_segments[rail]->length;
+            //std::cout << "segment_length: " << segment_length << std::endl;
+
+            if (distance <= (length_traversed + segment_length)
+               && distance >= (length_traversed))
+            {
+               // dot is on this segment
+               float dot_distance_along_segment = distance - length_traversed;
+               //std::cout << "YAY";
+               return track->segment[track_segment]->left_rail_segments[rail]->from_start.normalized() * dot_distance_along_segment
+                  + track->segment[track_segment]->left_rail_segments[rail]->start;
+            }
+
+            length_traversed += segment_length;
+         }
+      //}
+
+         return vec2d(-9999, -9999);
+   }
+
+
+      float length_traversed = 0;
+      //for (int i=0; i<(int)track->segment.size(); i++)
+      //{
+         for (int rail=1; rail<(int)track->segment[track_segment]->right_rail.size(); rail++)
+         {
+            float segment_length = track->segment[track_segment]->right_rail_segments[rail]->length;
+            //std::cout << "segment_length: " << segment_length << std::endl;
+
+            if (distance <= (length_traversed + segment_length)
+               && distance >= (length_traversed))
+            {
+               // dot is on this segment
+               float dot_distance_along_segment = distance - length_traversed;
+               //std::cout << "YAY";
+               return track->segment[track_segment]->right_rail_segments[rail]->from_start.normalized() * dot_distance_along_segment
+                  + track->segment[track_segment]->right_rail_segments[rail]->start;
+            }
+
+            length_traversed += segment_length;
+         }
+
+         return vec2d(-9999, -9999);
+}
+
+
+
 
 
 

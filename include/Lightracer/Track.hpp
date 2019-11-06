@@ -30,6 +30,7 @@ public:
    static std::vector<float> car_distance_cache;
 
    void fill_track_rail_points();
+   vec2d get_dot_at_distance(int track_segment, float distance, bool left);
 
 public:
    vec2d exit_p1;
