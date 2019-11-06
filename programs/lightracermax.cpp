@@ -1743,7 +1743,7 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
    int current_lap_num = (int)racer->lap_time.size()+1;
    int current_racer_health = racer->health;
    int current_racer_max_health = racer->max_health;
-   Hud(num_of_segments_in_track, racer, current_racer_health, current_racer_max_health, current_lap_num, num_laps_to_win, fonts, SCREEN_W, stopwatch, num_lives).draw();
+   Hud(num_of_segments_in_track, current_racer_health, current_racer_max_health, current_lap_num, num_laps_to_win, fonts, SCREEN_W, stopwatch, num_lives).draw();
 
 
    ALLEGRO_TRANSFORM ident;
