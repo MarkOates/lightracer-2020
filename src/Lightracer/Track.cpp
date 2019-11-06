@@ -8,6 +8,10 @@ using std::vector;
 
 #include <allegro5/allegro_color.h> // for al_color_name
 
+#include "Lightracer/shared.hpp" // for typedef char64_t
+
+using allegro_flare::char64_t;
+
 extern vector<int> segment_where_player_died;
 
 
@@ -254,9 +258,6 @@ vec2d Track::get_dot_at_distance(int track_segment, float distance, bool left)
 
          return vec2d(-9999, -9999);
 }
-
-
-
 
 
 
