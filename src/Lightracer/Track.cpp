@@ -9,7 +9,6 @@ using std::vector;
 #include <allegro5/allegro_color.h> // for al_color_name
 
 extern vector<int> segment_where_player_died;
-//extern vec2d get_dot_at_distance(int track_segment, float distance, bool left);
 
 
 
