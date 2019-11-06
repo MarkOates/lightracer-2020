@@ -62,7 +62,7 @@ void Hud::draw_num_segments(int text_y, int num_segments)
 
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
-   al_draw_text(font, color, screen_width - 300 - 235, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
+   al_draw_text(font, color, screen_width - 300 - 264, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
 }
 
 
