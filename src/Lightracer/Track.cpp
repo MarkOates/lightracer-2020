@@ -9,8 +9,7 @@ using std::vector;
 #include <allegro5/allegro_color.h> // for al_color_name
 
 extern vector<int> segment_where_player_died;
-
-void fill_track_rail_points();
+extern vec2d get_dot_at_distance(int track_segment, float distance, bool left);
 
 
 
@@ -126,6 +125,77 @@ void Track::append_segment(TrackSegment *ts)
    enter_p1 = *segment.at(1)->left_rail.front(); // the edge of the gate
    enter_p2 = *segment.at(1)->right_rail.back(); // the edge of the gate
    //fill_track_rail_points();
+}
+
+
+
+void Track::fill_track_rail_points()
+{
+   Track *track = this;
+
+   vector<vec2d> &track_rail_point = Track::track_rail_light;
+   //Track::track_rail_light.clear();
+   track_rail_point.clear();
+   Track::rail_light_belongs_to.clear();
+
+   //Track::color_light_belongs_to.clear();
+
+
+
+
+
+   // space the white lights:
+
+   float total_length = 0;
+   float dot_distance = 30;
+
+   int segment_num = 0;
+   for (int segment_num=0; segment_num<(int)track->segment.size(); segment_num++)
+   {
+      int rail = 1;
+      for (; rail<(int)track->segment[segment_num]->left_rail.size(); rail++)
+      {
+         total_length += track->segment[segment_num]->left_rail_segments[rail]->length;
+      }
+
+      int d=0;
+      do
+      {
+         track_rail_point.push_back(get_dot_at_distance(segment_num, d, true));
+         Track::rail_light_belongs_to.push_back(std::pair<bool, int>(true, segment_num));
+         d += dot_distance;
+      }while (d<total_length);
+   }
+
+
+   // right rails
+
+   total_length = 0;
+   segment_num = 0;
+   for (int segment_num=0; segment_num<(int)track->segment.size(); segment_num++)
+   {
+      int rail = 1;
+      for (; rail<(int)track->segment[segment_num]->right_rail.size(); rail++)
+      {
+         total_length += track->segment[segment_num]->right_rail_segments[rail]->length;
+      }
+
+      int d=0;
+      do
+      {
+         track_rail_point.push_back(get_dot_at_distance(segment_num, d, false));
+         Track::rail_light_belongs_to.push_back(std::pair<bool, int>(false, segment_num));
+         d += dot_distance;
+      }while (d<total_length);
+   }
+
+   // match the "projected" cache and the car distance cache to the same size
+   Track::track_rail_light_projected.clear();
+   for (int i=0; i<(int)track_rail_point.size(); i++)
+   {
+      Track::track_rail_light_projected.push_back(vec2d(0,0));
+      Track::car_distance_cache.push_back(0);
+   }
 }
 
 

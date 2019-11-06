@@ -29,6 +29,8 @@ public:
 
    static std::vector<float> car_distance_cache;
 
+   void fill_track_rail_points();
+
 public:
    vec2d exit_p1;
    vec2d exit_p2;
@@ -46,7 +48,7 @@ public:
 
    void clear();
    void draw();
-   void draw_projected(float racer_facing_angle, float racer_x, float racer_y, float racer_speed);;
+   void draw_projected(float racer_facing_angle, float racer_x, float racer_y, float racer_speed);
    void update_exit_slope_info();
    void __HACK_finalize_track();
    void make_segments_easy_where_player_died();

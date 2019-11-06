@@ -407,9 +407,6 @@ void zoom_normal()
 // track construction functions //
 
 
-void fill_track_rail_points();
-
-
 #include "Lightracer/TrackFactory.hpp"
 
 
