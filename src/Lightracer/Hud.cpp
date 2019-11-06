@@ -123,7 +123,7 @@ void Hud::draw_health_bar(int text_y, int horizontal_screen_padding)
    std::string lives_string = "LIV " + tostring(num_lives);
    al_draw_text(font, al_color_name("white"), horizontal_screen_padding, text_y, 0, lives_string.c_str());
 
-   float health_percentage = racer->health/racer->max_health;
+   float health_percentage = current_racer_health / current_racer_max_health;
 
    ALLEGRO_COLOR health_bar_color;
    if (health_percentage > 0.9) health_bar_color = al_color_name("dodgerblue");
