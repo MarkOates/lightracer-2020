@@ -498,7 +498,7 @@ inline void project_point(ALLEGRO_VERTEX &v, CheapCamera *cam, float multiplier=
 
 
 
-inline vec2d get_dot_at_distance(int track_segment, float distance, bool left)
+vec2d get_dot_at_distance(int track_segment, float distance, bool left)
 {
    // does left rail only
    if (left)
