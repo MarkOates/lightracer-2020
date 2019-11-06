@@ -11,7 +11,7 @@
 #include <sstream>
 
 
-Hud::Hud(int num_of_segments_in_track, Racer *racer, int current_racer_health, int current_racer_max_health, int current_lap_num, int num_laps_to_win, FontBin &fonts, int screen_width, Timer &stopwatch, int num_lives)
+Hud::Hud(int num_of_segments_in_track, Racer *racer, float current_racer_health, float current_racer_max_health, int current_lap_num, int num_laps_to_win, FontBin &fonts, int screen_width, Timer &stopwatch, int num_lives)
    : num_of_segments_in_track(num_of_segments_in_track)
    , racer(racer)
    , current_racer_health(current_racer_health)
