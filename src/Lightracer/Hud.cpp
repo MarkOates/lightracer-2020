@@ -28,6 +28,12 @@ Hud::~Hud()
 }
 
 
+void Hud::draw()
+{
+   draw_hud();
+}
+
+
 void Hud::draw_hud()
 {
    ALLEGRO_TRANSFORM transform;

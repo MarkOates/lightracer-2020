@@ -424,6 +424,7 @@ void mark_player_not_using_boost(void *);
 
 
 
+#include "Lightracer/Hud.hpp"
 
 
 
@@ -1874,7 +1875,8 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
    track->draw_projected(racer->direction_angle, racer->position.x, racer->position.y, racer->velocity_magnitude);
    stop_profile_timer("draw projected");
 
-   draw_hud();
+
+   Hud(num_of_segments_in_track, racer, num_laps_to_win, fonts, SCREEN_W, stopwatch, num_lives).draw();
 
 
    ALLEGRO_TRANSFORM ident;
