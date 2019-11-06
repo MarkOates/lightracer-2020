@@ -274,7 +274,7 @@ CheapCamera *camera = nullptr;
 
 
 
-class camera_class : public vec2d
+class Camera : public vec2d
 {
 private:
 
@@ -288,7 +288,7 @@ public:
 
    bool keyboard_controls_on;
 
-   camera_class()
+   Camera()
    {
       //_z = 0.0;
       //z.set(&_z);
@@ -380,7 +380,7 @@ public:
 };
 
 
-camera_class *good_camera = nullptr;
+Camera *good_camera = nullptr;
 
 
 void zoom_way_out()
@@ -1300,7 +1300,7 @@ void init_game()
    racer = new Racer();
 
    camera = new CheapCamera();
-   good_camera = new camera_class();
+   good_camera = new Camera();
 
    fade_out_of_black();
 
