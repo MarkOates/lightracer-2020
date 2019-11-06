@@ -100,7 +100,6 @@ void Track::append_segment(TrackSegment *ts)
    if (segment.empty()) { segment.push_back(ts); return; }
 
    vec2d pipe_output_vector = *segment.back()->right_rail.front()- *segment.back()->left_rail.back();
-   float distance = pipe_output_vector.get_magnitude();
 
    ts->rotate(pipe_output_vector.get_angle());
 
