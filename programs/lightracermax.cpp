@@ -1740,7 +1740,8 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
    stop_profile_timer("draw projected");
 
 
-   Hud(num_of_segments_in_track, racer, num_laps_to_win, fonts, SCREEN_W, stopwatch, num_lives).draw();
+   int current_lap_num = (int)racer->lap_time.size()+1;
+   Hud(num_of_segments_in_track, racer, current_lap_num, num_laps_to_win, fonts, SCREEN_W, stopwatch, num_lives).draw();
 
 
    ALLEGRO_TRANSFORM ident;

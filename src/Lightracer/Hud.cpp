@@ -11,9 +11,10 @@
 #include <sstream>
 
 
-Hud::Hud(int num_of_segments_in_track, Racer *racer, int num_laps_to_win, FontBin &fonts, int screen_width, Timer &stopwatch, int num_lives)
+Hud::Hud(int num_of_segments_in_track, Racer *racer, int current_lap_num, int num_laps_to_win, FontBin &fonts, int screen_width, Timer &stopwatch, int num_lives)
    : num_of_segments_in_track(num_of_segments_in_track)
    , racer(racer)
+   , current_lap_num(current_lap_num)
    , num_laps_to_win(num_laps_to_win)
    , fonts(fonts)
    , screen_width(screen_width)
