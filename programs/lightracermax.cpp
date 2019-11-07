@@ -870,12 +870,15 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, ALLEGRO_EVENT *curre
    al_set_sample_instance_speed(engine_sample_instance, 0.8+(racer->velocity_magnitude*racer->velocity_magnitude)/7);
    al_set_sample_instance_gain(engine_sample_instance, 0.6);
 
-   start_profile_timer("draw projected");
-   track->draw_projected(
-         index_of_last_track_segment_that_collides, racer, bitmaps, good_camera, camera,
-         racer->direction_angle, racer->position.x, racer->position.y, racer->velocity_magnitude
-      );
-   stop_profile_timer("draw projected");
+   if (!development)
+   {
+      start_profile_timer("draw projected");
+      track->draw_projected(
+            index_of_last_track_segment_that_collides, racer, bitmaps, good_camera, camera,
+            racer->direction_angle, racer->position.x, racer->position.y, racer->velocity_magnitude
+         );
+      stop_profile_timer("draw projected");
+   }
 
 
    int current_lap_num = (int)racer->lap_time.size()+1;
