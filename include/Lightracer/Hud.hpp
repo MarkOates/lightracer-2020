@@ -20,6 +20,7 @@ private:
    int screen_width;
    Timer &stopwatch;
    int num_lives;
+   int wall_hit_count;
 
    void draw_hud();
    void draw_num_segments(int text_y, int num_segments);
@@ -27,7 +28,7 @@ private:
    void draw_stopwatch(int text_y, int horizontal_screen_padding);
    void draw_health_bar(int text_y, int horizontal_screen_padding);
 public:
-   Hud(int num_of_segments_in_track, float current_racer_health, float current_racer_max_health, int current_lap_num, int num_laps_to_win, FontBin &fonts, int screen_width, Timer &stopwatch, int num_lives);
+   Hud(int num_of_segments_in_track, float current_racer_health, float current_racer_max_health, int current_lap_num, int num_laps_to_win, FontBin &fonts, int screen_width, Timer &stopwatch, int num_lives, int wall_hit_count);
    ~Hud();
 
    void draw();
