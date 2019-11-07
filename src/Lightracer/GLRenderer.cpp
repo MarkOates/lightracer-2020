@@ -3,6 +3,7 @@
 #include "Lightracer/GLRenderer.hpp"
 
 
+#include <allegro5/allegro_color.h>
 #include "Lightracer/Racer.hpp"
 #include "Lightracer/Track.hpp"
 #include "allegro_flare/placement3d.h"
@@ -67,6 +68,28 @@ void GLRenderer::draw_gl_projection(Camera3 &camera3, Racer *racer, ALLEGRO_BITM
 
    if (track)
    {
+      TrackSegment *first_track_segment = track->segment.empty() ? nullptr : track->segment[0];
+      if (first_track_segment)
+      {
+         // draw_the_left_rail
+         for (unsigned i=0; i<first_track_segment->left_rail_segments.size(); i++)
+         {
+            LineSegmentInfo *segment = first_track_segment->left_rail_segments[i];
+            vec2d start = segment->start * multiplier;
+            vec2d end = segment->end * multiplier;
+            al_draw_line(start.x, start.y, end.x, end.y, al_color_name("white"), 0.02);
+         }
+
+         // draw_the_right_rail
+         for (unsigned i=0; i<first_track_segment->right_rail_segments.size(); i++)
+         {
+            LineSegmentInfo *segment = first_track_segment->right_rail_segments[i];
+            vec2d start = segment->start * multiplier;
+            vec2d end = segment->end * multiplier;
+            al_draw_line(start.x, start.y, end.x, end.y, al_color_name("white"), 0.02);
+         }
+      }
+
       vec3d exit_p1_pos = vec3d(track->exit_p1.x * multiplier, 0, track->exit_p1.y * multiplier);
       vec3d exit_p2_pos = vec3d(track->exit_p2.x * multiplier, 0, track->exit_p2.y * multiplier);
 
