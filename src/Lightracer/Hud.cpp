@@ -52,6 +52,7 @@ void Hud::draw_hud()
    draw_num_segments(text_y, num_of_segments_in_track);
    draw_wall_hit_count(text_y);
    draw_throttle_release_count(text_y);
+   draw_count_of_removed_track_segments(text_y);
 
    draw_num_laps(text_y, num_laps_to_win);
    draw_stopwatch(text_y, horizontal_screen_padding);
@@ -96,6 +97,19 @@ void Hud::draw_throttle_release_count(int text_y)
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
    al_draw_text(font, color, screen_width - 300 - 924, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
+}
+
+
+void Hud::draw_count_of_removed_track_segments(int text_y)
+{
+   std::stringstream ss;
+   ss << "RLF " << count_of_removed_track_segments;
+
+   std::string string_to_write = ss.str();
+
+   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
+   ALLEGRO_COLOR color = al_color_name("white");
+   al_draw_text(font, color, screen_width - 300 - 1124, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
 }
 
 
@@ -162,7 +176,7 @@ void Hud::draw_health_bar(int text_y, int horizontal_screen_padding)
    else health_bar_color = al_color_name("red");
 
    int lives_text_length = 120;
-   int bar_length = 200;
+   int bar_length = 160;
    int bar_y = text_y + al_get_font_ascent(font) / 2 + 4;
    int bar_x = horizontal_screen_padding + lives_text_length + 4;
 
