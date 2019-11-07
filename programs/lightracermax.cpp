@@ -136,6 +136,13 @@ bool FLAG_draw_profile_graph = false;
 ALLEGRO_COLOR start_text_color;
 
 
+
+
+#include "Lightracer/PlayerStats.hpp"
+
+
+
+
 int max_num_lives = 3;
 int num_lives = max_num_lives;
 
@@ -1097,6 +1104,8 @@ void draw_gl_projection(Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, 
 #include "AllegroFlare/Screen.hpp"
 
 
+using Lightracer::PlayerStats;
+
 
 class LightracerMax : public Screen
 {
@@ -1104,12 +1113,14 @@ public:
    ALLEGRO_BITMAP *sub_bitmap_backbuffer_of_display_for_gl_projection;
    Camera3 camera3;
    ModelBin models;
+   PlayerStats player_stats;
 
    LightracerMax(Framework &framework, Screens &screens, Display *display)
       : Screen(framework, screens, display)
       , sub_bitmap_backbuffer_of_display_for_gl_projection(nullptr)
       , camera3()
       , models()
+      , player_stats()
    {}
 
    void initialize()
