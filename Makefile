@@ -75,6 +75,8 @@ endef
 
 
 main:
+	$(call output_terminal_message,"Compose componets from all quintessence files")
+	@make quintessences
 	$(call output_terminal_message,"Make all the component object files")
 	@make objects
 	$(call output_terminal_message,"Make all the programs")
