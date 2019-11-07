@@ -29,6 +29,7 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
    // create a camera3d
 
    vec3d racer_position = vec3d(racer->position.x, 0, racer->position.y) * multiplier;
+   vec3d racer_view_vector = vec3d(racer->direction.x, 0, racer->direction.y).normalized();
 
    vec3d targets_position = racer_position;
    AllegroFlare::vec3d view_vec(0, 0, 0);
@@ -39,9 +40,11 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
    //camera3d.pitch = 0.5 * std::sin(al_get_time());
          camera3d.is_fixed_on_axis = true;
          camera3d.position = targets_position;
-         view_vec = AllegroFlare::vec3d(0, 0, -1);
+         view_vec = racer_view_vector; // this is a fixed track camera tracking, might be good for victory laps: AllegroFlare::vec3d(0, 0, -1);
+         //view_vec = AllegroFlare::vec3d(0, 0, -1);
          camera3d.stepback = view_vec * -12;
-         camera3d.stepback += AllegroFlare::vec3d(0, 10, 0); // ascent
+         camera3d.stepback += AllegroFlare::vec3d(0, 8 - racer->velocity_magnitude, 0); // ascent
+         camera3d.stepback *= (0.9 - 0.1 * racer->velocity_magnitude);
          camera3d.pitch = 0;
          camera3d.stepback_pitch = -0.5;
          camera3d.view_vector = view_vec;
