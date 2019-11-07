@@ -371,13 +371,6 @@ inline void project_point(ALLEGRO_VERTEX &v, CheapCamera *cam, float multiplier=
 
 
 
-//void draw_projected(TrackSegment *segment)
-//{
-// for (int i
-//}
-
-
-
 // hud //
 
 void draw_text_with_letter_spacing(int font_size, ALLEGRO_COLOR color, int x, int y, float letter_spacing, ALLEGRO_FONT *font, std::string string_to_write)
