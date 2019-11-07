@@ -305,6 +305,7 @@ void RacerTrackCollisionResolver::update_racer_along_track()
                   delay_time_since_last_affect = 1.0f;
                   player.health -= 20;
                }
+               player_stats.increment_wall_hit_count();
                if (player.health < 0) { player.health = 0; kill_player(terrain_segment_where_player_collides); }
                break;
 
@@ -312,6 +313,7 @@ void RacerTrackCollisionResolver::update_racer_along_track()
                player.velocity_magnitude *= 0.95;
                player.health = 0;
                play_hit_bad();
+               player_stats.increment_wall_hit_count();
                kill_player(terrain_segment_where_player_collides);
                break;
 
@@ -322,6 +324,7 @@ void RacerTrackCollisionResolver::update_racer_along_track()
                   player.health += 10.0;
                   play_hit_soft();
                }
+               //player_stats.increment_wall_hit_count();
                if (player.health > player.max_health) player.health = player.max_health;
                break;
 
@@ -332,10 +335,12 @@ void RacerTrackCollisionResolver::update_racer_along_track()
                   delay_time_since_last_affect = 1.0f;
                   player.velocity_magnitude = 4.5;
                }
+               //player_stats.increment_wall_hit_count();
                break;
 
             case COLOR_TYPE_YELLOW:
                player.velocity_magnitude *= 0.95;
+               player_stats.increment_wall_hit_count();
                if (delay_time_since_last_affect < 0)
                {
                   play_hit_med();
