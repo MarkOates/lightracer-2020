@@ -59,6 +59,14 @@ al_orthographic_transform(&t, -al_get_bitmap_width(bitmap), al_get_bitmap_height
 
 void GLRenderer::draw_gl_projection(Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track)
 {
+   //camera3.position = vec3d(racer->position.x * 100, racer->position.y * 100, 0);
+   //camera3.stepout = 1.0 + al_get_time();
+   //camera3.tilt = -0.1; //1.0 - al_get_time();
+
+   float multiplier = 0.07;
+   vec3d racer_pos = vec3d(racer->position.x * multiplier, 0, racer->position.y * multiplier);
+   camera3.position = racer_pos;
+
    setup_projection_SCENE(camera3, bitmap, NULL);
 
    //place.position = vec3d(racer->position.x * multiplier, racer->position.y * multiplier, 0);// / 2.0 + al_get_time() * 0.04;
@@ -67,9 +75,11 @@ void GLRenderer::draw_gl_projection(Camera3 &camera3, Racer *racer, ALLEGRO_BITM
    cube_model.draw();
 
    placement3d place;
-   float multiplier = 0.01;
 
-   place.anchor = vec3d(-racer->position.x * multiplier, -racer->position.y * multiplier, 0);// / 2.0 + al_get_time() * 0.04;
+   float height_above_ground;
+   //place.anchor = vec3d(-racer->position.x * multiplier, -racer->position.y * multiplier, -12);// / 2.0 + al_get_time() * 0.04;
+   //place.anchor = vec3d(-racer->position.x * multiplier, -racer->position.y * multiplier + al_get_time(), -12);// / 2.0 + al_get_time() * 0.04;
+   //place.position = vec3d(-racer->position.x * multiplier, -racer->position.y * multiplier, -12 + al_get_time());// / 2.0 + al_get_time() * 0.04;
 
    if (track)
    {
