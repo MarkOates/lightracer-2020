@@ -45,9 +45,8 @@ void Hud::draw_hud()
    al_identity_transform(&transform);
    al_use_transform(&transform);
 
-   
-  int text_y = 40;
-  int horizontal_screen_padding = 100;
+   int text_y = 40;
+   int horizontal_screen_padding = 100;
 
    draw_num_segments(screen_width - 300 - 264, text_y, num_of_segments_in_track);
    draw_wall_hit_count(screen_width - 300 - 724, text_y);
