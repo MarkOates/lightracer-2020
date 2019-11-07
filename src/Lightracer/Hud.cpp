@@ -163,8 +163,6 @@ void Hud::draw_stopwatch(int text_x, int text_y)
 
 void Hud::draw_lives(ALLEGRO_FONT *font, int text_x, int text_y)
 {
-   draw_crosshair(text_x, text_y);
-
    std::string lives_string = "LIV " + tostring(num_lives);
    al_draw_text(font, al_color_name("white"), text_x, text_y, 0, lives_string.c_str());
 }
