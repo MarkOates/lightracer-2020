@@ -49,19 +49,19 @@ void Hud::draw_hud()
   int text_y = 40;
   int horizontal_screen_padding = 100;
 
-   draw_num_segments(text_y, num_of_segments_in_track);
-   draw_wall_hit_count(text_y);
-   draw_throttle_release_count(text_y);
-   draw_count_of_removed_track_segments(text_y);
+   draw_num_segments(0, text_y, num_of_segments_in_track);
+   draw_wall_hit_count(0, text_y);
+   draw_throttle_release_count(0, text_y);
+   draw_count_of_removed_track_segments(0, text_y);
 
-   draw_num_laps(text_y, num_laps_to_win);
-   draw_stopwatch(text_y, horizontal_screen_padding);
+   draw_num_laps(0, text_y, num_laps_to_win);
+   draw_stopwatch(0, text_y, horizontal_screen_padding);
 
-   draw_health_bar(text_y, horizontal_screen_padding);
+   draw_health_bar(0, text_y, horizontal_screen_padding);
 }
 
 
-void Hud::draw_num_segments(int text_y, int num_segments)
+void Hud::draw_num_segments(int text_x, int text_y, int num_segments)
 {
    std::stringstream ss;
    ss << "SEG " << num_segments;
@@ -74,7 +74,7 @@ void Hud::draw_num_segments(int text_y, int num_segments)
 }
 
 
-void Hud::draw_wall_hit_count(int text_y)
+void Hud::draw_wall_hit_count(int text_x, int text_y)
 {
    std::stringstream ss;
    ss << "WHC " << wall_hit_count;
@@ -87,7 +87,7 @@ void Hud::draw_wall_hit_count(int text_y)
 }
 
 
-void Hud::draw_throttle_release_count(int text_y)
+void Hud::draw_throttle_release_count(int text_x, int text_y)
 {
    std::stringstream ss;
    ss << "TRL " << throttle_release_count;
@@ -100,7 +100,7 @@ void Hud::draw_throttle_release_count(int text_y)
 }
 
 
-void Hud::draw_count_of_removed_track_segments(int text_y)
+void Hud::draw_count_of_removed_track_segments(int text_x, int text_y)
 {
    std::stringstream ss;
    ss << "RLF " << count_of_removed_track_segments;
@@ -113,7 +113,7 @@ void Hud::draw_count_of_removed_track_segments(int text_y)
 }
 
 
-void Hud::draw_num_laps(int text_y, int total_num_laps)
+void Hud::draw_num_laps(int text_x, int text_y, int total_num_laps)
 {
    std::string string_to_write = "";
    std::stringstream ss;
@@ -140,7 +140,7 @@ void Hud::draw_num_laps(int text_y, int total_num_laps)
 }
 
 
-void Hud::draw_stopwatch(int text_y, int horizontal_screen_padding)
+void Hud::draw_stopwatch(int text_x, int text_y, int horizontal_screen_padding)
 {
    std::string ellapsed_time_str = std::string("TIM ") + TimerFormatter(stopwatch.get_elappsed_time_msec()).format();
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
@@ -159,7 +159,7 @@ void Hud::draw_stopwatch(int text_y, int horizontal_screen_padding)
 }   
 
 
-void Hud::draw_health_bar(int text_y, int horizontal_screen_padding)
+void Hud::draw_health_bar(int text_x, int text_y, int horizontal_screen_padding)
 {
    int health_bar_height = 10;
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
