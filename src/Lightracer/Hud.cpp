@@ -51,7 +51,7 @@ void Hud::draw_hud()
 
    draw_num_segments(screen_width - 300 - 264, text_y, num_of_segments_in_track);
    draw_wall_hit_count(screen_width - 300 - 724, text_y);
-   draw_throttle_release_count(0, text_y);
+   draw_throttle_release_count(screen_width - 300 - 924, text_y);
    draw_count_of_removed_track_segments(0, text_y);
 
    draw_num_laps(0, text_y, num_laps_to_win);
@@ -96,7 +96,7 @@ void Hud::draw_throttle_release_count(int text_x, int text_y)
 
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
-   al_draw_text(font, color, screen_width - 300 - 924, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
+   al_draw_text(font, color, text_x, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
 }
 
 
