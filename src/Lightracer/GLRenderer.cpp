@@ -6,6 +6,7 @@
 #include <allegro5/allegro_color.h>
 #include "Lightracer/Racer.hpp"
 #include "Lightracer/Track.hpp"
+#include "AllegroFlare/Useful.hpp" // for FULL_ROTATION
 #include "allegro_flare/placement3d.h"
 
 
@@ -60,35 +61,47 @@ void GLRenderer::draw_gl_projection(Camera3 &camera3, Racer *racer, ALLEGRO_BITM
 {
    setup_projection_SCENE(camera3, bitmap, NULL);
 
+   //place.position = vec3d(racer->position.x * multiplier, racer->position.y * multiplier, 0);// / 2.0 + al_get_time() * 0.04;
+
    Model3D &cube_model = *models["rounded_unit_cube-01.obj"];
    cube_model.draw();
 
    placement3d place;
    float multiplier = 0.01;
 
+   place.anchor = vec3d(-racer->position.x * multiplier, -racer->position.y * multiplier, 0);// / 2.0 + al_get_time() * 0.04;
+
    if (track)
    {
+      place.rotation.z = 0.5;// / 2.0 + al_get_time() * 0.04;
+      place.rotation.x = 0.25; //+ al_get_time() * 0.04;
+      place.rotation.y = 0.5; //+ al_get_time() * 0.04;
+      place.start_transform();
+
       TrackSegment *first_track_segment = track->segment.empty() ? nullptr : track->segment[0];
-      if (first_track_segment)
+      for (auto &track_segment : track->segment)
       {
          // draw_the_left_rail
-         for (unsigned i=0; i<first_track_segment->left_rail_segments.size(); i++)
+         for (unsigned i=0; i<track_segment->left_rail_segments.size(); i++)
          {
-            LineSegmentInfo *segment = first_track_segment->left_rail_segments[i];
+            LineSegmentInfo *segment = track_segment->left_rail_segments[i];
             vec2d start = segment->start * multiplier;
             vec2d end = segment->end * multiplier;
-            al_draw_line(start.x, start.y, end.x, end.y, al_color_name("white"), 0.02);
+            al_draw_line(start.x, start.y, end.x, end.y, al_color_name("white"), 3 * multiplier);
          }
 
          // draw_the_right_rail
-         for (unsigned i=0; i<first_track_segment->right_rail_segments.size(); i++)
+         for (unsigned i=0; i<track_segment->right_rail_segments.size(); i++)
          {
-            LineSegmentInfo *segment = first_track_segment->right_rail_segments[i];
+            LineSegmentInfo *segment = track_segment->right_rail_segments[i];
             vec2d start = segment->start * multiplier;
             vec2d end = segment->end * multiplier;
-            al_draw_line(start.x, start.y, end.x, end.y, al_color_name("white"), 0.02);
+            al_draw_line(start.x, start.y, end.x, end.y, al_color_name("white"), 3 * multiplier);
          }
       }
+
+      place.restore_transform();
+
 
       vec3d exit_p1_pos = vec3d(track->exit_p1.x * multiplier, 0, track->exit_p1.y * multiplier);
       vec3d exit_p2_pos = vec3d(track->exit_p2.x * multiplier, 0, track->exit_p2.y * multiplier);
