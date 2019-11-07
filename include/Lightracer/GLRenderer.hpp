@@ -18,7 +18,7 @@ class GLRenderer
 public:
    GLRenderer();
 
-   void draw_gl_projection(Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track_);
+   void draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track_);
 };
 
 

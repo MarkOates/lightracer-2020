@@ -41,6 +41,9 @@ Motion motion;
 #include <cmath>
 
 
+#include "allegro_flare/camera3d.h"
+
+
 using std::vector;
 
 
@@ -1008,6 +1011,7 @@ class LightracerMax : public Screen
 public:
    ALLEGRO_BITMAP *sub_bitmap_backbuffer_of_display_for_gl_projection;
    Camera3 camera3;
+   Camera3D camera3d;
    ModelBin models;
    PlayerStats player_stats;
 
@@ -1015,6 +1019,7 @@ public:
       : Screen(framework, screens, display)
       , sub_bitmap_backbuffer_of_display_for_gl_projection(nullptr)
       , camera3()
+      , camera3d(vec3d(0, 0, 0))
       , models()
       , player_stats()
    {}
@@ -1070,7 +1075,8 @@ public:
       ALLEGRO_STATE previous_bitmap_state;
       al_store_state(&previous_bitmap_state, ALLEGRO_STATE_TARGET_BITMAP);
       al_set_target_bitmap(sub_bitmap_backbuffer_of_display_for_gl_projection);
-      GLRenderer().draw_gl_projection(camera3, racer, sub_bitmap_backbuffer_of_display_for_gl_projection, models, track);
+      ALLEGRO_DISPLAY *al_display = display->al_display;
+      GLRenderer().draw_gl_projection(al_display, camera3, racer, sub_bitmap_backbuffer_of_display_for_gl_projection, models, track);
       al_restore_state(&previous_bitmap_state);
    }
 

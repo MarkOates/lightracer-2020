@@ -8,9 +8,14 @@
 #include "Lightracer/Track.hpp"
 #include "AllegroFlare/Useful.hpp" // for FULL_ROTATION
 #include "allegro_flare/placement3d.h"
+#include "allegro_flare/camera3d.h"
+
+
+#include <cmath> // for std::sin
 
 
 using allegro_flare::placement3d;
+using allegro_flare::Camera3D;
 
 
 GLRenderer::GLRenderer()
@@ -18,29 +23,54 @@ GLRenderer::GLRenderer()
 }
 
 
-void GLRenderer::draw_gl_projection(Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track)
+void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track)
 {
-   //setup_projection_SCENE(camera3, bitmap, NULL);
-   ALLEGRO_BITMAP *backbuffer_sub_bitmap = bitmap;
-   Camera3 &camera_to_use = camera3;
-
-   // setup the render settings
-   al_set_render_state(ALLEGRO_DEPTH_TEST, 1);
-   al_set_render_state(ALLEGRO_WRITE_MASK, ALLEGRO_MASK_DEPTH | ALLEGRO_MASK_RGBA);
-   al_clear_depth_buffer(1);
-
-   ALLEGRO_TRANSFORM t;
-
-   camera_to_use.reverse_position_transform(&t);
-
-   float aspect_ratio = (float)al_get_bitmap_height(backbuffer_sub_bitmap) / al_get_bitmap_width(backbuffer_sub_bitmap);
-   al_perspective_transform(&t, -1, aspect_ratio, 1, 1, -aspect_ratio, 100);
-
-   al_use_projection_transform(&t);
-
-
-
    float multiplier = 0.07;
+   // create a camera3d
+
+   vec3d racer_position = vec3d(racer->position.x, 0, racer->position.y) * multiplier;
+
+   vec3d targets_position = racer_position;
+   AllegroFlare::vec3d view_vec(0, 0, 0);
+
+   Camera3D camera3d(0);
+   //camera3d.stepback = 30;
+   //camera3d.stepback_rotation = al_get_time() * 0.2;
+   //camera3d.pitch = 0.5 * std::sin(al_get_time());
+         camera3d.is_fixed_on_axis = true;
+         camera3d.position = targets_position;
+         view_vec = AllegroFlare::vec3d(0, 0, -1);
+         camera3d.stepback = view_vec * -12;
+         camera3d.stepback += AllegroFlare::vec3d(0, 10, 0); // ascent
+         camera3d.pitch = 0;
+         camera3d.stepback_pitch = -0.5;
+         camera3d.view_vector = view_vec;
+
+   camera3d.set_frustum_as_camera(display);
+
+
+   ////setup_projection_SCENE(camera3, bitmap, NULL);
+   //ALLEGRO_BITMAP *backbuffer_sub_bitmap = bitmap;
+   //Camera3 &camera_to_use = camera3;
+
+   //// setup the render settings
+   //al_set_render_state(ALLEGRO_DEPTH_TEST, 1);
+   //al_set_render_state(ALLEGRO_WRITE_MASK, ALLEGRO_MASK_DEPTH | ALLEGRO_MASK_RGBA);
+   //al_clear_depth_buffer(1);
+
+   //ALLEGRO_TRANSFORM t;
+
+   ////camera_to_use.reverse_position_transform(&t);
+
+   //float aspect_ratio = (float)al_get_bitmap_height(backbuffer_sub_bitmap) / al_get_bitmap_width(backbuffer_sub_bitmap);
+   //al_perspective_transform(&t, -1, aspect_ratio, 1, 1, -aspect_ratio, 100);
+
+   //al_use_projection_transform(&t);
+
+
+
+
+   multiplier = 0.07;
    Model3D &cube_model = *models["rounded_unit_cube-01.obj"];
    cube_model.draw();
 
