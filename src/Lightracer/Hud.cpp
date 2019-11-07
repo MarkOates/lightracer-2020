@@ -48,7 +48,7 @@ void Hud::draw_hud()
    int text_y = 40;
    int horizontal_screen_padding = 100;
 
-   int anchor_position = screen_width - 300;
+   int anchor_position = screen_width - 300 - 45;
 
    draw_health_bar(horizontal_screen_padding, text_y);
    draw_wall_hit_count(anchor_position - 1124, text_y);
