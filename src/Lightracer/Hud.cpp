@@ -57,7 +57,7 @@ void Hud::draw_hud()
    draw_num_laps(screen_width - 300 - 300 - 200, text_y, num_laps_to_win);
    draw_stopwatch(screen_width - 375, text_y, horizontal_screen_padding);
 
-   draw_health_bar(0, text_y, horizontal_screen_padding);
+   draw_health_bar(horizontal_screen_padding, text_y);
 }
 
 
@@ -159,13 +159,13 @@ void Hud::draw_stopwatch(int text_x, int text_y, int horizontal_screen_padding)
 }   
 
 
-void Hud::draw_health_bar(int text_x, int text_y, int horizontal_screen_padding)
+void Hud::draw_health_bar(int text_x, int text_y)
 {
    int health_bar_height = 10;
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
 
    std::string lives_string = "LIV " + tostring(num_lives);
-   al_draw_text(font, al_color_name("white"), horizontal_screen_padding, text_y, 0, lives_string.c_str());
+   al_draw_text(font, al_color_name("white"), text_x, text_y, 0, lives_string.c_str());
 
    float health_percentage = current_racer_health / current_racer_max_health;
 
@@ -178,7 +178,7 @@ void Hud::draw_health_bar(int text_x, int text_y, int horizontal_screen_padding)
    int lives_text_length = 120;
    int bar_length = 160;
    int bar_y = text_y + al_get_font_ascent(font) / 2 + 4;
-   int bar_x = horizontal_screen_padding + lives_text_length + 4;
+   int bar_x = text_x + lives_text_length + 4;
 
    al_draw_rounded_rectangle(
          bar_x - 4,
