@@ -841,7 +841,11 @@ void main_menu_timer_func(ALLEGRO_EVENT *event)
 
 
 
-void game_timer_func(ALLEGRO_EVENT *current_event)
+using Lightracer::PlayerStats;
+
+
+
+void game_timer_func(Lightracer::PlayerStats &player_stats, ALLEGRO_EVENT *current_event)
 {
    float screen_center_x = SCREEN_HW;
    float screen_center_y = SCREEN_HH;
@@ -1142,7 +1146,7 @@ public:
       }
       else
       {
-         game_timer_func(framework.current_event);
+         game_timer_func(player_stats, framework.current_event);
          if (development) gl_render_func();
       }
 
