@@ -265,29 +265,7 @@ int index_of_last_track_segment_that_collides = 0;
 
 
 
-
-void fade_to_black()
-{
-   float start_time = al_get_time();
-   float end_time = start_time + 3.0;
-   motion.animate(&foreground_black_opacity, 0.0, 1.0, start_time, end_time);
-}
-
-void fade_out_of_black()
-{
-   float start_time = al_get_time();
-   float end_time = start_time + 3.6;
-   motion.animate(&foreground_black_opacity, 1.0, 0.0, start_time, end_time);
-}
-
-void flash_white()
-{
-   float start_time = al_get_time();
-   float end_time = start_time + 2.0;
-   motion.animate(&foreground_white_opacity, 1.0, 0.0, start_time, end_time);
-   al_stop_sample_instance(exit_sample_instance);
-   al_play_sample_instance(exit_sample_instance);
-}
+#include "Lightracer/shared.hpp"
 
 
 
@@ -505,7 +483,7 @@ void start_track()
    stopwatch = AllegroFlare::Timer();
    stopwatch.start();
 
-   fade_out_of_black();
+   fade_out_of_black(motion, foreground_black_opacity);
 
 }
 
@@ -625,7 +603,7 @@ void init_game()
    camera = new CheapCamera();
    good_camera = new Camera(SCREEN_W, SCREEN_H);
 
-   fade_out_of_black();
+   fade_out_of_black(motion, foreground_black_opacity);
 
    //start_track();
 }
@@ -873,6 +851,8 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, ALLEGRO_EVENT *curre
       , lap_notification_counter
       , motion
       , delay_time_since_last_affect
+      , foreground_white_opacity
+      , exit_sample_instance
       );
    collision_resolver.resolve();
    stop_profile_timer("racer/track");

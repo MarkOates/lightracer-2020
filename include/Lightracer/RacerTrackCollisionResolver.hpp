@@ -23,6 +23,8 @@ private:
    float &lap_notification_counter;
    Motion &motion;
    float &delay_time_since_last_affect;
+   float &foreground_white_opacity;
+   ALLEGRO_SAMPLE_INSTANCE *exit_sample_instance;
 
 public:
    RacerTrackCollisionResolver(
@@ -35,6 +37,8 @@ public:
       , float &lap_notification_counter
       , Motion &motion
       , float &delay_time_since_last_affect
+      , float &foreground_white_opacity
+      , ALLEGRO_SAMPLE_INSTANCE *exit_sample_instance
    );
 
    void update_player_velocity_and_direction();

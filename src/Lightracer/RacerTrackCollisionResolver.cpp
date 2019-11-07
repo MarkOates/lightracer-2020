@@ -6,9 +6,10 @@
 #include <cmath> // for abs
 #include "AllegroFlare/Useful.hpp" // for reflect (and maybe something else)
 
+#include "Lightracer/shared.hpp"
 
 void complete_track();
-void flash_white();
+//void flash_white();
 void play_hit_bad();
 void kill_player(int _segment_where_player_died);
 void play_hit_soft();
@@ -26,6 +27,8 @@ RacerTrackCollisionResolver::RacerTrackCollisionResolver(
       , float &lap_notification_counter
       , Motion &motion
       , float &delay_time_since_last_affect
+      , float &foreground_white_opacity
+      , ALLEGRO_SAMPLE_INSTANCE *exit_sample_instance
       )
    : player(*racer)
    , player_stats(player_stats)
@@ -37,6 +40,8 @@ RacerTrackCollisionResolver::RacerTrackCollisionResolver(
    , lap_notification_counter(lap_notification_counter)
    , motion(motion)
    , delay_time_since_last_affect(delay_time_since_last_affect)
+   , foreground_white_opacity(foreground_white_opacity)
+   , exit_sample_instance(exit_sample_instance)
 {}
 
 
@@ -273,7 +278,8 @@ void RacerTrackCollisionResolver::update_racer_along_track()
             float end_time = start_time + 3.0;
             motion.animate(&lap_notification_counter, 1.0, 0.0, start_time, end_time, interpolator::quadruple_fast_out);
 
-            flash_white();
+            flash_white(motion, foreground_white_opacity);
+            play_exit_teleport_sound_effect(exit_sample_instance);
             
             // rotate velocity and direction
             player.direction_angle += track->exit_segment_info->from_start.get_angle();
