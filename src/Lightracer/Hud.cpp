@@ -185,14 +185,14 @@ void Hud::draw_health_bar(int text_x, int text_y)
          bar_x + 4 + bar_length,
          bar_y + 4 + health_bar_height * 0.5,
          4, 4,
-         al_color_name("lightblue"), 2.0);
+         al_color_name("white"), 2.0);
 
    al_draw_filled_rectangle(
          bar_x,
          bar_y - health_bar_height * 0.5,
          bar_x + bar_length * health_percentage,
          bar_y + health_bar_height * 0.5,
-         al_color_name("lightblue"));
+         al_color_name("white"));
 }
 
 
