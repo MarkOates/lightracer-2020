@@ -1,6 +1,7 @@
 #include "Lightracer/TrackFactory.hpp"
 
 #include "Lightracer/shared.hpp"
+#include "AllegroFlare/Useful.hpp" // for random_int, random_bool
 
 
 TrackSegment *create_track_segmentA()
@@ -129,4 +130,116 @@ TrackSegment *opening_gate()
 
    return segment;
 }
+
+
+bool create_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
+{
+   track->clear();
+   //int num_segments = 20;
+
+   if (num_segments > 30) num_segments = 30;
+
+   TrackSegment *track_segment = nullptr;
+
+   track->create_gate(); // gate is added automatically
+
+   segment_where_player_died.clear();
+
+   track_segment = create_track_segmentE();
+   track->append_segment(track_segment);
+   //                   track_segment = create_track_segmentE();
+                        //track->append_segment(track_segment);
+                        //track->__HACK_finalize_track();
+   //return;
+
+   track_segment = create_track_segmentE();
+   track->append_segment(track_segment);
+
+   int num_consecutive_color_segments = 2;
+   int consecutive_color_segment_ct = 0;
+   int last_color_segment = 0;
+
+   for (int i=0; i<num_segments; i++)
+   {
+      // pick the segment
+      switch(random_int(0, 4))
+      {
+      case 0:
+         track_segment = create_track_segmentA();
+         break;
+      case 1:
+         track_segment = create_track_segmentB();
+         break;
+      case 2:
+         track_segment = create_track_segmentC();
+         break;
+      case 3:
+         track_segment = create_track_segmentD();
+         break;
+      case 4:
+         track_segment = create_track_segmentE();
+         break;
+      }
+
+      // pick a reverse flip of the segment or not
+      if (random_bool()) track_segment->reverse();
+
+      if ((consecutive_color_segment_ct%num_consecutive_color_segments) == 0)
+      {
+         int new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_MAX-1);
+
+         if (num_segments == 4)
+         {
+            new_color_segment = COLOR_TYPE_YELLOW;
+         }
+         else if (num_segments == 10)
+         {
+            new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_GREEN);
+         }
+         else if (num_segments == 16)
+         {
+            // introduce blue, and unlikely red
+            new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_RED);
+            //if (new_color_segment == COLOR_TYPE_RED)
+            // new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_RED);
+         }
+         else if (num_segments == 22)
+         {
+            // no yellow and unlikely green
+            new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_RED_DEATH);
+            while (new_color_segment == COLOR_TYPE_GREEN)
+               new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_RED);
+         }
+         else if (num_segments == 28)
+         {
+            // no yellow or green, and more likely red
+            new_color_segment = random_int(COLOR_TYPE_BLUE, COLOR_TYPE_RED_DEATH);
+            if (new_color_segment != COLOR_TYPE_RED)
+               new_color_segment = random_int(COLOR_TYPE_BLUE, COLOR_TYPE_RED_DEATH);
+         }
+         else if (num_segments == 30) new_color_segment = COLOR_TYPE_RED_DEATH;
+
+         last_color_segment = new_color_segment;
+      }
+
+      consecutive_color_segment_ct++;
+
+      track_segment->color_type = last_color_segment;
+
+      // append the segment
+      track->append_segment(track_segment);
+   }
+
+   track_segment = create_track_segmentE();
+   track->append_segment(track_segment);
+
+   track_segment = create_track_segmentE();
+   track_segment->color_type = COLOR_TYPE_WHITE;
+   track->append_segment(track_segment);
+
+   track->__HACK_finalize_track();
+
+   return true;
+}
+
 
