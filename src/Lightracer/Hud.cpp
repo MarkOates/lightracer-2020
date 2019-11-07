@@ -48,6 +48,7 @@ void Hud::draw_hud()
   int horizontal_screen_padding = 100;
 
    draw_num_segments(text_y, num_of_segments_in_track);
+   draw_wall_hit_count(text_y);
 
    draw_num_laps(text_y, num_laps_to_win);
    draw_stopwatch(text_y, horizontal_screen_padding);
@@ -66,6 +67,19 @@ void Hud::draw_num_segments(int text_y, int num_segments)
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
    al_draw_text(font, color, screen_width - 300 - 264, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
+}
+
+
+void Hud::draw_wall_hit_count(int text_y)
+{
+   std::stringstream ss;
+   ss << "WHC " << wall_hit_count;
+
+   std::string string_to_write = ss.str();
+
+   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
+   ALLEGRO_COLOR color = al_color_name("white");
+   al_draw_text(font, color, screen_width - 300 - 724, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
 }
 
 

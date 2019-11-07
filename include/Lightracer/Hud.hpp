@@ -25,6 +25,7 @@ private:
    void draw_hud();
    void draw_num_segments(int text_y, int num_segments);
    void draw_num_laps(int text_y, int total_num_laps);
+   void draw_wall_hit_count(int text_y);
    void draw_stopwatch(int text_y, int horizontal_screen_padding);
    void draw_health_bar(int text_y, int horizontal_screen_padding);
 public:
