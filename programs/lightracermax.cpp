@@ -481,7 +481,6 @@ void start_track()
 
    start_track_begin_text();
    stopwatch = AllegroFlare::Timer();
-   stopwatch.start();
 
    fade_out_of_black(motion, foreground_black_opacity);
 
@@ -677,6 +676,7 @@ void racer__on_key_down(ALLEGRO_EVENT *current_event)
    switch(current_event->keyboard.keycode)
    {
    case ALLEGRO_KEY_UP:
+      if (!stopwatch.is_running()) stopwatch.start();
       racer->throttle_on = true;
       break;
    case ALLEGRO_KEY_LEFT:
@@ -708,7 +708,7 @@ void key_up_func(PlayerStats &player_stats, ALLEGRO_EVENT *current_event)
 
 void key_down_func(Framework &framework, ALLEGRO_EVENT *current_event)
 {
-   racer__on_key_down(current_event);
+   if (!track_completed) racer__on_key_down(current_event);
 
    switch(current_event->keyboard.keycode)
    {
