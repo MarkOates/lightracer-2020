@@ -669,13 +669,14 @@ void key_char_func(ALLEGRO_EVENT *current_event)
 }
 
 
-void racer__on_key_up(ALLEGRO_EVENT *current_event)
+void racer__on_key_up(PlayerStats &player_stats, ALLEGRO_EVENT *current_event)
 {
    if (racer->dead) return;
 
    switch(current_event->keyboard.keycode)
    {
    case ALLEGRO_KEY_UP:
+      if (racer->throttle_on) player_stats.increment_throttle_release_count();
       racer->throttle_on = false;
       break;
    case ALLEGRO_KEY_LEFT:
@@ -717,9 +718,9 @@ void racer__on_key_down(ALLEGRO_EVENT *current_event)
 
 
 
-void key_up_func(ALLEGRO_EVENT *current_event)
+void key_up_func(PlayerStats &player_stats, ALLEGRO_EVENT *current_event)
 {
-   racer__on_key_up(current_event);
+   racer__on_key_up(player_stats, current_event);
 }
 
 
@@ -899,7 +900,7 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, ALLEGRO_EVENT *curre
    int current_lap_num = (int)racer->lap_time.size()+1;
    int current_racer_health = racer->health;
    int current_racer_max_health = racer->max_health;
-   Hud(num_of_segments_in_track, current_racer_health, current_racer_max_health, current_lap_num, num_laps_to_win, fonts, SCREEN_W, stopwatch, num_lives, player_stats.get_wall_hit_count()).draw();
+   Hud(num_of_segments_in_track, current_racer_health, current_racer_max_health, current_lap_num, num_laps_to_win, fonts, SCREEN_W, stopwatch, num_lives, player_stats.get_wall_hit_count(), player_stats.get_throttle_release_count()).draw();
 
 
    ALLEGRO_TRANSFORM ident;
@@ -1185,7 +1186,7 @@ public:
 
    void key_up_func() override
    {
-      ::key_up_func(framework.current_event);
+      ::key_up_func(player_stats, framework.current_event);
    }
 
    void key_down_func() override

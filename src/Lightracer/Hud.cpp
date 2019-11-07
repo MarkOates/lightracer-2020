@@ -11,7 +11,7 @@
 #include <sstream>
 
 
-Hud::Hud(int num_of_segments_in_track, float current_racer_health, float current_racer_max_health, int current_lap_num, int num_laps_to_win, FontBin &fonts, int screen_width, Timer &stopwatch, int num_lives, int wall_hit_count)
+Hud::Hud(int num_of_segments_in_track, float current_racer_health, float current_racer_max_health, int current_lap_num, int num_laps_to_win, FontBin &fonts, int screen_width, Timer &stopwatch, int num_lives, int wall_hit_count, int throttle_release_count)
    : num_of_segments_in_track(num_of_segments_in_track)
    , current_racer_health(current_racer_health)
    , current_racer_max_health(current_racer_max_health)
@@ -22,6 +22,7 @@ Hud::Hud(int num_of_segments_in_track, float current_racer_health, float current
    , stopwatch(stopwatch)
    , num_lives(num_lives)
    , wall_hit_count(wall_hit_count)
+   , throttle_release_count(throttle_release_count)
 {
 }
 
@@ -49,6 +50,7 @@ void Hud::draw_hud()
 
    draw_num_segments(text_y, num_of_segments_in_track);
    draw_wall_hit_count(text_y);
+   draw_throttle_release_count(text_y);
 
    draw_num_laps(text_y, num_laps_to_win);
    draw_stopwatch(text_y, horizontal_screen_padding);
@@ -80,6 +82,19 @@ void Hud::draw_wall_hit_count(int text_y)
    ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
    al_draw_text(font, color, screen_width - 300 - 724, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
+}
+
+
+void Hud::draw_throttle_release_count(int text_y)
+{
+   std::stringstream ss;
+   ss << "TRL " << throttle_release_count;
+
+   std::string string_to_write = ss.str();
+
+   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
+   ALLEGRO_COLOR color = al_color_name("white");
+   al_draw_text(font, color, screen_width - 300 - 924, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
 }
 
 
