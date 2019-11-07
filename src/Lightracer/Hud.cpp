@@ -48,15 +48,13 @@ void Hud::draw_hud()
    int text_y = 40;
    int horizontal_screen_padding = 100;
 
-   draw_num_segments(screen_width - 300 - 264, text_y, num_of_segments_in_track);
+   draw_health_bar(horizontal_screen_padding, text_y);
    draw_wall_hit_count(screen_width - 300 - 724, text_y);
    draw_throttle_release_count(screen_width - 300 - 924, text_y);
-   draw_count_of_removed_track_segments(screen_width - 300 - 1124, text_y);
-
    draw_num_laps(screen_width - 300 - 300 - 200, text_y, num_laps_to_win);
+   draw_num_segments(screen_width - 300 - 264, text_y, num_of_segments_in_track);
+   draw_count_of_removed_track_segments(screen_width - 300 - 1124, text_y);
    draw_stopwatch(screen_width - 375, text_y);
-
-   draw_health_bar(horizontal_screen_padding, text_y);
 }
 
 
