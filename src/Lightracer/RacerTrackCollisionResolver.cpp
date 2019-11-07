@@ -19,7 +19,6 @@ void play_hit_med();
 RacerTrackCollisionResolver::RacerTrackCollisionResolver(
         Racer *racer
       , Track *track
-      , double &OMG_DeltaTime
       , int &index_of_last_track_segment_that_collides
       , ALLEGRO_SAMPLE_INSTANCE *passthough_sample_instance
       , int &num_laps_to_win
@@ -29,7 +28,7 @@ RacerTrackCollisionResolver::RacerTrackCollisionResolver(
       )
    : player(*racer)
    , track(track)
-   , OMG_DeltaTime(OMG_DeltaTime)
+   , OMG_DeltaTime(0.6)
    , index_of_last_track_segment_that_collides(index_of_last_track_segment_that_collides)
    , passthough_sample_instance(passthough_sample_instance)
    , num_laps_to_win(num_laps_to_win)

@@ -245,8 +245,6 @@ int num_of_segments_in_track = 4;
 
 
 
-double OMG_DeltaTime = 1.0;
-
 float finish_track_animation_counter = 1.0;
 bool track_completed = false;
 
@@ -530,8 +528,6 @@ void init_game()
    float start_time = al_get_time();
    float end_time = start_time + 7.0;
    motion.animate(&logo_scale, 0.7, 1.0, start_time, end_time, interpolator::tripple_fast_in);
-
-   OMG_DeltaTime = 0.6;
 
    start_text_color = al_color_name("white");
 
@@ -858,7 +854,6 @@ void game_timer_func(ALLEGRO_EVENT *current_event)
    RacerTrackCollisionResolver collision_resolver(
         racer
       , track
-      , OMG_DeltaTime
       , index_of_last_track_segment_that_collides
       , passthough_sample_instance
       , num_laps_to_win
