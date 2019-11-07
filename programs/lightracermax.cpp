@@ -864,6 +864,7 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, ALLEGRO_EVENT *curre
    start_profile_timer("racer/track");
    RacerTrackCollisionResolver collision_resolver(
         racer
+      , player_stats
       , track
       , index_of_last_track_segment_that_collides
       , passthough_sample_instance

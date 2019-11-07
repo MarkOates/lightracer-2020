@@ -3,6 +3,8 @@
 
 #include "Lightracer/Racer.hpp"
 #include "Lightracer/Track.hpp"
+#include "Lightracer/PlayerStats.hpp"
+using Lightracer::PlayerStats;
 
 #include "allegro5/allegro_audio.h"
 
@@ -11,6 +13,7 @@ class RacerTrackCollisionResolver
 {
 private:
    Racer &player;
+   PlayerStats &player_stats;
    Track *track;
 
    double OMG_DeltaTime;
@@ -24,6 +27,7 @@ private:
 public:
    RacerTrackCollisionResolver(
         Racer *racer
+      , PlayerStats &player_stats
       , Track *track
       , int &index_of_last_track_segment_that_collides
       , ALLEGRO_SAMPLE_INSTANCE *passthough_sample_instance

@@ -18,6 +18,7 @@ void play_hit_med();
 
 RacerTrackCollisionResolver::RacerTrackCollisionResolver(
         Racer *racer
+      , PlayerStats &player_stats
       , Track *track
       , int &index_of_last_track_segment_that_collides
       , ALLEGRO_SAMPLE_INSTANCE *passthough_sample_instance
@@ -27,6 +28,7 @@ RacerTrackCollisionResolver::RacerTrackCollisionResolver(
       , float &delay_time_since_last_affect
       )
    : player(*racer)
+   , player_stats(player_stats)
    , track(track)
    , OMG_DeltaTime(0.6)
    , index_of_last_track_segment_that_collides(index_of_last_track_segment_that_collides)
