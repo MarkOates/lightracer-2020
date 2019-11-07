@@ -20,6 +20,9 @@ namespace Lightracer
 
       int get_wall_hit_count();
       int get_throttle_release_count();
+
+      void increment_wall_hit_count();
+      void increment_throttle_release_count();
    };
 }
 

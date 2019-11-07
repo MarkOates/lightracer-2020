@@ -44,6 +44,18 @@ int PlayerStats::get_throttle_release_count()
 }
 
 
+void PlayerStats::increment_wall_hit_count()
+{
+   wall_hit_count++;
+}
+
+
+void PlayerStats::increment_throttle_release_count()
+{
+   throttle_release_count++;
+}
+
+
 } // namespace Lightracer
 
 
