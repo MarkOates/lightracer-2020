@@ -55,7 +55,7 @@ void Hud::draw_hud()
    draw_count_of_removed_track_segments(screen_width - 300 - 1124, text_y);
 
    draw_num_laps(screen_width - 300 - 300 - 200, text_y, num_laps_to_win);
-   draw_stopwatch(0, text_y, horizontal_screen_padding);
+   draw_stopwatch(screen_width - 375, text_y, horizontal_screen_padding);
 
    draw_health_bar(0, text_y, horizontal_screen_padding);
 }
@@ -153,7 +153,7 @@ void Hud::draw_stopwatch(int text_x, int text_y, int horizontal_screen_padding)
    for (auto &c : ellapsed_time_str)
    {
       the_char[0] = c;
-      al_draw_text(font, color, screen_width - 375 + (letters_traversed * letter_spacing), text_y, ALLEGRO_ALIGN_CENTER, the_char.c_str());
+      al_draw_text(font, color, text_x + (letters_traversed * letter_spacing), text_y, ALLEGRO_ALIGN_CENTER, the_char.c_str());
       letters_traversed++;
    }
 }   
