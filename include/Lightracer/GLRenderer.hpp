@@ -15,9 +15,6 @@ using AllegroFlare::ModelBin;
 
 class GLRenderer
 {
-private:
-   void setup_projection_SCENE(Camera3 &camera_to_use, ALLEGRO_BITMAP *backbuffer_sub_bitmap, ALLEGRO_TRANSFORM *transform_to_fill=nullptr);
-
 public:
    GLRenderer();
 
