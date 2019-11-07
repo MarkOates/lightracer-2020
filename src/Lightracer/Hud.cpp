@@ -131,7 +131,7 @@ void Hud::draw_num_laps(int text_x, int text_y, int total_num_laps)
    }
    else
    {
-      ss << "-";
+      ss << "- / -";
    }
    string_to_write = ss.str();
 
