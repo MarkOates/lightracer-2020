@@ -893,7 +893,8 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, ALLEGRO_EVENT *curre
    start_profile_timer("draw projected");
    track->draw_projected(
          index_of_last_track_segment_that_collides, racer, bitmaps, good_camera, camera,
-         racer->direction_angle, racer->position.x, racer->position.y, racer->velocity_magnitude);
+         racer->direction_angle, racer->position.x, racer->position.y, racer->velocity_magnitude
+      );
    stop_profile_timer("draw projected");
 
 
