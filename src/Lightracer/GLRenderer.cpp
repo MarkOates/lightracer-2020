@@ -34,6 +34,10 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
    vec3d targets_position = racer_position;
    AllegroFlare::vec3d view_vec(0, 0, 0);
 
+   float ideal_velocity = 4.165;
+
+   float moving_non_moving_normal = 1.0 - (racer->velocity_magnitude / ideal_velocity); // 0 is not moving, 1 is moving at te
+
    Camera3D camera3d(0);
    //camera3d.stepback = 30;
    //camera3d.stepback_rotation = al_get_time() * 0.2;
@@ -44,10 +48,12 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
          view_vec = racer_view_vector; // this is a fixed track camera tracking, might be good for victory laps: AllegroFlare::vec3d(0, 0, -1);
          //view_vec = AllegroFlare::vec3d(0, 0, -1);
          camera3d.stepback = view_vec * -12;
-         camera3d.stepback += AllegroFlare::vec3d(0, 16 - racer->velocity_magnitude*1.1, 0); // ascent
-         camera3d.stepback *= (1.0 - 0.11 * racer->velocity_magnitude);
+         camera3d.stepback += AllegroFlare::vec3d(0, 16 - ideal_velocity*1.1, 0); // ascent
+         camera3d.stepback *= (1.0 - 0.11 * ideal_velocity);
+         camera3d.stepback += AllegroFlare::vec3d(0, 13 * moving_non_moving_normal, 4 * moving_non_moving_normal); // ascent
          camera3d.pitch = 0;
-         camera3d.stepback_pitch = -1.2 + 0.17 * racer->velocity_magnitude;
+         camera3d.stepback_pitch = -1.2 + 0.17 * ideal_velocity;
+         camera3d.stepback_pitch += -0.4 * moving_non_moving_normal; // ascent
          camera3d.stepback += AllegroFlare::vec3d(0, -1, 0); // ascent
          camera3d.view_vector = view_vec;
 
