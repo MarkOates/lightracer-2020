@@ -11,7 +11,7 @@ using namespace AllegroFlare; // for FontBin
 class Hud
 {
 private:
-   int racer_velocity_magnitude;
+   float racer_velocity_magnitude;
    int num_of_segments_in_track;
    float current_racer_health;
    float current_racer_max_health;
