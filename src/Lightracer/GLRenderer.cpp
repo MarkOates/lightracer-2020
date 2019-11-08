@@ -86,6 +86,11 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
    //cube_model.draw();
 
    placement3d place;
+   placement3d lamp_placement;
+
+   lamp_placement.scale = vec3d(0.2, 0.2, 0.8);
+   lamp_placement.size = vec3d(1, 1, 1);
+   lamp_placement.align = vec3d(0, 0, 0.5);
 
    float height_above_ground;
 
@@ -100,52 +105,62 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
       for (auto &track_segment : track->segment)
       {
          // draw_the_left_rail
-         for (unsigned i=0; i<track_segment->left_rail_segments.size(); i++)
+         for (unsigned i=1; i<track_segment->left_rail_segments.size(); i++)
          {
             LineSegmentInfo *segment = track_segment->left_rail_segments[i];
             vec2d start = segment->start * multiplier;
             vec2d end = segment->end * multiplier;
             al_draw_line(start.x, start.y, end.x, end.y, al_color_name("white"), 3 * multiplier);
+
+            lamp_placement.position = vec3d(start.x, start.y, -0.5);
+            lamp_placement.start_transform();
+            cube_model.draw();
+            lamp_placement.restore_transform();
          }
 
          // draw_the_right_rail
-         for (unsigned i=0; i<track_segment->right_rail_segments.size(); i++)
+         for (unsigned i=1; i<track_segment->right_rail_segments.size(); i++)
          {
             LineSegmentInfo *segment = track_segment->right_rail_segments[i];
             vec2d start = segment->start * multiplier;
             vec2d end = segment->end * multiplier;
             al_draw_line(start.x, start.y, end.x, end.y, al_color_name("white"), 3 * multiplier);
+
+            lamp_placement.position = vec3d(start.x, start.y, -0.5);
+            lamp_placement.start_transform();
+            cube_model.draw();
+            lamp_placement.restore_transform();
          }
       }
 
       place.restore_transform();
 
 
-      vec3d exit_p1_pos = vec3d(track->exit_p1.x * multiplier, 0, track->exit_p1.y * multiplier);
-      vec3d exit_p2_pos = vec3d(track->exit_p2.x * multiplier, 0, track->exit_p2.y * multiplier);
+      //vec3d exit_p1_pos = vec3d(track->exit_p1.x * multiplier, 0, track->exit_p1.y * multiplier);
+      //vec3d exit_p2_pos = vec3d(track->exit_p2.x * multiplier, 0, track->exit_p2.y * multiplier);
 
-      place.position = exit_p1_pos;
-      place.start_transform();
-      cube_model.draw();
-      place.restore_transform();
+      //place.position = exit_p1_pos;
+      //place.start_transform();
+      //cube_model.draw();
+      //place.restore_transform();
 
-      place.position = exit_p2_pos;
-      place.start_transform();
-      cube_model.draw();
-      place.restore_transform();
+      //place.position = exit_p2_pos;
+      //place.start_transform();
+      //cube_model.draw();
+      //place.restore_transform();
 
-      vec3d enter_p1_pos = vec3d(track->enter_p1.x * multiplier, 0, track->enter_p1.y * multiplier);
-      vec3d enter_p2_pos = vec3d(track->enter_p2.x * multiplier, 0, track->enter_p2.y * multiplier);
+      //vec3d enter_p1_pos = vec3d(track->enter_p1.x * multiplier, 0, track->enter_p1.y * multiplier);
+      //vec3d enter_p2_pos = vec3d(track->enter_p2.x * multiplier, 0, track->enter_p2.y * multiplier);
 
-      place.position = enter_p1_pos;
-      place.start_transform();
-      cube_model.draw();
-      place.restore_transform();
+      //place.position = enter_p1_pos;
+      //place.start_transform();
+      //cube_model.draw();
+      //place.restore_transform();
 
-      place.position = enter_p2_pos;
-      place.start_transform();
-      cube_model.draw();
-      place.restore_transform();
+      //place.position = enter_p2_pos;
+      //place.start_transform();
+      //cube_model.draw();
+      //place.restore_transform();
 
    }
    
