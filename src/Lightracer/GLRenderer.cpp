@@ -23,6 +23,60 @@ GLRenderer::GLRenderer()
 }
 
 
+#define COLOR_RED    "#ea3377"
+#define COLOR_YELLOW "#fef653"
+#define COLOR_BLUE   "#5eccfa"
+#define COLOR_WHITE  "#ffffff"
+#define COLOR_GREEN  "#96fc4d"
+#define COLOR_BLACK  "#000000"
+#define LIGHT_OFF    "#404846"
+
+
+ALLEGRO_COLOR get_color_for_type(int strobe, int color_type)
+{
+   ALLEGRO_COLOR result = al_color_name("gray");
+   bool strobes = false;
+
+   switch(color_type)
+   {
+   case COLOR_TYPE_WHITE:
+      {
+         if (strobe == 1) result = al_color_html(COLOR_YELLOW);
+         if (strobe == 2) result = al_color_html(COLOR_RED);
+         if (strobe == 3) result = al_color_html(COLOR_WHITE);
+         if (strobe == 4) result = al_color_html(COLOR_BLUE);
+         if (strobe == 5) result = al_color_html(COLOR_WHITE);
+         if (strobe == 6) result = al_color_html(COLOR_GREEN);
+      }
+      break;
+   case COLOR_TYPE_RED_DEATH:
+      strobes = true;
+      result = al_color_html(COLOR_RED);
+      break;
+   case COLOR_TYPE_YELLOW:
+      result = al_color_html(COLOR_YELLOW);
+      break;
+   case COLOR_TYPE_GREEN:
+      result = al_color_html(COLOR_GREEN);
+      break;
+   case COLOR_TYPE_BLUE:
+      result = al_color_html(COLOR_BLUE);
+      break;
+   case COLOR_TYPE_OFF:
+      result = al_color_html(LIGHT_OFF);
+      break;
+   case COLOR_TYPE_RED:
+      result = al_color_html(COLOR_RED);
+      break;
+      }
+
+   if (strobes && (strobe > 3)) result = al_color_html(COLOR_YELLOW);
+
+   return result;
+}
+
+
+
 void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track)
 {
    float multiplier = 0.07;
@@ -79,19 +133,22 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
    //al_use_projection_transform(&t);
 
 
+   static int strobe = 0;
+   strobe++;
+   if (strobe > 6) { strobe = 0;}
 
 
    multiplier = 0.07;
    Model3D &cube_model = *models["rounded_unit_cube-01.obj"];
-   //cube_model.draw();
+   Model3D &sphere_model = *models["unit_sphere-01.obj"];
 
    placement3d place;
    placement3d lamp_placement;
 
-   lamp_placement.scale = vec3d(0.2, 0.2, 0.8);
+   lamp_placement.scale = vec3d(0.5, 0.5, 0.5);
    lamp_placement.size = vec3d(1, 1, 1);
    lamp_placement.align = vec3d(0, 0, 0.5);
-
+   
    float height_above_ground;
 
    if (track)
@@ -114,7 +171,9 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
 
             lamp_placement.position = vec3d(start.x, start.y, -0.5);
             lamp_placement.start_transform();
-            cube_model.draw();
+            ALLEGRO_COLOR color = get_color_for_type(strobe, track_segment->color_type); 
+            for (auto &vtx : sphere_model.vertexes) { vtx.color = color; }
+            sphere_model.draw();
             lamp_placement.restore_transform();
          }
 
@@ -128,7 +187,7 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
 
             lamp_placement.position = vec3d(start.x, start.y, -0.5);
             lamp_placement.start_transform();
-            cube_model.draw();
+            sphere_model.draw();
             lamp_placement.restore_transform();
          }
       }
