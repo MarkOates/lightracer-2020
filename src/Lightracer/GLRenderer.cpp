@@ -182,14 +182,6 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
             vec2d start = segment->start * multiplier;
             vec2d end = segment->end * multiplier;
             al_draw_line(start.x, start.y, end.x, end.y, color, 3 * multiplier);
-
-            // draw the lamp
-
-            lamp_placement.position = vec3d(start.x, start.y, -0.5);
-            lamp_placement.start_transform();
-            //track_segment_is_on = true;
-            sphere_model.draw();
-            lamp_placement.restore_transform();
          }
 
          // draw_the_right_rail
@@ -199,10 +191,34 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
             vec2d start = segment->start * multiplier;
             vec2d end = segment->end * multiplier;
             al_draw_line(start.x, start.y, end.x, end.y, color, 3 * multiplier);
+         }
+      }
 
-            // draw the lamp
+      i = 0;
+      for (auto &track_segment : track->segment)
+      {
+         i++;
 
-            lamp_placement.position = vec3d(start.x, start.y, -0.5);
+         bool track_segment_is_on = false;
+
+         if (  i == (index_of_last_track_segment_that_collides)
+            || i == (index_of_last_track_segment_that_collides+1)
+            || i == (index_of_last_track_segment_that_collides+2)
+               ) track_segment_is_on = true;
+
+         ALLEGRO_COLOR color = get_color_for_type(strobe, track_segment_is_on ? track_segment->color_type : COLOR_TYPE_OFF);
+         for (auto &vtx : sphere_model.vertexes) { vtx.color = color; }
+
+         for (auto &rail_vertex : track_segment->left_rail)
+         {
+            lamp_placement.position = vec3d(rail_vertex->x * multiplier, rail_vertex->y * multiplier, -0.5);
+            lamp_placement.start_transform();
+            sphere_model.draw();
+            lamp_placement.restore_transform();
+         }
+         for (auto &rail_vertex : track_segment->right_rail)
+         {
+            lamp_placement.position = vec3d(rail_vertex->x * multiplier, rail_vertex->y * multiplier, -0.5);
             lamp_placement.start_transform();
             sphere_model.draw();
             lamp_placement.restore_transform();
