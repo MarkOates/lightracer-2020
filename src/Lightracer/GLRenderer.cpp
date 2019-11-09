@@ -159,20 +159,35 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
       place.start_transform();
 
       TrackSegment *first_track_segment = track->segment.empty() ? nullptr : track->segment[0];
+      int i=0;
+
       for (auto &track_segment : track->segment)
       {
+         i++;
+
+         bool track_segment_is_on = false;
+
+         if (  i == (index_of_last_track_segment_that_collides)
+            || i == (index_of_last_track_segment_that_collides+1)
+            || i == (index_of_last_track_segment_that_collides+2)
+               ) track_segment_is_on = true;
+
+         ALLEGRO_COLOR color = get_color_for_type(strobe, track_segment_is_on ? track_segment->color_type : COLOR_TYPE_OFF);
+         for (auto &vtx : sphere_model.vertexes) { vtx.color = color; }
+
          // draw_the_left_rail
          for (unsigned i=1; i<track_segment->left_rail_segments.size(); i++)
          {
             LineSegmentInfo *segment = track_segment->left_rail_segments[i];
             vec2d start = segment->start * multiplier;
             vec2d end = segment->end * multiplier;
-            al_draw_line(start.x, start.y, end.x, end.y, al_color_name("white"), 3 * multiplier);
+            al_draw_line(start.x, start.y, end.x, end.y, color, 3 * multiplier);
+
+            // draw the lamp
 
             lamp_placement.position = vec3d(start.x, start.y, -0.5);
             lamp_placement.start_transform();
-            ALLEGRO_COLOR color = get_color_for_type(strobe, track_segment->color_type); 
-            for (auto &vtx : sphere_model.vertexes) { vtx.color = color; }
+            //track_segment_is_on = true;
             sphere_model.draw();
             lamp_placement.restore_transform();
          }
@@ -183,7 +198,9 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
             LineSegmentInfo *segment = track_segment->right_rail_segments[i];
             vec2d start = segment->start * multiplier;
             vec2d end = segment->end * multiplier;
-            al_draw_line(start.x, start.y, end.x, end.y, al_color_name("white"), 3 * multiplier);
+            al_draw_line(start.x, start.y, end.x, end.y, color, 3 * multiplier);
+
+            // draw the lamp
 
             lamp_placement.position = vec3d(start.x, start.y, -0.5);
             lamp_placement.start_transform();
