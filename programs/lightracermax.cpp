@@ -1076,7 +1076,7 @@ public:
       al_store_state(&previous_bitmap_state, ALLEGRO_STATE_TARGET_BITMAP);
       al_set_target_bitmap(sub_bitmap_backbuffer_of_display_for_gl_projection);
       ALLEGRO_DISPLAY *al_display = display->al_display;
-      GLRenderer().draw_gl_projection(al_display, camera3, racer, sub_bitmap_backbuffer_of_display_for_gl_projection, models, track);
+      GLRenderer().draw_gl_projection(al_display, camera3, racer, sub_bitmap_backbuffer_of_display_for_gl_projection, models, track, index_of_last_track_segment_that_collides);
       al_restore_state(&previous_bitmap_state);
    }
 

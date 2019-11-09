@@ -77,7 +77,7 @@ ALLEGRO_COLOR get_color_for_type(int strobe, int color_type)
 
 
 
-void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track)
+void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track, int index_of_last_track_segment_that_collides)
 {
    float multiplier = 0.07;
    // create a camera3d
