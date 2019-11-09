@@ -70,7 +70,7 @@ ALLEGRO_COLOR get_color_for_type(int strobe, int color_type)
       break;
       }
 
-   if (strobes && (strobe > 3)) result = al_color_html(COLOR_YELLOW);
+   if (strobes && (strobe > 3)) result = al_color_html(COLOR_BLACK);
 
    return result;
 }
