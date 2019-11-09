@@ -209,15 +209,17 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
          ALLEGRO_COLOR color = get_color_for_type(strobe, track_segment_is_on ? track_segment->color_type : COLOR_TYPE_OFF);
          for (auto &vtx : sphere_model.vertexes) { vtx.color = color; }
 
-         for (auto &rail_vertex : track_segment->left_rail)
+         for (unsigned l=1; l<track_segment->left_rail.size(); l++)
          {
+            vec2d *rail_vertex = track_segment->left_rail[l];
             lamp_placement.position = vec3d(rail_vertex->x * multiplier, rail_vertex->y * multiplier, -0.5);
             lamp_placement.start_transform();
             sphere_model.draw();
             lamp_placement.restore_transform();
          }
-         for (auto &rail_vertex : track_segment->right_rail)
+         for (unsigned l=0; l<(track_segment->right_rail.size()-1); l++)
          {
+            vec2d *rail_vertex = track_segment->right_rail[l];
             lamp_placement.position = vec3d(rail_vertex->x * multiplier, rail_vertex->y * multiplier, -0.5);
             lamp_placement.start_transform();
             sphere_model.draw();
