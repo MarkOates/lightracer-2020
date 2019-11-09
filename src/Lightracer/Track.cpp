@@ -50,7 +50,30 @@ static inline void rotate_point(vec2d *point, const vec2d &axis, float angle)
 
 
 
-Track::Track() : exit_segment_info(nullptr) {}
+Track::Track()
+   : __this_points_color__left_rail({})
+   , __this_points_color__right_rail({})
+   , __this_point_belongs_to_segment({})
+   , track_rail_light({})
+   , rail_light_belongs_to({})
+   , track_rail_light_projected({})
+
+   , __left_color_light_belongs_to({})
+   , __right_color_light_belongs_to({})
+   , car_distance_cache({})
+
+   , exit_p1(0, 0)
+   , exit_p2(0, 0)
+   , enter_p1(0, 0)
+   , enter_p2(0, 0)
+   , exit_segment_info(nullptr)
+   , start_time(0)
+   , segment({})
+{}
+
+
+
+
 
 
 
@@ -772,16 +795,5 @@ vec2d Track::get_dot_at_distance(int track_segment, float distance, bool left)
          return vec2d(-9999, -9999);
 }
 
-
-
-vector<int> Track::__this_points_color__left_rail;
-vector<int> Track::__this_points_color__right_rail;
-vector<int> Track::__this_point_belongs_to_segment;
-vector<vec2d> Track::track_rail_light; // < for caching
-vector<vec2d> Track::track_rail_light_projected; // < for caching
-vector<float> Track::car_distance_cache;
-vector<std::pair<bool, int> > Track::rail_light_belongs_to;
-vector<std::pair<bool, int> > Track::__left_color_light_belongs_to;
-vector<std::pair<bool, int> > Track::__right_color_light_belongs_to;
 
 

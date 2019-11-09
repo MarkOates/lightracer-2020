@@ -19,18 +19,18 @@ class Track
 {
 public:
 
-   static std::vector<int> __this_points_color__left_rail;
-   static std::vector<int> __this_points_color__right_rail;
-   static std::vector<int> __this_point_belongs_to_segment;
+   std::vector<int> __this_points_color__left_rail;
+   std::vector<int> __this_points_color__right_rail;
+   std::vector<int> __this_point_belongs_to_segment;
 
-   static std::vector<vec2d> track_rail_light; // < for caching
-   static std::vector<std::pair<bool, int> > rail_light_belongs_to; // < for caching
-   static std::vector<vec2d> track_rail_light_projected; // < for caching
+   std::vector<vec2d> track_rail_light; // < for caching
+   std::vector<std::pair<bool, int> > rail_light_belongs_to; // < for caching
+   std::vector<vec2d> track_rail_light_projected; // < for caching
 
-   static std::vector<std::pair<bool, int> > __left_color_light_belongs_to; // < for caching
-   static std::vector<std::pair<bool, int> > __right_color_light_belongs_to; // < for caching
+   std::vector<std::pair<bool, int> > __left_color_light_belongs_to; // < for caching
+   std::vector<std::pair<bool, int> > __right_color_light_belongs_to; // < for caching
 
-   static std::vector<float> car_distance_cache;
+   std::vector<float> car_distance_cache;
 
    void fill_track_rail_points();
    vec2d get_dot_at_distance(int track_segment, float distance, bool left);
