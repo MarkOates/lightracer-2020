@@ -826,6 +826,7 @@ using Lightracer::PlayerStats;
 
 #include "Lightracer/Camera3.hpp"
 #include "Lightracer/GLRenderer.hpp"
+#include "Lightracer/Banner/TrackCompleted.hpp"
 
 
 void game_timer_func(Lightracer::PlayerStats &player_stats, Camera3 &camera3, Display *display, ModelBin &models, ALLEGRO_EVENT *current_event, ALLEGRO_BITMAP *sub_bitmap_backbuffer_of_display_for_gl_projection)
@@ -987,8 +988,10 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, Camera3 &camera3, Di
       if (track_completed)
       {
          stopwatch.pause();
-         al_draw_text(font_large, al_color_name("dodgerblue"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "TRACK COMPLETED");
-         al_draw_text(font_regular, al_color_name("dodgerblue"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
+
+         Banner::TrackCompleted track_completed_banner(font_large, font_regular, screen_center_x, screen_center_y);
+         track_completed_banner.draw();
+
          racer->velocity_magnitude *= 0.98;
          racer->throttle_on = false;
       }
