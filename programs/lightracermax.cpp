@@ -825,6 +825,7 @@ using Lightracer::PlayerStats;
 #include "Lightracer/Camera3.hpp"
 #include "Lightracer/GLRenderer.hpp"
 #include "Lightracer/Banner/TrackCompleted.hpp"
+#include "Lightracer/Banner/Lap.hpp"
 #include "Lightracer/Banner/YouFailed.hpp"
 
 
@@ -940,18 +941,13 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, Camera3 &camera3, Di
    }
    else
    {
-      if (lap_notification_counter != 0 && ((racer->lap_time.size()) != num_laps_to_win))
+      bool show_lap_banner = lap_notification_counter != 0 && ((racer->lap_time.size()) != num_laps_to_win);
+
+      if (show_lap_banner)
       {
-
-         std::string lap_string = "LAP " + tostring(racer->lap_time.size()+1);
-         if ((int)racer->lap_time.size() == (num_laps_to_win-1)) lap_string = "FINAL LAP";
-
-
-         int font_size = -30;
-         draw_text_with_letter_spacing(font_size, al_color_name("white"), 0, screen_center_y - 160, 40 + 30 * (1.0 - lap_notification_counter), fonts["venus_rising_rg.ttf 30"], lap_string.c_str());
-
-         //al_draw_text(font_large, al_map_rgba_f(lap_notification_counter, lap_notification_counter, lap_notification_counter, lap_notification_counter),
-            //screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
+         int lap_number = racer->lap_time.size()+1;
+         Banner::Lap lap(font_large, font_regular, screen_center_x, screen_center_y, lap_number);
+         lap.draw();
       }
 
       if (track_completed)
