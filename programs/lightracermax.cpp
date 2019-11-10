@@ -827,6 +827,7 @@ using Lightracer::PlayerStats;
 #include "Lightracer/Camera3.hpp"
 #include "Lightracer/GLRenderer.hpp"
 #include "Lightracer/Banner/TrackCompleted.hpp"
+#include "Lightracer/Banner/YouFailed.hpp"
 
 
 void game_timer_func(Lightracer::PlayerStats &player_stats, Camera3 &camera3, Display *display, ModelBin &models, ALLEGRO_EVENT *current_event, ALLEGRO_BITMAP *sub_bitmap_backbuffer_of_display_for_gl_projection)
@@ -927,8 +928,9 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, Camera3 &camera3, Di
    else if (racer->dead)
    {
       stopwatch.pause();
-      al_draw_text(font_large, al_color_name("orange"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "YOU FAILED");
-      al_draw_text(font_regular, al_color_name("orange"), screen_center_x, 350-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
+
+      Banner::YouFailed you_failed_banner(font_large, font_regular, screen_center_x, screen_center_y);
+      you_failed_banner.draw();
    }
    else
    {
