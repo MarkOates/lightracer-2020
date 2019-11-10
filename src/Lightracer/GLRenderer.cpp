@@ -90,8 +90,24 @@ void GLRenderer::draw_track(Track *track, float multiplier, BitmapBin &bitmaps, 
 
    placement3d floor_plate_placement;
    floor_plate_placement.rotation = vec3d(0.25, 0, 0);
-   floor_plate_placement.align = vec3d(0.5, 0.5, 0.5);
+   floor_plate_placement.size = floor_plate.get_max_vertex_coordinate();
+   floor_plate_placement.align = vec3d(0, 0, 0);
    floor_plate.set_texture(bitmaps["floor-plate-1.png"]);
+
+
+   /// draw floor plates
+
+   for (int y=-9; y<8; y++)
+   {
+      for (int x=-1; x<1; x++)
+      {
+         floor_plate_placement.position = vec3d(x * 10 + 6 + 2.5, y * 10, 1.1);
+         floor_plate_placement.start_transform();
+         floor_plate.draw();
+         floor_plate_placement.restore_transform();
+      }
+   }
+
 
    int i=0;
 
@@ -126,10 +142,6 @@ void GLRenderer::draw_track(Track *track, float multiplier, BitmapBin &bitmaps, 
          vec2d end = segment->end * multiplier;
          al_draw_line(start.x, start.y, end.x, end.y, color, 3 * multiplier);
       }
-
-      floor_plate_placement.start_transform();
-      floor_plate.draw();
-      floor_plate_placement.restore_transform();
    }
 
    i = 0;
