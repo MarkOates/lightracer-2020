@@ -163,6 +163,21 @@ void Hud::draw_lives(ALLEGRO_FONT *font, int text_x, int text_y)
 }
 
 
+void Hud::draw_frame(ALLEGRO_COLOR color, int x, int y, int x2, int y2)
+{
+   int health_bar_height = y2 - y;
+   int bar_length = x2 - x;
+
+   al_draw_rounded_rectangle(
+         x - 4,
+         y - 4 - health_bar_height * 0.5,
+         x + 4 + bar_length,
+         y + 4 + health_bar_height * 0.5,
+         4, 4,
+         color, 1.5);
+}
+
+
 void Hud::draw_health_bar(ALLEGRO_FONT *font, int text_x, int text_y)
 {
    int health_bar_height = 10;

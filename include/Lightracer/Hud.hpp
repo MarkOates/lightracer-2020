@@ -25,6 +25,8 @@ private:
    int throttle_release_count;
    int count_of_removed_track_segments;
 
+   void draw_frame(ALLEGRO_COLOR color, int x, int y, int x2, int y2);
+
    void draw_hud();
    void draw_num_segments(ALLEGRO_FONT *font, int text_x, int text_y, int num_segments);
    void draw_num_laps(ALLEGRO_FONT *font, int text_x, int text_y, int total_num_laps);
