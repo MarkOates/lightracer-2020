@@ -8,14 +8,29 @@
 
 
 
-enum { COLOR_TYPE_WHITE = 0,
+enum track_segmet_shape_t
+{
+   TRACK_SEGMENT_UNDEF = 0,
+   TRACK_SEGMENT_A,
+   TRACK_SEGMENT_B,
+   TRACK_SEGMENT_C,
+   TRACK_SEGMENT_D,
+   TRACK_SEGMENT_E,
+};
+
+
+
+enum track_segment_color_t
+{
+   COLOR_TYPE_WHITE = 0,
    COLOR_TYPE_OFF,
    COLOR_TYPE_YELLOW,
    COLOR_TYPE_GREEN,
    COLOR_TYPE_BLUE,
    COLOR_TYPE_RED,
    COLOR_TYPE_RED_DEATH,
-   COLOR_TYPE_MAX };
+   COLOR_TYPE_MAX
+};
 
 
 
