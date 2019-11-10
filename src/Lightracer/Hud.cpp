@@ -61,8 +61,6 @@ void Hud::draw_hud()
    draw_num_segments(font, anchor_position - 480 + 20, text_y, num_of_segments_in_track);
    draw_count_of_removed_track_segments(font, anchor_position - 279 + 50 + 20, text_y);
    draw_stopwatch(font, anchor_position - 75 + 50 + 20, text_y);
-
-   //draw_track_progress_bar(screen_width / 2, screen_height - text_y - 50, 7, 15);
 }
 
 
