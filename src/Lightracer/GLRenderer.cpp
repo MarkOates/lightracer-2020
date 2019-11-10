@@ -162,7 +162,6 @@ void GLRenderer::draw_track(Track *track, float multiplier, ModelBin &models, in
 void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track, int index_of_last_track_segment_that_collides)
 {
    float multiplier = 0.07;
-   // create a camera3d
 
    vec3d racer_position = vec3d(racer->position.x, 0, racer->position.y) * multiplier;
    vec3d racer_view_vector = vec3d(racer->direction.x, 0, racer->direction.y).normalized();
@@ -175,23 +174,19 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
    float moving_non_moving_normal = 1.0 - (racer->velocity_magnitude / ideal_velocity); // 0 is not moving, 1 is moving at te
 
    Camera3D camera3d(0);
-   //camera3d.stepback = 30;
-   //camera3d.stepback_rotation = al_get_time() * 0.2;
-   //camera3d.pitch = 0.5 * std::sin(al_get_time());
-         camera3d.is_fixed_on_axis = true;
-         camera3d.position = targets_position;
-         camera3d.position = targets_position + AllegroFlare::vec3d(0, -2, 0);
-         view_vec = racer_view_vector; // this is a fixed track camera tracking, might be good for victory laps: AllegroFlare::vec3d(0, 0, -1);
-         //view_vec = AllegroFlare::vec3d(0, 0, -1);
-         camera3d.stepback = view_vec * -12;
-         camera3d.stepback += AllegroFlare::vec3d(0, 16 - ideal_velocity*1.1, 0); // ascent
-         camera3d.stepback *= (1.0 - 0.11 * ideal_velocity);
-         camera3d.stepback += AllegroFlare::vec3d(0, 13 * moving_non_moving_normal, 4 * moving_non_moving_normal); // ascent
-         camera3d.pitch = 0;
-         camera3d.stepback_pitch = -1.2 + 0.17 * ideal_velocity;
-         camera3d.stepback_pitch += -0.4 * moving_non_moving_normal; // ascent
-         camera3d.stepback += AllegroFlare::vec3d(0, -1, 0); // ascent
-         camera3d.view_vector = view_vec;
+   camera3d.is_fixed_on_axis = true;
+   camera3d.position = targets_position;
+   camera3d.position = targets_position + AllegroFlare::vec3d(0, -2, 0);
+   view_vec = racer_view_vector; // this is a fixed track camera tracking, might be good for victory laps: AllegroFlare::vec3d(0, 0, -1);
+   camera3d.stepback = view_vec * -12;
+   camera3d.stepback += AllegroFlare::vec3d(0, 16 - ideal_velocity*1.1, 0); // ascent
+   camera3d.stepback *= (1.0 - 0.11 * ideal_velocity);
+   camera3d.stepback += AllegroFlare::vec3d(0, 13 * moving_non_moving_normal, 4 * moving_non_moving_normal); // ascent
+   camera3d.pitch = 0;
+   camera3d.stepback_pitch = -1.2 + 0.17 * ideal_velocity;
+   camera3d.stepback_pitch += -0.4 * moving_non_moving_normal; // ascent
+   camera3d.stepback += AllegroFlare::vec3d(0, -1, 0); // ascent
+   camera3d.view_vector = view_vec;
 
    camera3d.set_frustum_as_camera(display);
 
@@ -218,36 +213,7 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
 
       draw_track(track, multiplier, models, strobe, index_of_last_track_segment_that_collides);
 
-
       place.restore_transform();
-
-
-      //vec3d exit_p1_pos = vec3d(track->exit_p1.x * multiplier, 0, track->exit_p1.y * multiplier);
-      //vec3d exit_p2_pos = vec3d(track->exit_p2.x * multiplier, 0, track->exit_p2.y * multiplier);
-
-      //place.position = exit_p1_pos;
-      //place.start_transform();
-      //cube_model.draw();
-      //place.restore_transform();
-
-      //place.position = exit_p2_pos;
-      //place.start_transform();
-      //cube_model.draw();
-      //place.restore_transform();
-
-      //vec3d enter_p1_pos = vec3d(track->enter_p1.x * multiplier, 0, track->enter_p1.y * multiplier);
-      //vec3d enter_p2_pos = vec3d(track->enter_p2.x * multiplier, 0, track->enter_p2.y * multiplier);
-
-      //place.position = enter_p1_pos;
-      //place.start_transform();
-      //cube_model.draw();
-      //place.restore_transform();
-
-      //place.position = enter_p2_pos;
-      //place.start_transform();
-      //cube_model.draw();
-      //place.restore_transform();
-
    }
    
    // draw the racer
