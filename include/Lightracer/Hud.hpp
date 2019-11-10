@@ -26,12 +26,12 @@ private:
    int count_of_removed_track_segments;
 
    void draw_hud();
-   void draw_num_segments(int text_x, int text_y, int num_segments);
-   void draw_num_laps(int text_x, int text_y, int total_num_laps);
-   void draw_wall_hit_count(int text_x, int text_y);
-   void draw_throttle_release_count(int text_x, int text_y);
-   void draw_count_of_removed_track_segments(int text_x, int text_y);
-   void draw_stopwatch(int text_x, int text_y);
+   void draw_num_segments(ALLEGRO_FONT *font, int text_x, int text_y, int num_segments);
+   void draw_num_laps(ALLEGRO_FONT *font, int text_x, int text_y, int total_num_laps);
+   void draw_wall_hit_count(ALLEGRO_FONT *font, int text_x, int text_y);
+   void draw_throttle_release_count(ALLEGRO_FONT *font, int text_x, int text_y);
+   void draw_count_of_removed_track_segments(ALLEGRO_FONT *font, int text_x, int text_y);
+   void draw_stopwatch(ALLEGRO_FONT *font, int text_x, int text_y);
    void draw_lives(ALLEGRO_FONT *font, int text_x, int text_y);
    void draw_health_bar(ALLEGRO_FONT *font, int text_x, int text_y);
 public:

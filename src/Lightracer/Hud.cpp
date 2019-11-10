@@ -55,68 +55,64 @@ void Hud::draw_hud()
 
    draw_lives(font, horizontal_screen_padding, text_y);
    draw_health_bar(font, horizontal_screen_padding, text_y);
-   draw_wall_hit_count(anchor_position - 1124, text_y);
-   draw_throttle_release_count(anchor_position - 924, text_y);
-   draw_num_laps(anchor_position - 724, text_y, num_laps_to_win);
-   draw_num_segments(anchor_position - 480, text_y, num_of_segments_in_track);
-   draw_count_of_removed_track_segments(anchor_position - 279, text_y);
-   draw_stopwatch(anchor_position - 75, text_y);
+   draw_wall_hit_count(font, anchor_position - 1124, text_y);
+   draw_throttle_release_count(font, anchor_position - 924, text_y);
+   draw_num_laps(font, anchor_position - 724, text_y, num_laps_to_win);
+   draw_num_segments(font, anchor_position - 480, text_y, num_of_segments_in_track);
+   draw_count_of_removed_track_segments(font, anchor_position - 279, text_y);
+   draw_stopwatch(font, anchor_position - 75, text_y);
 }
 
 
-void Hud::draw_num_segments(int text_x, int text_y, int num_segments)
+void Hud::draw_num_segments(ALLEGRO_FONT *font, int text_x, int text_y, int num_segments)
 {
    std::stringstream ss;
    ss << "SEG " << num_segments;
 
    std::string string_to_write = ss.str();
 
-   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
    al_draw_text(font, color, text_x, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
 }
 
 
-void Hud::draw_wall_hit_count(int text_x, int text_y)
+void Hud::draw_wall_hit_count(ALLEGRO_FONT *font, int text_x, int text_y)
 {
    std::stringstream ss;
    ss << "WHC " << wall_hit_count;
 
    std::string string_to_write = ss.str();
 
-   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
    al_draw_text(font, color, text_x, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
 }
 
 
-void Hud::draw_throttle_release_count(int text_x, int text_y)
+void Hud::draw_throttle_release_count(ALLEGRO_FONT *font, int text_x, int text_y)
 {
    std::stringstream ss;
    ss << "TRL " << throttle_release_count;
 
    std::string string_to_write = ss.str();
 
-   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
    al_draw_text(font, color, text_x, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
 }
 
 
-void Hud::draw_count_of_removed_track_segments(int text_x, int text_y)
+void Hud::draw_count_of_removed_track_segments(ALLEGRO_FONT *font, int text_x, int text_y)
 {
    std::stringstream ss;
    ss << "RLF " << count_of_removed_track_segments;
 
    std::string string_to_write = ss.str();
 
-   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
    al_draw_text(font, color, text_x, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
 }
 
 
-void Hud::draw_num_laps(int text_x, int text_y, int total_num_laps)
+void Hud::draw_num_laps(ALLEGRO_FONT *font, int text_x, int text_y, int total_num_laps)
 {
    std::string string_to_write = "";
    std::stringstream ss;
@@ -137,16 +133,14 @@ void Hud::draw_num_laps(int text_x, int text_y, int total_num_laps)
    string_to_write = ss.str();
 
 
-   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
    al_draw_text(font, color, text_x, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
 }
 
 
-void Hud::draw_stopwatch(int text_x, int text_y)
+void Hud::draw_stopwatch(ALLEGRO_FONT *font, int text_x, int text_y)
 {
    std::string ellapsed_time_str = std::string("TIM ") + TimerFormatter(stopwatch.get_elappsed_time_msec()).format();
-   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
    ALLEGRO_COLOR color = al_color_name("white");
 
    //float text_width = al_get_text_width(font, ellapsed_time_str.c_str());
