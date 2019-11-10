@@ -67,7 +67,7 @@ void Hud::draw_hud()
    draw_health_bar(font, horizontal_screen_padding, text_y);
    draw_wall_hit_count(font, anchor_position - 1124, text_y);
    draw_throttle_release_count(font, anchor_position - 974, text_y);
-   draw_num_laps(font, anchor_position - 724 + 20, text_y, num_laps_to_win);
+   draw_num_laps(font, anchor_position - 634 + 20, text_y, num_laps_to_win);
    draw_num_segments(font, anchor_position - 480 + 20, text_y, num_of_segments_in_track);
    draw_count_of_removed_track_segments(font, anchor_position - 279 + 50 + 20, text_y);
    draw_stopwatch(font, anchor_position - 75 + 50 + 20, text_y);
@@ -127,24 +127,24 @@ void Hud::draw_num_laps(ALLEGRO_FONT *font, int text_x, int text_y, int total_nu
    std::string string_to_write = "";
    std::stringstream ss;
 
-   ss << "LAP ";
    if (current_lap_num < total_num_laps)
    {
+      ss << "LAP ";
       ss << current_lap_num << " of " << total_num_laps;
    }
    else if (current_lap_num == total_num_laps)
    {
-      ss << "FIN";
+      ss << "FINAL LAP";
    }
    else
    {
-      ss << "- of -";
+      ss << "FINISH";
    }
    string_to_write = ss.str();
 
 
    ALLEGRO_COLOR color = al_color_name("white");
-   al_draw_text(font, color, text_x, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
+   al_draw_text(font, color, text_x, text_y, ALLEGRO_ALIGN_CENTER, string_to_write.c_str());
 }
 
 
