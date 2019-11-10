@@ -51,23 +51,25 @@ void Hud::draw_hud()
 
    int anchor_position = screen_width - 300 - 45;
 
-   ALLEGRO_FONT *font = fonts["venus_rising_rg.ttf 26"];
+   ALLEGRO_FONT *font = fonts["Exan-Regular.ttf 26"];
 
    draw_lives(font, horizontal_screen_padding, text_y);
    draw_health_bar(font, horizontal_screen_padding, text_y);
    draw_wall_hit_count(font, anchor_position - 1124, text_y);
-   draw_throttle_release_count(font, anchor_position - 924, text_y);
-   draw_num_laps(font, anchor_position - 724, text_y, num_laps_to_win);
-   draw_num_segments(font, anchor_position - 480, text_y, num_of_segments_in_track);
-   draw_count_of_removed_track_segments(font, anchor_position - 279, text_y);
-   draw_stopwatch(font, anchor_position - 75, text_y);
+   draw_throttle_release_count(font, anchor_position - 974, text_y);
+   draw_num_laps(font, anchor_position - 724 + 20, text_y, num_laps_to_win);
+   draw_num_segments(font, anchor_position - 480 + 20, text_y, num_of_segments_in_track);
+   draw_count_of_removed_track_segments(font, anchor_position - 279 + 50 + 20, text_y);
+   draw_stopwatch(font, anchor_position - 75 + 50 + 20, text_y);
+
+   //draw_track_progress_bar(screen_width / 2, screen_height - text_y - 50, 7, 15);
 }
 
 
 void Hud::draw_num_segments(ALLEGRO_FONT *font, int text_x, int text_y, int num_segments)
 {
    std::stringstream ss;
-   ss << "SEG " << num_segments;
+   ss << "SEGMENTS " << num_segments;
 
    std::string string_to_write = ss.str();
 
@@ -79,7 +81,7 @@ void Hud::draw_num_segments(ALLEGRO_FONT *font, int text_x, int text_y, int num_
 void Hud::draw_wall_hit_count(ALLEGRO_FONT *font, int text_x, int text_y)
 {
    std::stringstream ss;
-   ss << "WHC " << wall_hit_count;
+   ss << "HITS " << wall_hit_count;
 
    std::string string_to_write = ss.str();
 
@@ -91,7 +93,7 @@ void Hud::draw_wall_hit_count(ALLEGRO_FONT *font, int text_x, int text_y)
 void Hud::draw_throttle_release_count(ALLEGRO_FONT *font, int text_x, int text_y)
 {
    std::stringstream ss;
-   ss << "TRL " << throttle_release_count;
+   ss << "UNTHROTTLE " << throttle_release_count;
 
    std::string string_to_write = ss.str();
 
@@ -103,7 +105,7 @@ void Hud::draw_throttle_release_count(ALLEGRO_FONT *font, int text_x, int text_y
 void Hud::draw_count_of_removed_track_segments(ALLEGRO_FONT *font, int text_x, int text_y)
 {
    std::stringstream ss;
-   ss << "RLF " << count_of_removed_track_segments;
+   ss << "RELIEF " << count_of_removed_track_segments;
 
    std::string string_to_write = ss.str();
 
@@ -120,7 +122,7 @@ void Hud::draw_num_laps(ALLEGRO_FONT *font, int text_x, int text_y, int total_nu
    ss << "LAP ";
    if (current_lap_num < total_num_laps)
    {
-      ss << current_lap_num << " / " << total_num_laps;
+      ss << current_lap_num << " of " << total_num_laps;
    }
    else if (current_lap_num == total_num_laps)
    {
@@ -128,7 +130,7 @@ void Hud::draw_num_laps(ALLEGRO_FONT *font, int text_x, int text_y, int total_nu
    }
    else
    {
-      ss << "- / -";
+      ss << "- of -";
    }
    string_to_write = ss.str();
 
@@ -140,25 +142,28 @@ void Hud::draw_num_laps(ALLEGRO_FONT *font, int text_x, int text_y, int total_nu
 
 void Hud::draw_stopwatch(ALLEGRO_FONT *font, int text_x, int text_y)
 {
-   std::string ellapsed_time_str = std::string("TIM ") + TimerFormatter(stopwatch.get_elappsed_time_msec()).format();
+   std::string ellapsed_time_str = std::string("TIME ") + TimerFormatter(stopwatch.get_elappsed_time_msec()).format();
    ALLEGRO_COLOR color = al_color_name("white");
 
+   std::string string_to_write = ellapsed_time_str;
+
+   al_draw_text(font, color, text_x, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
    //float text_width = al_get_text_width(font, ellapsed_time_str.c_str());
-   std::string the_char = " ";
-   int letter_spacing = 12 * 2;
-   int letters_traversed = 0;
-   for (auto &c : ellapsed_time_str)
-   {
-      the_char[0] = c;
-      al_draw_text(font, color, text_x + (letters_traversed * letter_spacing), text_y, ALLEGRO_ALIGN_CENTER, the_char.c_str());
-      letters_traversed++;
-   }
+   //std::string the_char = " ";
+   //int letter_spacing = 12 * 2;
+   //int letters_traversed = 0;
+   //for (auto &c : ellapsed_time_str)
+   //{
+      //the_char[0] = c;
+      //al_draw_text(font, color, text_x + (letters_traversed * letter_spacing), text_y, ALLEGRO_ALIGN_CENTER, the_char.c_str());
+      //letters_traversed++;
+   //}
 }   
 
 
 void Hud::draw_lives(ALLEGRO_FONT *font, int text_x, int text_y)
 {
-   std::string lives_string = "LIV " + tostring(num_lives);
+   std::string lives_string = "LIVES " + tostring(num_lives);
    al_draw_text(font, al_color_name("white"), text_x, text_y, 0, lives_string.c_str());
 }
 
