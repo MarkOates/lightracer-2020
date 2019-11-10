@@ -87,7 +87,6 @@ void GLRenderer::draw_track(Track *track, float multiplier, ModelBin &models, in
 
    Model3D &sphere_model = *models["unit_sphere-01.obj"];
 
-   TrackSegment *first_track_segment = track->segment.empty() ? nullptr : track->segment[0];
    int i=0;
 
    for (auto &track_segment : track->segment)
@@ -198,12 +197,9 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
 
    multiplier = 0.07;
    Model3D &cube_model = *models["rounded_unit_cube-01.obj"];
-   Model3D &sphere_model = *models["unit_sphere-01.obj"];
 
    placement3d place;
    
-   float height_above_ground;
-
    if (track)
    {
       place.rotation.z = 0.5;// / 2.0 + al_get_time() * 0.04;
