@@ -81,7 +81,7 @@ void GLRenderer::draw_track(Track *track, float multiplier, BitmapBin &bitmaps, 
 {
    placement3d lamp_placement;
 
-   lamp_placement.scale = vec3d(0.5, 0.5, 0.5);
+   lamp_placement.scale = vec3d(0.35, 0.35, 0.35);
    lamp_placement.size = vec3d(1, 1, 1);
    lamp_placement.align = vec3d(0, 0, 0.5);
 
@@ -131,7 +131,7 @@ void GLRenderer::draw_track(Track *track, float multiplier, BitmapBin &bitmaps, 
          LineSegmentInfo *segment = track_segment->left_rail_segments[i];
          vec2d start = segment->start * multiplier;
          vec2d end = segment->end * multiplier;
-         al_draw_line(start.x, start.y, end.x, end.y, color, 3 * multiplier);
+         al_draw_line(start.x, start.y, end.x, end.y, color, 2 * multiplier);
       }
 
       // draw_the_right_rail
@@ -140,7 +140,7 @@ void GLRenderer::draw_track(Track *track, float multiplier, BitmapBin &bitmaps, 
          LineSegmentInfo *segment = track_segment->right_rail_segments[i];
          vec2d start = segment->start * multiplier;
          vec2d end = segment->end * multiplier;
-         al_draw_line(start.x, start.y, end.x, end.y, color, 3 * multiplier);
+         al_draw_line(start.x, start.y, end.x, end.y, color, 2 * multiplier);
       }
    }
 
@@ -219,7 +219,7 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
 
    multiplier = 0.07;
    Model3D &car_model = *models["rounded_unit_cube-01.obj"];
-   car_model.set_texture(bitmaps[""]);
+   car_model.set_texture(bitmaps["rounded_unit_car_texture.png"]);
 
    placement3d place;
    
@@ -240,7 +240,7 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
    if (racer)
    {
       vec3d racer_pos = vec3d(racer->position.x * multiplier, 0, racer->position.y * multiplier);
-      place.scale = vec3d(1.5, 0.3, 1.2);
+      place.scale = vec3d(1.1, 0.3, 1.2);
       place.rotation = vec3d(0, -radians_to_degrees(racer->direction.get_angle()/180/2), 0);
       place.position = racer_pos;
       place.start_transform();
