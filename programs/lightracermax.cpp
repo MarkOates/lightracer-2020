@@ -824,7 +824,11 @@ using Lightracer::PlayerStats;
 
 
 
-void game_timer_func(Lightracer::PlayerStats &player_stats, ALLEGRO_EVENT *current_event)
+#include "Lightracer/Camera3.hpp"
+#include "Lightracer/GLRenderer.hpp"
+
+
+void game_timer_func(Lightracer::PlayerStats &player_stats, Camera3 &camera3, Display *display, ModelBin &models, ALLEGRO_EVENT *current_event, ALLEGRO_BITMAP *sub_bitmap_backbuffer_of_display_for_gl_projection)
 {
    float screen_center_x = SCREEN_HW;
    float screen_center_y = SCREEN_HH;
@@ -872,6 +876,21 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, ALLEGRO_EVENT *curre
 
 
    // draw_gl_projection
+         float racer_speed = racer->velocity_magnitude;
+         good_camera->z += 100 + 30*(4.0-racer_speed);
+         float camera_y = 550 - 65*racer_speed;  // higher numbers (400) mean flatter, more birds-eye perspective
+         //float track_y_value = 50 + 50*(4.0-racer_speed) + (1.0-camera->zoom)*1000;
+
+         camera3.spin = -camera->rotation + FULL_ROTATION/2;
+         camera3.stepout = vec3d(0, 0, 10 + camera_y * 0.05);
+
+         ALLEGRO_STATE previous_bitmap_state;
+         al_store_state(&previous_bitmap_state, ALLEGRO_STATE_TARGET_BITMAP);
+         al_set_target_bitmap(sub_bitmap_backbuffer_of_display_for_gl_projection);
+         ALLEGRO_DISPLAY *al_display = display->al_display;
+         GLRenderer().draw_gl_projection(al_display, camera3, racer, sub_bitmap_backbuffer_of_display_for_gl_projection, bitmaps, models, track, index_of_last_track_segment_that_collides);
+         al_restore_state(&previous_bitmap_state);
+
 
 
    int current_lap_num = (int)racer->lap_time.size()+1;
@@ -986,8 +1005,6 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, ALLEGRO_EVENT *curre
 #include "Lightracer/Camera3.hpp"
 
 
-#include "Lightracer/GLRenderer.hpp"
-
 
 #include "AllegroFlare/Framework.hpp"
 #include "AllegroFlare/Screen.hpp"
@@ -1033,22 +1050,7 @@ public:
       }
       else
       {
-         game_timer_func(player_stats, framework.current_event);
-
-         float racer_speed = racer->velocity_magnitude;
-         good_camera->z += 100 + 30*(4.0-racer_speed);
-         float camera_y = 550 - 65*racer_speed;  // higher numbers (400) mean flatter, more birds-eye perspective
-         //float track_y_value = 50 + 50*(4.0-racer_speed) + (1.0-camera->zoom)*1000;
-
-         camera3.spin = -camera->rotation + FULL_ROTATION/2;
-         camera3.stepout = vec3d(0, 0, 10 + camera_y * 0.05);
-
-         ALLEGRO_STATE previous_bitmap_state;
-         al_store_state(&previous_bitmap_state, ALLEGRO_STATE_TARGET_BITMAP);
-         al_set_target_bitmap(sub_bitmap_backbuffer_of_display_for_gl_projection);
-         ALLEGRO_DISPLAY *al_display = display->al_display;
-         GLRenderer().draw_gl_projection(al_display, camera3, racer, sub_bitmap_backbuffer_of_display_for_gl_projection, bitmaps, models, track, index_of_last_track_segment_that_collides);
-         al_restore_state(&previous_bitmap_state);
+         game_timer_func(player_stats, camera3, display, models, framework.current_event, sub_bitmap_backbuffer_of_display_for_gl_projection);
       }
 
       stop_profile_timer("WHOLE UPDATE");
