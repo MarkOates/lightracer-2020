@@ -37,7 +37,13 @@ Hud::~Hud()
 
 void Hud::draw()
 {
+   //ALLEGRO_STATE previous_render_state;
+   //al_store_state(&previous_render_state, ALLEGRO_RENDER_STATE);
+
+   al_set_render_state(ALLEGRO_DEPTH_TEST, 0);
    draw_hud();
+
+   //al_restore_state(&previous_render_state);
 }
 
 
