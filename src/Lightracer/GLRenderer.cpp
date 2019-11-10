@@ -87,74 +87,74 @@ void GLRenderer::draw_track(Track *track, float multiplier, ModelBin &models, in
 
    Model3D &sphere_model = *models["unit_sphere-01.obj"];
 
-      TrackSegment *first_track_segment = track->segment.empty() ? nullptr : track->segment[0];
-      int i=0;
+   TrackSegment *first_track_segment = track->segment.empty() ? nullptr : track->segment[0];
+   int i=0;
 
-      for (auto &track_segment : track->segment)
-      {
-         i++;
+   for (auto &track_segment : track->segment)
+   {
+      i++;
 
-         bool track_segment_is_on = false;
+      bool track_segment_is_on = false;
 
-         if (  i == (index_of_last_track_segment_that_collides)
+      if (  i == (index_of_last_track_segment_that_collides)
             || i == (index_of_last_track_segment_that_collides+1)
             || i == (index_of_last_track_segment_that_collides+2)
-               ) track_segment_is_on = true;
+         ) track_segment_is_on = true;
 
-         ALLEGRO_COLOR color = get_color_for_type(strobe, track_segment_is_on ? track_segment->color_type : COLOR_TYPE_OFF);
-         for (auto &vtx : sphere_model.vertexes) { vtx.color = color; }
+      ALLEGRO_COLOR color = get_color_for_type(strobe, track_segment_is_on ? track_segment->color_type : COLOR_TYPE_OFF);
+      for (auto &vtx : sphere_model.vertexes) { vtx.color = color; }
 
-         // draw_the_left_rail
-         for (unsigned i=1; i<track_segment->left_rail_segments.size(); i++)
-         {
-            LineSegmentInfo *segment = track_segment->left_rail_segments[i];
-            vec2d start = segment->start * multiplier;
-            vec2d end = segment->end * multiplier;
-            al_draw_line(start.x, start.y, end.x, end.y, color, 3 * multiplier);
-         }
-
-         // draw_the_right_rail
-         for (unsigned i=1; i<track_segment->right_rail_segments.size(); i++)
-         {
-            LineSegmentInfo *segment = track_segment->right_rail_segments[i];
-            vec2d start = segment->start * multiplier;
-            vec2d end = segment->end * multiplier;
-            al_draw_line(start.x, start.y, end.x, end.y, color, 3 * multiplier);
-         }
+      // draw_the_left_rail
+      for (unsigned i=1; i<track_segment->left_rail_segments.size(); i++)
+      {
+         LineSegmentInfo *segment = track_segment->left_rail_segments[i];
+         vec2d start = segment->start * multiplier;
+         vec2d end = segment->end * multiplier;
+         al_draw_line(start.x, start.y, end.x, end.y, color, 3 * multiplier);
       }
 
-      i = 0;
-      for (auto &track_segment : track->segment)
+      // draw_the_right_rail
+      for (unsigned i=1; i<track_segment->right_rail_segments.size(); i++)
       {
-         i++;
+         LineSegmentInfo *segment = track_segment->right_rail_segments[i];
+         vec2d start = segment->start * multiplier;
+         vec2d end = segment->end * multiplier;
+         al_draw_line(start.x, start.y, end.x, end.y, color, 3 * multiplier);
+      }
+   }
 
-         bool track_segment_is_on = false;
+   i = 0;
+   for (auto &track_segment : track->segment)
+   {
+      i++;
 
-         if (  i == (index_of_last_track_segment_that_collides)
+      bool track_segment_is_on = false;
+
+      if (  i == (index_of_last_track_segment_that_collides)
             || i == (index_of_last_track_segment_that_collides+1)
             || i == (index_of_last_track_segment_that_collides+2)
-               ) track_segment_is_on = true;
+         ) track_segment_is_on = true;
 
-         ALLEGRO_COLOR color = get_color_for_type(strobe, track_segment_is_on ? track_segment->color_type : COLOR_TYPE_OFF);
-         for (auto &vtx : sphere_model.vertexes) { vtx.color = color; }
+      ALLEGRO_COLOR color = get_color_for_type(strobe, track_segment_is_on ? track_segment->color_type : COLOR_TYPE_OFF);
+      for (auto &vtx : sphere_model.vertexes) { vtx.color = color; }
 
-         for (unsigned l=1; l<track_segment->left_rail.size(); l++)
-         {
-            vec2d *rail_vertex = track_segment->left_rail[l];
-            lamp_placement.position = vec3d(rail_vertex->x * multiplier, rail_vertex->y * multiplier, -0.5);
-            lamp_placement.start_transform();
-            sphere_model.draw();
-            lamp_placement.restore_transform();
-         }
-         for (unsigned l=0; l<(track_segment->right_rail.size()-1); l++)
-         {
-            vec2d *rail_vertex = track_segment->right_rail[l];
-            lamp_placement.position = vec3d(rail_vertex->x * multiplier, rail_vertex->y * multiplier, -0.5);
-            lamp_placement.start_transform();
-            sphere_model.draw();
-            lamp_placement.restore_transform();
-         }
+      for (unsigned l=1; l<track_segment->left_rail.size(); l++)
+      {
+         vec2d *rail_vertex = track_segment->left_rail[l];
+         lamp_placement.position = vec3d(rail_vertex->x * multiplier, rail_vertex->y * multiplier, -0.5);
+         lamp_placement.start_transform();
+         sphere_model.draw();
+         lamp_placement.restore_transform();
       }
+      for (unsigned l=0; l<(track_segment->right_rail.size()-1); l++)
+      {
+         vec2d *rail_vertex = track_segment->right_rail[l];
+         lamp_placement.position = vec3d(rail_vertex->x * multiplier, rail_vertex->y * multiplier, -0.5);
+         lamp_placement.start_transform();
+         sphere_model.draw();
+         lamp_placement.restore_transform();
+      }
+   }
 }
 
 
