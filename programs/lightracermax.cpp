@@ -956,45 +956,6 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, Camera3 &camera3, Di
             //screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
       }
 
-      if (track_begin_notification_counter > 0.4)
-      {
-         std::string lap_string = "READY";
-         if (final_course) lap_string = "==-== FINAL COURSE ==-==";
-         std::string lap_info_string = "track with " + tostring(num_of_segments_in_track) + " segments";
-         std::string lap_info2_string = "with " + get_number_string(segment_where_player_died.size()) + " trouble spot";
-         if (segment_where_player_died.size()==1) lap_info2_string += " removed";
-         else lap_info2_string += "s removed";
-
-         if (fmod(track_begin_notification_counter, 0.1f) < 0.05)
-         {
-            //ALLEGRO_COLOR color = al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter);
-            int font_size = -30;
-            draw_text_with_letter_spacing(font_size, al_color_name("white"), 0, 250-300 + screen_center_y, 60, fonts["venus_rising_rg.ttf 26"], lap_string.c_str());
-
-            //al_draw_text(font_large, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
-               //screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
-         }
-
-
-         draw_text_with_letter_spacing(-30, al_color_name("white"), screen_center_x, screen_center_y, 50, fonts["venus_rising_rg.ttf 30"], lap_info_string.c_str());
-
-         //al_draw_text(font_large, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
-            //screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_info_string.c_str());
-
-         if (!segment_where_player_died.empty())
-            al_draw_text(font_regular, al_map_rgba_f(track_begin_notification_counter*0.5, track_begin_notification_counter, 0.0, track_begin_notification_counter),
-               screen_center_x, 300-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_info2_string.c_str());
-      }
-      else if (track_begin_notification_counter < 0.4 && (!(racer->velocity_magnitude > 0.01)))
-      {
-         std::string go_string = "GO";
-
-         float opacity_counter = track_begin_notification_counter/0.2;
-
-         al_draw_text(font_large, al_map_rgba_f(0.0, 1.0*opacity_counter, 0.0, opacity_counter),
-            screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, go_string.c_str());
-      }
-
       if (track_completed)
       {
          Banner::TrackCompleted track_completed_banner(font_large, font_regular, screen_center_x, screen_center_y);
