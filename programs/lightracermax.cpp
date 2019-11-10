@@ -845,6 +845,14 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, Camera3 &camera3, Di
 
 
 
+   if (track_completed)
+   {
+      stopwatch.pause();
+      racer->velocity_magnitude *= 0.98;
+      racer->throttle_on = false;
+   }
+
+
 
    start_profile_timer("racer/track");
    RacerTrackCollisionResolver collision_resolver(
@@ -989,16 +997,9 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, Camera3 &camera3, Di
 
       if (track_completed)
       {
-         stopwatch.pause();
-
          Banner::TrackCompleted track_completed_banner(font_large, font_regular, screen_center_x, screen_center_y);
          track_completed_banner.draw();
-
-         racer->velocity_magnitude *= 0.98;
-         racer->throttle_on = false;
       }
-
-
 
    }
 
