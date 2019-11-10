@@ -196,25 +196,6 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
    camera3d.set_frustum_as_camera(display);
 
 
-   ////setup_projection_SCENE(camera3, bitmap, NULL);
-   //ALLEGRO_BITMAP *backbuffer_sub_bitmap = bitmap;
-   //Camera3 &camera_to_use = camera3;
-
-   //// setup the render settings
-   //al_set_render_state(ALLEGRO_DEPTH_TEST, 1);
-   //al_set_render_state(ALLEGRO_WRITE_MASK, ALLEGRO_MASK_DEPTH | ALLEGRO_MASK_RGBA);
-   //al_clear_depth_buffer(1);
-
-   //ALLEGRO_TRANSFORM t;
-
-   ////camera_to_use.reverse_position_transform(&t);
-
-   //float aspect_ratio = (float)al_get_bitmap_height(backbuffer_sub_bitmap) / al_get_bitmap_width(backbuffer_sub_bitmap);
-   //al_perspective_transform(&t, -1, aspect_ratio, 1, 1, -aspect_ratio, 100);
-
-   //al_use_projection_transform(&t);
-
-
    static int strobe = 0;
    strobe++;
    if (strobe > 6) { strobe = 0;}
