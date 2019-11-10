@@ -61,8 +61,6 @@ SampleBin samples;
 
 
 #include <AllegroFlare/Timer.hpp>
-#include <AllegroFlare/TimerFormatter.hpp>
-using AllegroFlare::TimerFormatter;
 AllegroFlare::Timer stopwatch;
 
 

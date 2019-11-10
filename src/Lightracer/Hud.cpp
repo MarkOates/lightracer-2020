@@ -3,7 +3,10 @@
 #include "Lightracer/Hud.hpp"
 
 
-#include "AllegroFlare/TimerFormatter.hpp"
+#include "Lightracer/TimerFormatter.hpp"
+using Lightracer::TimerFormatter;
+
+
 #include "AllegroFlare/Useful.hpp" // for tostring
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
