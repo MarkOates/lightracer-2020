@@ -92,7 +92,7 @@ void GLRenderer::draw_track(Track *track, float multiplier, BitmapBin &bitmaps, 
    floor_plate_placement.rotation = vec3d(0.25, 0, 0);
    floor_plate_placement.size = floor_plate.get_max_vertex_coordinate();
    floor_plate_placement.align = vec3d(0, 0, 0);
-   floor_plate.set_texture(bitmaps["floor-plate-1.png"]);
+   floor_plate.set_texture(bitmaps["plate-2.png"]);
 
 
    /// draw floor plates

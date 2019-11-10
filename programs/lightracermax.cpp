@@ -1,6 +1,3 @@
-bool development = true;
-
-
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
@@ -873,15 +870,8 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, ALLEGRO_EVENT *curre
    al_set_sample_instance_speed(engine_sample_instance, 0.8+(racer->velocity_magnitude*racer->velocity_magnitude)/7);
    al_set_sample_instance_gain(engine_sample_instance, 0.6);
 
-   if (!development)
-   {
-      start_profile_timer("draw projected");
-      track->draw_projected(
-            index_of_last_track_segment_that_collides, racer, bitmaps, good_camera, camera,
-            racer->direction_angle, racer->position.x, racer->position.y, racer->velocity_magnitude
-         );
-      stop_profile_timer("draw projected");
-   }
+
+   // draw_gl_projection
 
 
    int current_lap_num = (int)racer->lap_time.size()+1;
@@ -1027,7 +1017,7 @@ public:
    void initialize()
    {
       init_game();
-      if (development) initialize_gl_render();
+      initialize_gl_render();
    }
 
    void primary_timer_func() override
@@ -1044,7 +1034,7 @@ public:
       else
       {
          game_timer_func(player_stats, framework.current_event);
-         if (development) gl_render_func();
+         gl_render_func();
       }
 
       stop_profile_timer("WHOLE UPDATE");
