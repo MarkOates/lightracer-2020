@@ -1,4 +1,4 @@
-bool development = true;
+bool development = false;
 
 
 #include <allegro5/allegro.h>
