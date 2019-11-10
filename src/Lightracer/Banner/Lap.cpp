@@ -34,12 +34,12 @@ namespace Banner
       int x = screen_hw - expected_text_width / 2;
       int x2 = x + expected_text_width;
 
-      int y = screen_center_y - 10;
+      int y = screen_center_y - 10 - 50;
 
       std::string text_to_draw = std::string("LAP ") + std::to_string(lap_number);
 
       draw_frame(color, x, y, x2, y+40);
-      draw_text_with_letter_spacing(color, screen_hw, screen_center_x+16, screen_center_y, 40, font_regular, text_to_draw);
+      draw_text_with_letter_spacing(color, screen_hw, screen_center_x+16, y+10, 40, font_regular, text_to_draw);
    }
 }
 
