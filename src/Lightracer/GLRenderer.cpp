@@ -92,7 +92,7 @@ void GLRenderer::draw_track(Track *track, float multiplier, BitmapBin &bitmaps, 
    floor_plate_placement.rotation = vec3d(0.25, 0, 0);
    floor_plate_placement.size = floor_plate.get_max_vertex_coordinate();
    floor_plate_placement.align = vec3d(0, 0, 0);
-   floor_plate.set_texture(bitmaps["plate-2.png"]);
+   floor_plate.set_texture(bitmaps["blue-plate-2.png"]);
 
 
    /// draw floor plates
@@ -164,7 +164,7 @@ void GLRenderer::draw_track(Track *track, float multiplier, BitmapBin &bitmaps, 
          vec2d *rail_vertex = track_segment->left_rail[l];
          lamp_placement.position = vec3d(rail_vertex->x * multiplier, rail_vertex->y * multiplier, -0.5);
          lamp_placement.start_transform();
-         lamp_model.draw();
+         //lamp_model.draw();
          lamp_placement.restore_transform();
       }
       for (unsigned l=0; l<(track_segment->right_rail.size()-1); l++)
@@ -172,7 +172,7 @@ void GLRenderer::draw_track(Track *track, float multiplier, BitmapBin &bitmaps, 
          vec2d *rail_vertex = track_segment->right_rail[l];
          lamp_placement.position = vec3d(rail_vertex->x * multiplier, rail_vertex->y * multiplier, -0.5);
          lamp_placement.start_transform();
-         lamp_model.draw();
+         //lamp_model.draw();
          lamp_placement.restore_transform();
       }
    }

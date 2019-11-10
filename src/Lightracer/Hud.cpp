@@ -61,7 +61,7 @@ void Hud::draw_hud()
 
    int anchor_position = screen_width - 300 - 45;
 
-   ALLEGRO_FONT *font = fonts["Exan-Regular.ttf 26"];
+   ALLEGRO_FONT *font = fonts["Exan-Regular.ttf 22"];
 
    draw_lives(font, horizontal_screen_padding, text_y);
    draw_health_bar(font, horizontal_screen_padding, text_y);
