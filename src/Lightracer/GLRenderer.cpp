@@ -85,7 +85,7 @@ void GLRenderer::draw_track(Track *track, float multiplier, ModelBin &models, in
    lamp_placement.size = vec3d(1, 1, 1);
    lamp_placement.align = vec3d(0, 0, 0.5);
 
-   Model3D &sphere_model = *models["unit_sphere-01.obj"];
+   Model3D &lamp_model = *models["unit_sphere-01.obj"];
 
    int i=0;
 
@@ -101,7 +101,7 @@ void GLRenderer::draw_track(Track *track, float multiplier, ModelBin &models, in
          ) track_segment_is_on = true;
 
       ALLEGRO_COLOR color = get_color_for_type(strobe, track_segment_is_on ? track_segment->color_type : COLOR_TYPE_OFF);
-      for (auto &vtx : sphere_model.vertexes) { vtx.color = color; }
+      for (auto &vtx : lamp_model.vertexes) { vtx.color = color; }
 
       // draw_the_left_rail
       for (unsigned i=1; i<track_segment->left_rail_segments.size(); i++)
@@ -135,14 +135,14 @@ void GLRenderer::draw_track(Track *track, float multiplier, ModelBin &models, in
          ) track_segment_is_on = true;
 
       ALLEGRO_COLOR color = get_color_for_type(strobe, track_segment_is_on ? track_segment->color_type : COLOR_TYPE_OFF);
-      for (auto &vtx : sphere_model.vertexes) { vtx.color = color; }
+      for (auto &vtx : lamp_model.vertexes) { vtx.color = color; }
 
       for (unsigned l=1; l<track_segment->left_rail.size(); l++)
       {
          vec2d *rail_vertex = track_segment->left_rail[l];
          lamp_placement.position = vec3d(rail_vertex->x * multiplier, rail_vertex->y * multiplier, -0.5);
          lamp_placement.start_transform();
-         sphere_model.draw();
+         lamp_model.draw();
          lamp_placement.restore_transform();
       }
       for (unsigned l=0; l<(track_segment->right_rail.size()-1); l++)
@@ -150,7 +150,7 @@ void GLRenderer::draw_track(Track *track, float multiplier, ModelBin &models, in
          vec2d *rail_vertex = track_segment->right_rail[l];
          lamp_placement.position = vec3d(rail_vertex->x * multiplier, rail_vertex->y * multiplier, -0.5);
          lamp_placement.start_transform();
-         sphere_model.draw();
+         lamp_model.draw();
          lamp_placement.restore_transform();
       }
    }
