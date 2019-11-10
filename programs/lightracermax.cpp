@@ -959,7 +959,7 @@ void game_timer_func(Lightracer::PlayerStats &player_stats, Camera3 &camera3, Di
          {
             //ALLEGRO_COLOR color = al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter);
             int font_size = -30;
-            draw_text_with_letter_spacing(font_size, al_color_name("white"), 0, 250-300 + screen_center_y, 50, fonts["venus_rising_rg.ttf 30"], lap_string.c_str());
+            draw_text_with_letter_spacing(font_size, al_color_name("white"), 0, 250-300 + screen_center_y, 60, fonts["venus_rising_rg.ttf 26"], lap_string.c_str());
 
             //al_draw_text(font_large, al_map_rgba_f(track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter, track_begin_notification_counter),
                //screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, lap_string.c_str());
