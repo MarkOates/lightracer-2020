@@ -77,7 +77,7 @@ ALLEGRO_COLOR get_color_for_type(int strobe, int color_type)
 
 
 
-void GLRenderer::draw_track(Track *track, float multiplier, ModelBin &models, int strobe, int index_of_last_track_segment_that_collides)
+void GLRenderer::draw_track(Track *track, float multiplier, BitmapBin &bitmaps, ModelBin &models, int strobe, int index_of_last_track_segment_that_collides)
 {
    placement3d lamp_placement;
 
@@ -86,6 +86,12 @@ void GLRenderer::draw_track(Track *track, float multiplier, ModelBin &models, in
    lamp_placement.align = vec3d(0, 0, 0.5);
 
    Model3D &lamp_model = *models["unit_sphere-01.obj"];
+   Model3D &floor_plate = *models["flat_stage-01.obj"];
+
+   placement3d floor_plate_placement;
+   floor_plate_placement.rotation = vec3d(0.25, 0, 0);
+   floor_plate_placement.align = vec3d(0.5, 0.5, 0.5);
+   floor_plate.set_texture(bitmaps["floor-plate-1.png"]);
 
    int i=0;
 
@@ -120,6 +126,10 @@ void GLRenderer::draw_track(Track *track, float multiplier, ModelBin &models, in
          vec2d end = segment->end * multiplier;
          al_draw_line(start.x, start.y, end.x, end.y, color, 3 * multiplier);
       }
+
+      floor_plate_placement.start_transform();
+      floor_plate.draw();
+      floor_plate_placement.restore_transform();
    }
 
    i = 0;
@@ -158,7 +168,7 @@ void GLRenderer::draw_track(Track *track, float multiplier, ModelBin &models, in
 
 
 
-void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track, int index_of_last_track_segment_that_collides)
+void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, BitmapBin &bitmaps, ModelBin &models, Track *track, int index_of_last_track_segment_that_collides)
 {
    float multiplier = 0.07;
 
@@ -207,7 +217,7 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
       place.rotation.y = 0.5; //+ al_get_time() * 0.04;
       place.start_transform();
 
-      draw_track(track, multiplier, models, strobe, index_of_last_track_segment_that_collides);
+      draw_track(track, multiplier, bitmaps, models, strobe, index_of_last_track_segment_that_collides);
 
       place.restore_transform();
    }
