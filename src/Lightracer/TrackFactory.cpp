@@ -132,6 +132,73 @@ TrackSegment *opening_gate()
 }
 
 
+TrackSegment *create_track_segment(track_segmet_shape_t shape_type, track_segment_color_t color_type, bool reverse)
+{
+   TrackSegment *track_segment = nullptr;
+
+   switch(shape_type)
+   {
+   case TRACK_SEGMENT_UNDEF:
+      throw std::runtime_error("assemble_track cannot attach track segment of type TRACK_SEGMENT_UNDEF");
+      break;
+   case TRACK_SEGMENT_A:
+      track_segment = create_track_segmentA();
+      break;
+   case TRACK_SEGMENT_B:
+      track_segment = create_track_segmentB();
+      break;
+   case TRACK_SEGMENT_C:
+      track_segment = create_track_segmentC();
+      break;
+   case TRACK_SEGMENT_D:
+      track_segment = create_track_segmentD();
+      break;
+   case TRACK_SEGMENT_E:
+      track_segment = create_track_segmentE();
+      break;
+   }
+
+   track_segment->color_type = color_type;
+
+   if (reverse) track_segment->reverse();
+
+   return track_segment;
+}
+
+
+bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool>> track_build_info)
+{
+   track->clear();
+   TrackSegment *track_segment = nullptr;
+   track->create_gate(); // gate is added automatically
+   segment_where_player_died.clear();
+   track_segment = create_track_segmentE();
+   track->append_segment(track_segment);
+
+
+   /// build the track here
+   for (auto &track_build_info_unit : track_build_info)
+   {
+      track_segmet_shape_t shape = std::get<0>(track_build_info_unit);//.first;
+      track_segment_color_t color = std::get<1>(track_build_info_unit);//.second;
+      bool reverse = std::get<2>(track_build_info_unit);
+
+      track_segment = create_track_segment(shape, color, reverse);
+
+      track->append_segment(track_segment);
+   }
+
+
+   track_segment = create_track_segmentE();
+   track_segment->color_type = COLOR_TYPE_WHITE;
+   track->append_segment(track_segment);
+
+   track->__HACK_finalize_track();
+
+   return true;
+}
+
+
 bool create_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
 {
    track->clear();
