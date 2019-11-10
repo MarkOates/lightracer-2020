@@ -169,7 +169,8 @@ void Hud::draw_health_bar(ALLEGRO_FONT *font, int text_x, int text_y)
    float health_percentage = current_racer_health / current_racer_max_health;
 
    ALLEGRO_COLOR health_bar_color;
-   if (health_percentage > 0.9) health_bar_color = al_color_name("dodgerblue");
+   if (health_percentage >= 0.9999) health_bar_color = al_color_name("white");
+   else if (health_percentage > 0.8) health_bar_color = al_color_name("dodgerblue");
    else if (health_percentage > 0.6) health_bar_color = al_color_name("violet");
    else if (health_percentage > 0.3) health_bar_color = al_color_name("orange");
    else health_bar_color = al_color_name("red");
@@ -185,14 +186,14 @@ void Hud::draw_health_bar(ALLEGRO_FONT *font, int text_x, int text_y)
          bar_x + 4 + bar_length,
          bar_y + 4 + health_bar_height * 0.5,
          4, 4,
-         al_color_name("white"), 2.0);
+         health_bar_color, 1.5);
 
    al_draw_filled_rectangle(
          bar_x,
          bar_y - health_bar_height * 0.5,
          bar_x + bar_length * health_percentage,
          bar_y + health_bar_height * 0.5,
-         al_color_name("white"));
+         health_bar_color);
 }
 
 
