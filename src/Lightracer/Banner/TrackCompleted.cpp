@@ -25,8 +25,14 @@ namespace Banner
 
    void TrackCompleted::draw()
    {
-      al_draw_text(font_large, al_color_name("dodgerblue"), screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "TRACK COMPLETED");
-      al_draw_text(font_regular, al_color_name("dodgerblue"), screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
+      ALLEGRO_COLOR color = al_color_name("dodgerblue");
+      int screen_hw = 1920 / 2; ///// PASS THIS DOWN
+
+      draw_text_with_letter_spacing(color, screen_hw, screen_center_x, screen_center_y - 50, 90, font_large, "TRACK COMPLETED");
+      draw_text_with_letter_spacing(color, screen_hw, screen_center_x, screen_center_y + 50, 50, font_regular, "press ENTER to continue");
+
+      //al_draw_text(font_large, color, screen_center_x, 200-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "TRACK COMPLETED");
+      //al_draw_text(font_regular, color, screen_center_x, 250-300 + screen_center_y, ALLEGRO_ALIGN_CENTRE, "press ENTER to continue");
    }
 }
 

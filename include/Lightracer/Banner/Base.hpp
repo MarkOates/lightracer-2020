@@ -10,8 +10,8 @@ namespace Banner
 {
    class Base
    {
-   private:
-      void draw_text_with_letter_spacing(int font_size, ALLEGRO_COLOR color, int screen_hw, int x, int y, float letter_spacing, ALLEGRO_FONT *font, std::string string_to_write);
+   protected:
+      void draw_text_with_letter_spacing(ALLEGRO_COLOR color, int screen_hw, int x, int y, float letter_spacing, ALLEGRO_FONT *font, std::string string_to_write);
 
    public:
       Base();
