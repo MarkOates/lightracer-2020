@@ -146,16 +146,6 @@ void Hud::draw_stopwatch(ALLEGRO_FONT *font, int text_x, int text_y)
    std::string string_to_write = ellapsed_time_str;
 
    al_draw_text(font, color, text_x, text_y, ALLEGRO_ALIGN_LEFT, string_to_write.c_str());
-   //float text_width = al_get_text_width(font, ellapsed_time_str.c_str());
-   //std::string the_char = " ";
-   //int letter_spacing = 12 * 2;
-   //int letters_traversed = 0;
-   //for (auto &c : ellapsed_time_str)
-   //{
-      //the_char[0] = c;
-      //al_draw_text(font, color, text_x + (letters_traversed * letter_spacing), text_y, ALLEGRO_ALIGN_CENTER, the_char.c_str());
-      //letters_traversed++;
-   //}
 }   
 
 
