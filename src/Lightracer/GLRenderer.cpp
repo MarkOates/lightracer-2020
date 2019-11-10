@@ -218,7 +218,8 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
 
 
    multiplier = 0.07;
-   Model3D &cube_model = *models["rounded_unit_cube-01.obj"];
+   Model3D &car_model = *models["rounded_unit_cube-01.obj"];
+   car_model.set_texture(bitmaps[""]);
 
    placement3d place;
    
@@ -239,10 +240,11 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
    if (racer)
    {
       vec3d racer_pos = vec3d(racer->position.x * multiplier, 0, racer->position.y * multiplier);
+      place.scale = vec3d(1.5, 0.3, 1.2);
       place.rotation = vec3d(0, -radians_to_degrees(racer->direction.get_angle()/180/2), 0);
       place.position = racer_pos;
       place.start_transform();
-      cube_model.draw();
+      car_model.draw();
       place.restore_transform();
    }
 }
