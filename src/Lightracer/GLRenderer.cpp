@@ -77,86 +77,15 @@ ALLEGRO_COLOR get_color_for_type(int strobe, int color_type)
 
 
 
-void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track, int index_of_last_track_segment_that_collides)
+void GLRenderer::draw_track(Track *track, float multiplier, ModelBin &models, int strobe, int index_of_last_track_segment_that_collides)
 {
-   float multiplier = 0.07;
-   // create a camera3d
-
-   vec3d racer_position = vec3d(racer->position.x, 0, racer->position.y) * multiplier;
-   vec3d racer_view_vector = vec3d(racer->direction.x, 0, racer->direction.y).normalized();
-
-   vec3d targets_position = racer_position;
-   AllegroFlare::vec3d view_vec(0, 0, 0);
-
-   float ideal_velocity = 4.165;
-
-   float moving_non_moving_normal = 1.0 - (racer->velocity_magnitude / ideal_velocity); // 0 is not moving, 1 is moving at te
-
-   Camera3D camera3d(0);
-   //camera3d.stepback = 30;
-   //camera3d.stepback_rotation = al_get_time() * 0.2;
-   //camera3d.pitch = 0.5 * std::sin(al_get_time());
-         camera3d.is_fixed_on_axis = true;
-         camera3d.position = targets_position;
-         camera3d.position = targets_position + AllegroFlare::vec3d(0, -2, 0);
-         view_vec = racer_view_vector; // this is a fixed track camera tracking, might be good for victory laps: AllegroFlare::vec3d(0, 0, -1);
-         //view_vec = AllegroFlare::vec3d(0, 0, -1);
-         camera3d.stepback = view_vec * -12;
-         camera3d.stepback += AllegroFlare::vec3d(0, 16 - ideal_velocity*1.1, 0); // ascent
-         camera3d.stepback *= (1.0 - 0.11 * ideal_velocity);
-         camera3d.stepback += AllegroFlare::vec3d(0, 13 * moving_non_moving_normal, 4 * moving_non_moving_normal); // ascent
-         camera3d.pitch = 0;
-         camera3d.stepback_pitch = -1.2 + 0.17 * ideal_velocity;
-         camera3d.stepback_pitch += -0.4 * moving_non_moving_normal; // ascent
-         camera3d.stepback += AllegroFlare::vec3d(0, -1, 0); // ascent
-         camera3d.view_vector = view_vec;
-
-   camera3d.set_frustum_as_camera(display);
-
-
-   ////setup_projection_SCENE(camera3, bitmap, NULL);
-   //ALLEGRO_BITMAP *backbuffer_sub_bitmap = bitmap;
-   //Camera3 &camera_to_use = camera3;
-
-   //// setup the render settings
-   //al_set_render_state(ALLEGRO_DEPTH_TEST, 1);
-   //al_set_render_state(ALLEGRO_WRITE_MASK, ALLEGRO_MASK_DEPTH | ALLEGRO_MASK_RGBA);
-   //al_clear_depth_buffer(1);
-
-   //ALLEGRO_TRANSFORM t;
-
-   ////camera_to_use.reverse_position_transform(&t);
-
-   //float aspect_ratio = (float)al_get_bitmap_height(backbuffer_sub_bitmap) / al_get_bitmap_width(backbuffer_sub_bitmap);
-   //al_perspective_transform(&t, -1, aspect_ratio, 1, 1, -aspect_ratio, 100);
-
-   //al_use_projection_transform(&t);
-
-
-   static int strobe = 0;
-   strobe++;
-   if (strobe > 6) { strobe = 0;}
-
-
-   multiplier = 0.07;
-   Model3D &cube_model = *models["rounded_unit_cube-01.obj"];
-   Model3D &sphere_model = *models["unit_sphere-01.obj"];
-
-   placement3d place;
    placement3d lamp_placement;
 
    lamp_placement.scale = vec3d(0.5, 0.5, 0.5);
    lamp_placement.size = vec3d(1, 1, 1);
    lamp_placement.align = vec3d(0, 0, 0.5);
-   
-   float height_above_ground;
 
-   if (track)
-   {
-      place.rotation.z = 0.5;// / 2.0 + al_get_time() * 0.04;
-      place.rotation.x = 0.25; //+ al_get_time() * 0.04;
-      place.rotation.y = 0.5; //+ al_get_time() * 0.04;
-      place.start_transform();
+   Model3D &sphere_model = *models["unit_sphere-01.obj"];
 
       TrackSegment *first_track_segment = track->segment.empty() ? nullptr : track->segment[0];
       int i=0;
@@ -226,6 +155,88 @@ void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, 
             lamp_placement.restore_transform();
          }
       }
+}
+
+
+
+void GLRenderer::draw_gl_projection(ALLEGRO_DISPLAY *display, Camera3 &camera3, Racer *racer, ALLEGRO_BITMAP *bitmap, ModelBin &models, Track *track, int index_of_last_track_segment_that_collides)
+{
+   float multiplier = 0.07;
+   // create a camera3d
+
+   vec3d racer_position = vec3d(racer->position.x, 0, racer->position.y) * multiplier;
+   vec3d racer_view_vector = vec3d(racer->direction.x, 0, racer->direction.y).normalized();
+
+   vec3d targets_position = racer_position;
+   AllegroFlare::vec3d view_vec(0, 0, 0);
+
+   float ideal_velocity = 4.165;
+
+   float moving_non_moving_normal = 1.0 - (racer->velocity_magnitude / ideal_velocity); // 0 is not moving, 1 is moving at te
+
+   Camera3D camera3d(0);
+   //camera3d.stepback = 30;
+   //camera3d.stepback_rotation = al_get_time() * 0.2;
+   //camera3d.pitch = 0.5 * std::sin(al_get_time());
+         camera3d.is_fixed_on_axis = true;
+         camera3d.position = targets_position;
+         camera3d.position = targets_position + AllegroFlare::vec3d(0, -2, 0);
+         view_vec = racer_view_vector; // this is a fixed track camera tracking, might be good for victory laps: AllegroFlare::vec3d(0, 0, -1);
+         //view_vec = AllegroFlare::vec3d(0, 0, -1);
+         camera3d.stepback = view_vec * -12;
+         camera3d.stepback += AllegroFlare::vec3d(0, 16 - ideal_velocity*1.1, 0); // ascent
+         camera3d.stepback *= (1.0 - 0.11 * ideal_velocity);
+         camera3d.stepback += AllegroFlare::vec3d(0, 13 * moving_non_moving_normal, 4 * moving_non_moving_normal); // ascent
+         camera3d.pitch = 0;
+         camera3d.stepback_pitch = -1.2 + 0.17 * ideal_velocity;
+         camera3d.stepback_pitch += -0.4 * moving_non_moving_normal; // ascent
+         camera3d.stepback += AllegroFlare::vec3d(0, -1, 0); // ascent
+         camera3d.view_vector = view_vec;
+
+   camera3d.set_frustum_as_camera(display);
+
+
+   ////setup_projection_SCENE(camera3, bitmap, NULL);
+   //ALLEGRO_BITMAP *backbuffer_sub_bitmap = bitmap;
+   //Camera3 &camera_to_use = camera3;
+
+   //// setup the render settings
+   //al_set_render_state(ALLEGRO_DEPTH_TEST, 1);
+   //al_set_render_state(ALLEGRO_WRITE_MASK, ALLEGRO_MASK_DEPTH | ALLEGRO_MASK_RGBA);
+   //al_clear_depth_buffer(1);
+
+   //ALLEGRO_TRANSFORM t;
+
+   ////camera_to_use.reverse_position_transform(&t);
+
+   //float aspect_ratio = (float)al_get_bitmap_height(backbuffer_sub_bitmap) / al_get_bitmap_width(backbuffer_sub_bitmap);
+   //al_perspective_transform(&t, -1, aspect_ratio, 1, 1, -aspect_ratio, 100);
+
+   //al_use_projection_transform(&t);
+
+
+   static int strobe = 0;
+   strobe++;
+   if (strobe > 6) { strobe = 0;}
+
+
+   multiplier = 0.07;
+   Model3D &cube_model = *models["rounded_unit_cube-01.obj"];
+   Model3D &sphere_model = *models["unit_sphere-01.obj"];
+
+   placement3d place;
+   
+   float height_above_ground;
+
+   if (track)
+   {
+      place.rotation.z = 0.5;// / 2.0 + al_get_time() * 0.04;
+      place.rotation.x = 0.25; //+ al_get_time() * 0.04;
+      place.rotation.y = 0.5; //+ al_get_time() * 0.04;
+      place.start_transform();
+
+      draw_track(track, multiplier, models, strobe, index_of_last_track_segment_that_collides);
+
 
       place.restore_transform();
 

@@ -15,6 +15,9 @@ using AllegroFlare::ModelBin;
 
 class GLRenderer
 {
+private:
+   void draw_track(Track *track, float multiplier, ModelBin &models, int strobe, int index_of_last_track_segment_that_collides);
+
 public:
    GLRenderer();
 
