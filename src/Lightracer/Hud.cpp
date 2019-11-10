@@ -11,7 +11,7 @@
 #include <sstream>
 
 
-Hud::Hud(float racer_velocity_magnitude, int num_of_segments_in_track, float current_racer_health, float current_racer_max_health, int current_lap_num, int num_laps_to_win, FontBin &fonts, int screen_width, Timer &stopwatch, int num_lives, int wall_hit_count, int throttle_release_count, int count_of_removed_track_segments)
+Hud::Hud(float racer_velocity_magnitude, int num_of_segments_in_track, float current_racer_health, float current_racer_max_health, int current_lap_num, int num_laps_to_win, FontBin &fonts, int screen_width, int screen_height, Timer &stopwatch, int num_lives, int wall_hit_count, int throttle_release_count, int count_of_removed_track_segments)
    : racer_velocity_magnitude(racer_velocity_magnitude)
    , num_of_segments_in_track(num_of_segments_in_track)
    , current_racer_health(current_racer_health)
@@ -20,6 +20,7 @@ Hud::Hud(float racer_velocity_magnitude, int num_of_segments_in_track, float cur
    , num_laps_to_win(num_laps_to_win)
    , fonts(fonts)
    , screen_width(screen_width)
+   , screen_height(screen_height)
    , stopwatch(stopwatch)
    , num_lives(num_lives)
    , wall_hit_count(wall_hit_count)
