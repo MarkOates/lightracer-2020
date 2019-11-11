@@ -211,12 +211,7 @@ bool create_random_track(std::vector<int> &segment_where_player_died, Track *tra
 {
    std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool, bool>> track_build_info;
 
-   track->clear();
-   //int num_segments = 20;
-
    if (num_segments > 30) num_segments = 30;
-
-   track->create_gate(); // gate is added automatically
 
    segment_where_player_died.clear();
 
@@ -294,8 +289,6 @@ bool create_random_track(std::vector<int> &segment_where_player_died, Track *tra
       color = (track_segment_color_t)last_color_segment;
       track_build_info.push_back({shape, color, false, false});
    }
-
-   track->__HACK_finalize_track();
 
    assemble_track(segment_where_player_died, track, track_build_info);
 
