@@ -262,8 +262,6 @@ bool create_classic_random_track(std::vector<int> &segment_where_player_died, Tr
          {
             // introduce blue, and unlikely red
             new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_RED);
-            //if (new_color_segment == COLOR_TYPE_RED)
-            // new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_RED);
          }
          else if (num_segments == 22)
          {
