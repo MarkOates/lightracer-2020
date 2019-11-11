@@ -207,6 +207,93 @@ bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, s
 }
 
 
+bool create_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
+{
+   std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool, bool>> track_build_info;
+
+   if (num_segments > 30) num_segments = 30;
+
+   segment_where_player_died.clear();
+
+   int num_consecutive_color_segments = 2;
+   int consecutive_color_segment_ct = 0;
+   int last_color_segment = 0;
+
+   for (int i=0; i<num_segments; i++)
+   {
+      track_segmet_shape_t shape = TRACK_SEGMENT_UNDEF;
+      track_segment_color_t color = COLOR_TYPE_WHITE;
+      bool mirror = random_bool();
+      bool reverse = random_bool();
+
+      // pick the segment
+      switch(random_int(0, 4))
+      {
+      case 0:
+         shape = TRACK_SEGMENT_A;
+         break;
+      case 1:
+         shape = TRACK_SEGMENT_B;
+         break;
+      case 2:
+         shape = TRACK_SEGMENT_C;
+         break;
+      case 3:
+         shape = TRACK_SEGMENT_D;
+         break;
+      case 4:
+         shape = TRACK_SEGMENT_E;
+         break;
+      }
+
+      if ((consecutive_color_segment_ct%num_consecutive_color_segments) == 0)
+      {
+         int new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_MAX-1);
+
+         if (num_segments == 4)
+         {
+            new_color_segment = COLOR_TYPE_YELLOW;
+         }
+         else if (num_segments == 10)
+         {
+            new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_GREEN);
+         }
+         else if (num_segments == 16)
+         {
+            // introduce blue, and unlikely red
+            new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_RED);
+         }
+         else if (num_segments == 22)
+         {
+            // no yellow and unlikely green
+            new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_RED_DEATH);
+            while (new_color_segment == COLOR_TYPE_GREEN)
+               new_color_segment = random_int(COLOR_TYPE_YELLOW, COLOR_TYPE_RED);
+         }
+         else if (num_segments == 28)
+         {
+            // no yellow or green, and more likely red
+            new_color_segment = random_int(COLOR_TYPE_BLUE, COLOR_TYPE_RED_DEATH);
+            if (new_color_segment != COLOR_TYPE_RED)
+               new_color_segment = random_int(COLOR_TYPE_BLUE, COLOR_TYPE_RED_DEATH);
+         }
+         else if (num_segments == 30) new_color_segment = COLOR_TYPE_RED_DEATH;
+
+         last_color_segment = new_color_segment;
+      }
+
+      consecutive_color_segment_ct++;
+
+      color = (track_segment_color_t)last_color_segment;
+      track_build_info.push_back({shape, color, mirror, reverse});
+   }
+
+   assemble_track(segment_where_player_died, track, track_build_info);
+
+   return true;
+}
+
+
 bool create_classic_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
 {
    std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool, bool>> track_build_info;

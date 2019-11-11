@@ -24,4 +24,6 @@ bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, s
 
 bool create_classic_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments);
 
+bool create_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments);
+
 
