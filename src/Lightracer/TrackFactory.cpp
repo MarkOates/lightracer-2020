@@ -192,6 +192,9 @@ bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, s
 
 
    track_segment = create_track_segmentE();
+   track->append_segment(track_segment);
+
+   track_segment = create_track_segmentE();
    track_segment->color_type = COLOR_TYPE_WHITE;
    track->append_segment(track_segment);
 
