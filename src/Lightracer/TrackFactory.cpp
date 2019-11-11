@@ -261,7 +261,7 @@ bool create_random_track(std::vector<int> &segment_where_player_died, Track *tra
       }
 
       // pick a reverse flip of the segment or not
-      if (random_bool()) track_segment->reverse();
+      //if (random_bool()) track_segment->reverse(); // <<-- this is disabled: at the time this was being "used" this function was not implemented
 
       if ((consecutive_color_segment_ct%num_consecutive_color_segments) == 0)
       {
