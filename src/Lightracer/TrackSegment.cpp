@@ -98,7 +98,19 @@ void TrackSegment::reverse()
       std::cout << "error: attempting to reverse on empty rails" << std::endl;
       return;
    }
-   // doesn't work (yet)
+
+   // move
+   move(-right_rail[0]->x, -right_rail[0]->y);
+
+   // get the rotation
+   vec2d pipe_output_vector = *this->right_rail.front() - *this->left_rail.back();
+   this->rotate(pipe_output_vector.get_angle());
+
+   // swap the rails
+   std::vector<vec2d *> swapping_rail = left_rail;
+   left_rail = right_rail;
+   right_rail = swapping_rail;
+
    update_slope_info();
 }
 
