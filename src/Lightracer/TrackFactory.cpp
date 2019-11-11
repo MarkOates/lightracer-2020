@@ -207,7 +207,7 @@ bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, s
 }
 
 
-bool create_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
+bool create_classic_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
 {
    std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool, bool>> track_build_info;
 

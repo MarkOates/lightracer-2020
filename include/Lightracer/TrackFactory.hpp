@@ -22,6 +22,6 @@ TrackSegment *create_track_segment(track_segmet_shape_t shape_type, track_segmen
 
 bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool, bool>> track_build_info);
 
-bool create_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments);
+bool create_classic_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments);
 
 

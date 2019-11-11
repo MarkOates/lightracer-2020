@@ -590,7 +590,7 @@ void init_game()
    //al_play_sample(samples["engine"), 0.5, 0.5, 1.0, ALLEGRO_PLAYMODE_LOOP, nullptr);
 
    track = new Track();
-   create_random_track(segment_where_player_died, track, num_of_segments_in_track);
+   create_classic_random_track(segment_where_player_died, track, num_of_segments_in_track);
    start_track_begin_text();
 
    restart_music();
@@ -723,7 +723,7 @@ void key_down_func(Framework &framework, ALLEGRO_EVENT *current_event)
          game_over = false;
          num_lives = max_num_lives;
          num_of_segments_in_track = 4;
-         create_random_track(segment_where_player_died, track, num_of_segments_in_track);
+         create_classic_random_track(segment_where_player_died, track, num_of_segments_in_track);
       }
       if (track_completed)
       {
@@ -735,7 +735,7 @@ void key_down_func(Framework &framework, ALLEGRO_EVENT *current_event)
             num_of_segments_in_track = 30;
             final_course = true;
          }
-         create_random_track(segment_where_player_died, track, num_of_segments_in_track);
+         create_classic_random_track(segment_where_player_died, track, num_of_segments_in_track);
       }
       start_track();
       break;
