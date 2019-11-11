@@ -132,7 +132,7 @@ TrackSegment *opening_gate()
 }
 
 
-TrackSegment *create_track_segment(track_segmet_shape_t shape_type, track_segment_color_t color_type, bool reverse)
+TrackSegment *create_track_segment(track_segmet_shape_t shape_type, track_segment_color_t color_type, bool mirror, bool reverse)
 {
    TrackSegment *track_segment = nullptr;
 
@@ -160,13 +160,14 @@ TrackSegment *create_track_segment(track_segmet_shape_t shape_type, track_segmen
 
    track_segment->color_type = color_type;
 
+   if (mirror) track_segment->mirror();
    if (reverse) track_segment->reverse();
 
    return track_segment;
 }
 
 
-bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool>> track_build_info)
+bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool, bool>> track_build_info)
 {
    track->clear();
    TrackSegment *track_segment = nullptr;
@@ -181,9 +182,10 @@ bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, s
    {
       track_segmet_shape_t shape = std::get<0>(track_build_info_unit);//.first;
       track_segment_color_t color = std::get<1>(track_build_info_unit);//.second;
-      bool reverse = std::get<2>(track_build_info_unit);
+      bool mirror = std::get<2>(track_build_info_unit);
+      bool reverse = std::get<3>(track_build_info_unit);
 
-      track_segment = create_track_segment(shape, color, reverse);
+      track_segment = create_track_segment(shape, color, mirror, reverse);
 
       track->append_segment(track_segment);
    }
@@ -202,10 +204,10 @@ bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, s
 bool create_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
 {
    assemble_track(segment_where_player_died, track, {
-         { TRACK_SEGMENT_B, COLOR_TYPE_WHITE, false },
-         { TRACK_SEGMENT_B, COLOR_TYPE_YELLOW, false },
-         { TRACK_SEGMENT_B, COLOR_TYPE_RED, true },
-         { TRACK_SEGMENT_B, COLOR_TYPE_BLUE, true },
+         { TRACK_SEGMENT_B, COLOR_TYPE_WHITE, false, false },
+         { TRACK_SEGMENT_B, COLOR_TYPE_YELLOW, false, false },
+         { TRACK_SEGMENT_B, COLOR_TYPE_RED, true, false },
+         { TRACK_SEGMENT_B, COLOR_TYPE_BLUE, true, false },
    });
 
    return true;
