@@ -49,6 +49,12 @@ void TrackSegment::move(float x, float y)
 
 void TrackSegment::mirror()
 {
+   if (right_rail.empty() || left_rail.empty())
+   {
+      std::cout << "error: attempting to TrackSegment::mirror() on empty rails" << std::endl;
+      return;
+   }
+
    for (int i=0; i<(int)left_rail.size(); i++)
    {
       left_rail[i]->x *= -1;
@@ -84,8 +90,14 @@ void TrackSegment::rotate(float angle)
 
 //void TrackSegment::draw_projected();
 
+
 void TrackSegment::reverse()
 {
+   if (right_rail.empty() || left_rail.empty())
+   {
+      std::cout << "error: attempting to reverse on empty rails" << std::endl;
+      return;
+   }
    // doesn't work (yet)
    update_slope_info();
 }
