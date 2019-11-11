@@ -99,12 +99,12 @@ void TrackSegment::reverse()
       return;
    }
 
+   // get the rotation
+   vec2d pipe_output_vector = *this->left_rail.back() - *this->right_rail.front();
+   this->rotate(-pipe_output_vector.get_angle());
+
    // move
    move(-right_rail[0]->x, -right_rail[0]->y);
-
-   // get the rotation
-   vec2d pipe_output_vector = *this->right_rail.front() - *this->left_rail.back();
-   this->rotate(pipe_output_vector.get_angle());
 
    // swap the rails
    std::vector<vec2d *> swapping_rail = left_rail;
