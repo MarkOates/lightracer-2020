@@ -176,6 +176,9 @@ bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, s
    track_segment = create_track_segmentE();
    track->append_segment(track_segment);
 
+   track_segment = create_track_segmentE();
+   track->append_segment(track_segment);
+
 
    /// build the track here
    for (auto &track_build_info_unit : track_build_info)
@@ -206,6 +209,8 @@ bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, s
 
 bool create_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
 {
+   std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool, bool>> track_build_info;
+
    track->clear();
    //int num_segments = 20;
 
@@ -233,23 +238,33 @@ bool create_random_track(std::vector<int> &segment_where_player_died, Track *tra
 
    for (int i=0; i<num_segments; i++)
    {
+      track_segmet_shape_t shape = TRACK_SEGMENT_UNDEF;
+      track_segment_color_t color = COLOR_TYPE_WHITE;
+      //bool mirror = std::get<2>(track_build_info_unit);
+      //bool reverse = std::get<3>(track_build_info_unit);
+
       // pick the segment
       switch(random_int(0, 4))
       {
       case 0:
          track_segment = create_track_segmentA();
+         shape = TRACK_SEGMENT_A;
          break;
       case 1:
          track_segment = create_track_segmentB();
+         shape = TRACK_SEGMENT_B;
          break;
       case 2:
          track_segment = create_track_segmentC();
+         shape = TRACK_SEGMENT_C;
          break;
       case 3:
          track_segment = create_track_segmentD();
+         shape = TRACK_SEGMENT_D;
          break;
       case 4:
          track_segment = create_track_segmentE();
+         shape = TRACK_SEGMENT_E;
          break;
       }
 
@@ -300,6 +315,9 @@ bool create_random_track(std::vector<int> &segment_where_player_died, Track *tra
 
       // append the segment
       track->append_segment(track_segment);
+
+      color = (track_segment_color_t)last_color_segment;
+      track_build_info.push_back({shape, color, false, false});
    }
 
    track_segment = create_track_segmentE();
@@ -310,6 +328,8 @@ bool create_random_track(std::vector<int> &segment_where_player_died, Track *tra
    track->append_segment(track_segment);
 
    track->__HACK_finalize_track();
+
+   assemble_track(segment_where_player_died, track, track_build_info);
 
    return true;
 }
