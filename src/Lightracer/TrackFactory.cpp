@@ -201,6 +201,16 @@ bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, s
 
 bool create_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
 {
+   assemble_track(segment_where_player_died, track, {
+         { TRACK_SEGMENT_B, COLOR_TYPE_WHITE, false },
+         { TRACK_SEGMENT_B, COLOR_TYPE_YELLOW, false },
+         { TRACK_SEGMENT_B, COLOR_TYPE_RED, true },
+         { TRACK_SEGMENT_B, COLOR_TYPE_BLUE, true },
+   });
+
+   return true;
+
+
    track->clear();
    //int num_segments = 20;
 
