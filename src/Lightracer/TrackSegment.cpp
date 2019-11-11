@@ -47,6 +47,28 @@ void TrackSegment::move(float x, float y)
    update_slope_info();
 }
 
+void TrackSegment::mirror()
+{
+   for (int i=0; i<(int)left_rail.size(); i++)
+   {
+      left_rail[i]->x *= -1;
+   }
+   for (int i=0; i<(int)right_rail.size(); i++)
+   {
+      right_rail[i]->x *= -1;
+   }
+
+   std::vector<vec2d *> swapping_rail = left_rail;
+   left_rail = right_rail;
+   right_rail = swapping_rail;
+
+   __HACK_reverse_order_of_points();
+
+   move(100, 0);
+
+   update_slope_info();
+}
+
 void TrackSegment::rotate(float angle)
 {
    for (int i=0; i<(int)left_rail.size(); i++)

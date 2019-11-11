@@ -72,6 +72,8 @@ public:
 
    void move(float x, float y);
 
+   void mirror();
+
    void rotate(float angle);
 
    void draw_projected();
