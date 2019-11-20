@@ -3,3 +3,4 @@
 bin/programs/lightracermax
 
 obj/*
+tmp/*
