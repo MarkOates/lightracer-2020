@@ -4,7 +4,7 @@
 #include "AllegroFlare/Useful.hpp" // for random_int, random_bool
 
 
-TrackSegment *create_track_segmentA()
+TrackSegment *TrackFactory::create_track_segmentA()
 {
    TrackSegment *segment = new TrackSegment();
    segment->add_point(LEFT_RAIL, 200, 500);
@@ -23,7 +23,7 @@ TrackSegment *create_track_segmentA()
 }
 
 
-TrackSegment *create_track_segmentB()
+TrackSegment *TrackFactory::create_track_segmentB()
 {
    TrackSegment *segment = new TrackSegment();
    segment->add_point(LEFT_RAIL, 300, 500);
@@ -44,7 +44,7 @@ TrackSegment *create_track_segmentB()
 }
 
 
-TrackSegment *create_track_segmentC()
+TrackSegment *TrackFactory::create_track_segmentC()
 {
    TrackSegment *segment = new TrackSegment();
 
@@ -62,7 +62,7 @@ TrackSegment *create_track_segmentC()
 }
 
 
-TrackSegment *create_track_segmentD()
+TrackSegment *TrackFactory::create_track_segmentD()
 {
    TrackSegment *segment = new TrackSegment();
 
@@ -83,7 +83,7 @@ TrackSegment *create_track_segmentD()
 
 
 
-TrackSegment *create_track_segmentE()
+TrackSegment *TrackFactory::create_track_segmentE()
 {
    TrackSegment *segment = new TrackSegment();
 
@@ -107,8 +107,7 @@ TrackSegment *create_track_segmentE()
 }
 
 
-
-TrackSegment *opening_gate()
+TrackSegment *TrackFactory::opening_gate()
 {
    TrackSegment *segment = new TrackSegment();
 
@@ -132,7 +131,7 @@ TrackSegment *opening_gate()
 }
 
 
-TrackSegment *create_track_segment(track_segmet_shape_t shape_type, track_segment_color_t color_type, bool mirror, bool reverse)
+TrackSegment *TrackFactory::create_track_segment(track_segmet_shape_t shape_type, track_segment_color_t color_type, bool mirror, bool reverse)
 {
    TrackSegment *track_segment = nullptr;
 
@@ -167,7 +166,7 @@ TrackSegment *create_track_segment(track_segmet_shape_t shape_type, track_segmen
 }
 
 
-bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool, bool>> track_build_info)
+bool TrackFactory::assemble_track(std::vector<int> &segment_where_player_died, Track *track, std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool, bool>> track_build_info)
 {
    track->clear();
    TrackSegment *track_segment = nullptr;
@@ -207,7 +206,7 @@ bool assemble_track(std::vector<int> &segment_where_player_died, Track *track, s
 }
 
 
-bool create_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
+bool TrackFactory::create_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
 {
    std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool, bool>> track_build_info;
 
@@ -294,7 +293,7 @@ bool create_random_track(std::vector<int> &segment_where_player_died, Track *tra
 }
 
 
-bool create_classic_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
+bool TrackFactory::create_classic_random_track(std::vector<int> &segment_where_player_died, Track *track, int num_segments)
 {
    std::vector<std::tuple<track_segmet_shape_t, track_segment_color_t, bool, bool>> track_build_info;
 
