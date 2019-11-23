@@ -56,6 +56,5 @@ public:
    void update_exit_slope_info();
    void __HACK_finalize_track();
    void make_segments_easy_where_player_died();
-   void create_gate();
    void append_segment(TrackSegment *ts);
 };

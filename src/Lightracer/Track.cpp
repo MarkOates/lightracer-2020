@@ -626,14 +626,6 @@ void Track::make_segments_easy_where_player_died()
 
 
 
-void Track::create_gate()
-{
-   TrackSegment *gate = TrackFactory::opening_gate();
-   segment.push_back(gate);
-}
-
-
-
 void Track::append_segment(TrackSegment *ts)
 {
    if (segment.empty()) { segment.push_back(ts); return; }

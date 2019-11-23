@@ -170,7 +170,7 @@ bool TrackFactory::assemble_track(std::vector<int> &segment_where_player_died, T
 {
    track->clear();
    TrackSegment *track_segment = nullptr;
-   track->create_gate(); // gate is added automatically
+   track->append_segment(opening_gate());
    segment_where_player_died.clear();
    track_segment = create_track_segmentE();
    track->append_segment(track_segment);
