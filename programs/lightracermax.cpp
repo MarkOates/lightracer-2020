@@ -84,40 +84,8 @@ float delay_time_since_last_affect = 1.0;
 
 
 
-ALLEGRO_SAMPLE_INSTANCE *instance_hit_bad = nullptr;
-ALLEGRO_SAMPLE_INSTANCE *instance_hit_bounce = nullptr;
-ALLEGRO_SAMPLE_INSTANCE *instance_hit_med = nullptr;
-ALLEGRO_SAMPLE_INSTANCE *instance_hit_soft = nullptr;
-
-
-
 ALLEGRO_BITMAP *black_screen_overlay = nullptr;
 
-
-
-void play_hit_bad()
-{
-    al_stop_sample_instance(instance_hit_bad);
-    al_play_sample_instance(instance_hit_bad);
-}
-
-void play_hit_bounce()
-{
-    al_stop_sample_instance(instance_hit_bounce);
-    al_play_sample_instance(instance_hit_bounce);
-}
-
-void play_hit_med()
-{
-    al_stop_sample_instance(instance_hit_med);
-    al_play_sample_instance(instance_hit_med);
-}
-
-void play_hit_soft()
-{
-    al_stop_sample_instance(instance_hit_soft);
-    al_play_sample_instance(instance_hit_soft);
-}
 
 
 
@@ -416,28 +384,6 @@ void draw_text_with_letter_spacing(int font_size, ALLEGRO_COLOR color, int x, in
    }
 }
 
-
-void kill_player(int _segment_where_player_died)
-{
-   racer->dead = true;
-   motion.move_to(&camera->zoom, 0.8, 2, interpolator::slow_in_out);
-   //animate_delta(racer->direction_angle, FULL_ROTATION*2, 5.0, interpolator::trippleFastIn);
-   al_stop_sample_instance(engine_sample_instance);
-
-   racer->throttle_on = false;
-   racer->turning_left = false;
-   racer->turning_right = false;
-   racer->break_on = false;
-
-   num_lives--;
-
-   if (num_lives <= 0) game_over = true;
-
-   if (_segment_where_player_died != 0) segment_where_player_died.push_back(_segment_where_player_died);
-
-   racer->velocity_magnitude = 0;
-   racer->velocity = 0;
-}
 
 // game calculation functions //
 

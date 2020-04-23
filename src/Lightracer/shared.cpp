@@ -36,3 +36,36 @@ void play_exit_teleport_sound_effect(ALLEGRO_SAMPLE_INSTANCE *exit_sample_instan
 }
 
 
+void play_hit_bad()
+{
+    al_stop_sample_instance(instance_hit_bad);
+    al_play_sample_instance(instance_hit_bad);
+}
+
+
+void play_hit_bounce()
+{
+    al_stop_sample_instance(instance_hit_bounce);
+    al_play_sample_instance(instance_hit_bounce);
+}
+
+
+void play_hit_med()
+{
+    al_stop_sample_instance(instance_hit_med);
+    al_play_sample_instance(instance_hit_med);
+}
+
+
+void play_hit_soft()
+{
+    al_stop_sample_instance(instance_hit_soft);
+    al_play_sample_instance(instance_hit_soft);
+}
+
+
+ALLEGRO_SAMPLE_INSTANCE *instance_hit_bad = nullptr;
+ALLEGRO_SAMPLE_INSTANCE *instance_hit_bounce = nullptr;
+ALLEGRO_SAMPLE_INSTANCE *instance_hit_med = nullptr;
+ALLEGRO_SAMPLE_INSTANCE *instance_hit_soft = nullptr;
+
