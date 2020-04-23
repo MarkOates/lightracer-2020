@@ -31,7 +31,7 @@ using namespace allegro_flare;
 
 
 using namespace AllegroFlare;
-Motion motion;
+//Motion motion;
 
 
 #include <vector>
@@ -89,7 +89,7 @@ ALLEGRO_BITMAP *black_screen_overlay = nullptr;
 
 
 
-ALLEGRO_SAMPLE_INSTANCE *engine_sample_instance = nullptr;
+//ALLEGRO_SAMPLE_INSTANCE *engine_sample_instance = nullptr;
 ALLEGRO_SAMPLE_INSTANCE *passthough_sample_instance = nullptr;
 ALLEGRO_SAMPLE_INSTANCE *music_sample_instance = nullptr;
 ALLEGRO_SAMPLE_INSTANCE *exit_sample_instance = nullptr;
@@ -109,12 +109,8 @@ ALLEGRO_COLOR start_text_color;
 
 
 
-int max_num_lives = 3;
-int num_lives = max_num_lives;
-
-
-bool game_won = false;
-bool game_over = false;
+//bool game_won = false;
+//bool game_over = false;
 
 bool final_course = false;
 
@@ -202,9 +198,6 @@ std::string get_number_string(int num)
 
 //int segment_where_player_died = 0;
 
-vector<int> segment_where_player_died;
-
-
 
 void start_track_begin_text()
 {
@@ -214,12 +207,12 @@ void start_track_begin_text()
 }
 
 
-int num_of_segments_in_track = 4;
+//int num_of_segments_in_track = 4;
 
 
 
 float finish_track_animation_counter = 1.0;
-bool track_completed = false;
+//bool track_completed = false;
 
 int num_laps_to_win = 4;
 
@@ -236,10 +229,6 @@ int index_of_last_track_segment_that_collides = 0;
 
 
 #include "Lightracer/CheapCamera.hpp"
-
-
-
-CheapCamera *camera = nullptr;
 
 
 
@@ -294,10 +283,6 @@ void mark_player_not_using_boost(void *);
 
 
 // globuals //
-
-Track *track = nullptr;
-TrackSegment *track_segment = nullptr;
-Racer *racer = nullptr;
 
 
 
@@ -428,15 +413,6 @@ void start_track()
 
    fade_out_of_black(motion, foreground_black_opacity);
 
-}
-
-
-
-void complete_track()
-{
-   //racer->dead = true;
-   if (num_of_segments_in_track == 30) game_won = true;
-   track_completed = true;
 }
 
 

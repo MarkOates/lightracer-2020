@@ -64,8 +64,59 @@ void play_hit_soft()
 }
 
 
+void kill_player(int _segment_where_player_died)
+{
+   racer->dead = true;
+   motion.move_to(&camera->zoom, 0.8, 2, interpolator::slow_in_out);
+   //animate_delta(racer->direction_angle, FULL_ROTATION*2, 5.0, interpolator::trippleFastIn);
+   al_stop_sample_instance(engine_sample_instance);
+
+   racer->throttle_on = false;
+   racer->turning_left = false;
+   racer->turning_right = false;
+   racer->break_on = false;
+
+   num_lives--;
+
+   if (num_lives <= 0) game_over = true;
+
+   if (_segment_where_player_died != 0) segment_where_player_died.push_back(_segment_where_player_died);
+
+   racer->velocity_magnitude = 0;
+   racer->velocity = 0;
+}
+
+
+void complete_track()
+{
+   //racer->dead = true;
+   if (num_of_segments_in_track == 30) game_won = true;
+   track_completed = true;
+}
+
+
+
+
 ALLEGRO_SAMPLE_INSTANCE *instance_hit_bad = nullptr;
 ALLEGRO_SAMPLE_INSTANCE *instance_hit_bounce = nullptr;
 ALLEGRO_SAMPLE_INSTANCE *instance_hit_med = nullptr;
 ALLEGRO_SAMPLE_INSTANCE *instance_hit_soft = nullptr;
+ALLEGRO_SAMPLE_INSTANCE *engine_sample_instance = nullptr;
+
+Track *track = nullptr;
+TrackSegment *track_segment = nullptr;
+Racer *racer = nullptr;
+
+Motion motion;
+CheapCamera *camera = nullptr;
+
+int max_num_lives = 3;
+int num_lives = max_num_lives;
+bool game_won = false;
+bool game_over = false;
+bool track_completed = false;
+ 
+vector<int> segment_where_player_died = {};
+
+int num_of_segments_in_track = 4;
 
