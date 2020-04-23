@@ -1,1 +1,1 @@
-/Users/markoates/Repos/allegro_flare/src/AllegroFlare/SampleBin.cpp
+../../../allegro_flare/src/AllegroFlare/SampleBin.cpp

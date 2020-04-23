@@ -1,1 +1,1 @@
-/Users/markoates/Repos/allegro_flare/include/AllegroFlare/Version.hpp
+../../../allegro_flare/include/AllegroFlare/Version.hpp

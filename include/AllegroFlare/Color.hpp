@@ -1,1 +1,1 @@
-/Users/markoates/Repos/allegro_flare/include/AllegroFlare/Color.hpp
+../../../allegro_flare/include/AllegroFlare/Color.hpp

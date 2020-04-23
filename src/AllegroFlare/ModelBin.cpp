@@ -1,1 +1,1 @@
-/Users/markoates/Repos/allegro_flare/src/AllegroFlare/ModelBin.cpp
+../../../allegro_flare/src/AllegroFlare/ModelBin.cpp
