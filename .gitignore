@@ -1,6 +1,34 @@
-.DS_Store
+# vim swap files
 
-bin/programs/lightracermax
+*.swp
+*.swo
 
-obj/*
+
+# temp files in the build dir
+
+build/tmp*
 tmp/*
+
+
+# compiled object files and any executable files
+
+obj/**
+bin/**
+!bin/data
+*.a
+
+
+# OSX image caches
+
+.DS_store
+
+
+# Allegro log files
+
+allegro.log
+
+
+
+# Hexagon files
+
+~TMP.txt
