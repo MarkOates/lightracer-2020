@@ -731,7 +731,7 @@ void main_menu_timer_func(ALLEGRO_EVENT *event)
       screen_center_x, (250 - 300) + screen_center_y, logo_scale, logo_scale, 0, 0);
 
    int font_size = -25;
-   draw_text_with_letter_spacing(font_size, al_color_name("white"), screen_center_x, (375 - 300) + screen_center_y + 20, 12*2, fonts["venus_rising_rg.ttf 25"], "press ANY KEY to BEGIN");
+   draw_text_with_letter_spacing(font_size, al_color_name("white"), screen_center_x, (375 - 300) + screen_center_y + 20, 12*2, fonts["venus_rising_rg.ttf 25"], "press ENTER to BEGIN");
    //al_draw_text(fonts["venus_rising_rg.ttf", -25), al_color_name("white"),
       //screen_center_x, (375 - 300) + screen_center_y + 20, ALLEGRO_ALIGN_CENTRE, "press ANY KEY to BEGIN");
 
