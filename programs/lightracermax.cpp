@@ -904,9 +904,11 @@ public:
    Camera3D camera3d;
    ModelBin models;
    PlayerStats player_stats;
+   Framework &framework;
 
    LightracerMax(Framework &framework, Screens &screens, Display *display)
-      : Screen(framework, screens, display)
+      : Screen(display)
+      , framework(framework)
       , sub_bitmap_backbuffer_of_display_for_gl_projection(nullptr)
       , camera3()
       , camera3d(vec3d(0, 0, 0))
@@ -920,7 +922,7 @@ public:
       initialize_gl_render();
    }
 
-   void primary_timer_func() override
+   virtual void primary_timer_func() override
    {
       motion.update(al_get_time());
 
@@ -951,17 +953,17 @@ public:
          0, 0, al_get_bitmap_width(main_target), al_get_bitmap_height(main_target));
    }
 
-   void key_up_func() override
+   virtual void key_up_func() override
    {
       ::key_up_func(player_stats, framework.current_event);
    }
 
-   void key_down_func() override
+   virtual void key_down_func(ALLEGRO_EVENT *ev) override
    {
       ::key_down_func(framework, framework.current_event);
    }
 
-   void key_char_func() override
+   virtual void key_char_func(ALLEGRO_EVENT *ev) override
    {
       ::key_char_func(framework.current_event);
    }
