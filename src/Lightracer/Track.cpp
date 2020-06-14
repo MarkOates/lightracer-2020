@@ -38,12 +38,12 @@ static inline void rotate_point(vec2d *point, const vec2d &axis, float angle)
 
    point->x -= axis.x;
    point->y -= axis.y;
-   
+
    const float tx = point->x;
-   
+
    point->x = c * tx - s * point->y;
    point->y = s * tx + c * point->y;
-   
+
    point->x += axis.x;
    point->y += axis.y;
 }

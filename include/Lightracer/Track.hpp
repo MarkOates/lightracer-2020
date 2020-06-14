@@ -52,7 +52,17 @@ public:
 
    void clear();
    void draw();
-   void draw_projected(int &index_of_last_track_segment_that_collides, Racer *racer, BitmapBin &bitmaps, Camera *good_camera, CheapCamera *camera, float racer_facing_angle, float racer_x, float racer_y, float racer_speed);
+   void draw_projected(
+      int &index_of_last_track_segment_that_collides,
+      Racer *racer,
+      BitmapBin &bitmaps,
+      Camera *good_camera,
+      CheapCamera *camera,
+      float racer_facing_angle,
+      float racer_x,
+      float racer_y,
+      float racer_speed
+      );
    void update_exit_slope_info();
    void __HACK_finalize_track();
    void make_segments_easy_where_player_died();
