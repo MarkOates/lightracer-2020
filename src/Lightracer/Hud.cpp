@@ -150,7 +150,9 @@ void Hud::draw_num_laps(ALLEGRO_FONT *font, int text_x, int text_y, int total_nu
 
 void Hud::draw_stopwatch(ALLEGRO_FONT *font, int text_x, int text_y)
 {
-   std::string ellapsed_time_str = std::string("TIME ") + TimerFormatter(stopwatch.get_elappsed_time_msec()).format();
+
+   std::string ellapsed_time_str = std::string("TIME ")
+                                 + TimerFormatter(stopwatch.get_elapsed_time_milliseconds()).format();
    ALLEGRO_COLOR color = al_color_name("white");
 
    std::string string_to_write = ellapsed_time_str;
