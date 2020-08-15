@@ -18,6 +18,7 @@ using AllegroFlare::vec2d;
 //#include "object2d.h"
 #include "AllegroFlare/Interpolators.hpp"
 #include "AllegroFlare/Motion.hpp"
+#include <AllegroFlare/FrameworkScreenRegistrar.hpp>
 
 
 
@@ -979,6 +980,7 @@ int main(int argc, char **argv)
 
    LightracerMax lightracer_max(framework, screens, display);
    lightracer_max.initialize();
+   AllegroFlare::FrameworkScreenRegistrar(&screens, &lightracer_max).append();
 
    framework.run_loop();
 
