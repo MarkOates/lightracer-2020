@@ -12,8 +12,7 @@ public:
    DummyComponent();
    ~DummyComponent();
 
-
-std::string run();
+   std::string run();
 };
 
 

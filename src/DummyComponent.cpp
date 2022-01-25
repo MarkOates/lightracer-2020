@@ -18,7 +18,7 @@ DummyComponent::~DummyComponent()
 
 std::string DummyComponent::run()
 {
-return "Hello World!";
+   return "Hello World!";
 }
 
 
