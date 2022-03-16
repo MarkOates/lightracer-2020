@@ -954,7 +954,7 @@ public:
          0, 0, al_get_bitmap_width(main_target), al_get_bitmap_height(main_target));
    }
 
-   virtual void key_up_func() override
+   virtual void key_up_func(ALLEGRO_EVENT *ev) override
    {
       ::key_up_func(player_stats, framework.current_event);
    }
@@ -974,7 +974,7 @@ public:
 int main(int argc, char **argv)
 {
    Screens screens;
-   Framework framework(screens);
+   Framework framework(&screens);
    framework.initialize();
    Display *display = framework.create_display(SCREEN_W, SCREEN_H);
 
